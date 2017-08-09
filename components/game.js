@@ -31,6 +31,9 @@ export default class GameComponent extends React.Component {
     this._showNormal = this._showNormal.bind(this)
     this._showDetailed = this._showDetailed.bind(this)
     this._saveLayout = this._saveLayout.bind(this)
+
+    this._renderNotDetailedGame = this._renderNotDetailedGame.bind(this)
+    this._renderDetailedGame = this._renderDetailedGame.bind(this)
   }
 
   _handlePress = () => {
@@ -77,9 +80,11 @@ export default class GameComponent extends React.Component {
     } = this.state;
     
     animationProgression.setValue(layouts.normal.height);
-    Animated.spring(
+    Animated.timing(
       animationProgression,
       {
+        easing: Easing.ease,
+        duration: 250,
         toValue: layouts.detailed.height
       }
     ).start();
@@ -99,14 +104,69 @@ export default class GameComponent extends React.Component {
 		}
 	}
 
-	render() {
-		const {
-			id,
+  _renderNotDetailedGame() {
+    const {
 			name,
-			isDetailed,
-			hasDetailed,
 		} = this.props;
-		
+    
+    return (
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <Name
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {name}
+        </Name>
+        <Game>
+          <Cover
+            resizeMode="cover"
+            source={image}
+          >
+            <LinearGradient
+              style={styles.overlay}
+              colors={['transparent', 'rgba(0,0,0,0.7)']}
+            /> 
+          </Cover>
+          <PlatformList
+            {...this.props}
+          />
+        </Game>
+      </View>
+    )
+  }
+
+  _renderDetailedGame() {
+    const {
+			name,
+		} = this.props;
+    
+    return (
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <Game>
+          <Text>
+            {name}
+          </Text>
+          <PlatformList
+            {...this.props}
+          />
+        </Game>
+      </View>
+    )
+  }
+
+	render() {
+    const {
+      isDetailed,
+    } = this.props;
+
 		const {
       animationProgression,
       layouts,
@@ -126,28 +186,7 @@ export default class GameComponent extends React.Component {
             flex: 1,
           }}
         >
-          <Name
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {name}
-          </Name>
-          <Game
-            isDetailed={isDetailed}
-          >
-            <Cover
-              resizeMode="cover"
-              source={image}
-            >
-              <LinearGradient
-                style={styles.overlay}
-                colors={['transparent', 'rgba(0,0,0,0.7)']}
-              /> 
-            </Cover>
-            <PlatformList
-              {...this.props}
-            />
-          </Game>
+          {(isDetailed) ? this._renderDetailedGame() : this._renderNotDetailedGame()}
         </TouchableOpacity>
       </Animated.View>
 		);
