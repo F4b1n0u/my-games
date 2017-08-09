@@ -1,53 +1,37 @@
 import React from 'react';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import {
-  Animated,
-  Easing,
-  LayoutAnimation,
-  Text,
-  UIManager,
-  View,
-} from 'react-native';
+import styled from 'styled-components/native';
 
 import Background from './background'
 import SearchEngine from './search-engine'
 import GameList from './game-list'
 
-export default class GameExplorer extends React.Component {
+export default class GameExplorerComponent extends React.Component {
   constructor(props) {
     super(props)
   }
 
   render() {
-    const {
-      isVisible
-    } = this.props;
-
     return (
-      <View
-        style={styles.gameExplorer}
-      >
+      <GameExplorer>
         <GameList
           {...this.props}
         />
         <SearchEngine
           {...this.props}
         />
-      </View>
-    );
+      </GameExplorer>
+    )
   }
 }
 
-const styles = EStyleSheet.create({
-  gameExplorer: {
-    flex: 1,
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingLeft:0,
-    paddingRight:0,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: "transparent",
-  },
-});
+const GameExplorer = styled.View`
+  flex: 1;
+  padding-top: 20;
+  padding-Bottom: 20;
+  padding-left: 0;
+  padding-right: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: transparent;
+`;

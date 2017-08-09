@@ -32,6 +32,11 @@ const styles = EStyleSheet.create({
 });
 
 export default class AppContainer extends React.Component {
+  constructor(props) {
+    super(props)
+    this._toggleGameDetails = this._toggleGameDetails.bind(this)
+  }
+
   state = _.merge(
     {},
     generateInitialState({
@@ -40,57 +45,23 @@ export default class AppContainer extends React.Component {
     })
   );
 
-  isAdding = true;
+  _toggleGameDetails = (game) => {
+    let nextState = {}
 
-  componentDidMount() {
-    // setInterval(
-    //   () => {
-    //     let nextState
+    const isAlreadyVisible = game.id === this.state.detailedGameId
 
-    //     if (_.isEmpty(this.state.suggestions)) {
-    //       nextState = {
-    //         suggestions: generateSugestions(),
-    //       }
-    //     } else {
-    //       nextState = {
-    //         suggestions: [],
-    //       }
-    //     }
-        
-    //     this.setState(nextState)
-    //   },
-    //   4000
-    // )
+    const detailedGameId = isAlreadyVisible ? null : game.id
 
-    // setInterval(
-    //   () => {
-    //     const {
-    //       games
-    //     } = this.state;
+    _.merge(
+      nextState,
+      this.state, {
+        detailedGameId,
+      }
+    );
 
-    //     let nextState
-
-    //     if (games.length <= 0) {
-    //       this.isAdding = true;
-    //     } else if(games.length >= 4) {
-    //       this.isAdding = false;
-    //     }
-
-    //     if (this.isAdding) {
-    //       nextState = {
-    //         games: _.concat(games, generateGame()),
-    //       }
-    //     } else {
-    //       games.pop();
-    //       nextState = {
-    //         games,
-    //       }
-    //     }
-
-    //     this.setState(nextState)
-    //   },
-    //   1000
-    // )
+    this.setState(nextState, () => {
+      // console.log('detailedGameId:',this.state.detailedGameId);
+    })
   }
 
   render() {
@@ -99,6 +70,7 @@ export default class AppContainer extends React.Component {
         <Background />
         <GameExplorer
           {...this.state}
+          toggleGameDetails={this._toggleGameDetails}
         />
       </View>
     )

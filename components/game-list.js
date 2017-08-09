@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-	FlatList,
-	View,
-	Text,
-	Image,
-} from 'react-native';
-import EStyleSheet from 'react-native-extended-stylesheet';
+import styled from 'styled-components/native';
 
 import Game from './game'
 
-export default class GameList extends React.Component {
+export default class GameListComponent extends React.Component {
   constructor(props) {
 		super(props)
 		
@@ -19,37 +13,42 @@ export default class GameList extends React.Component {
 	_keyExtractor = item => item.id
 
 	_renderItem({item}) {
+		const {
+			games,
+			toggleGameDetails,
+			detailedGameId,
+		} = this.props;
+
 		return (
 			<Game
 				{...item}
+				toggleGameDetails={toggleGameDetails}
+				isDetailed={detailedGameId === item.id}
+				hasDetailed={!!detailedGameId}
 			/>
 		);
 	}
 
   render() {
     const {
-      games,
+			games,
     } = this.props;
 
 		return (
-			<FlatList
-				style={styles.gameList}
+			<GameList
 				data={games}
 				keyExtractor={this._keyExtractor}
-				renderItem={this._renderItem}
+				renderItem={this._renderItem.bind(this)}
 			/>
     );
   }
 }
 
-const styles = EStyleSheet.create({
-  gameList: {
-		flex: 1,
-		marginTop: 45,
-		marginLeft: 5,
-		marginRight: 5,
-		width: '100% - 20',
-		backgroundColor: "transparent",
-		overflow: 'visible',
-	},
-});
+const GameList = styled.FlatList`
+	flex: 1;
+	margin-top: 45;
+	bottom: 0;
+	width: 90%;
+	background-color: transparent;
+	overflow: visible;
+`;

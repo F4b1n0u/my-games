@@ -26,13 +26,13 @@ export default class Platform extends React.Component {
         <Ionicons
           style={styles.icon}
           name="ios-game-controller-b-outline"
-          size={25}
+          size={20}
           color='#fafafa'
         />
         <Text
           style={styles.abbreviation}
         >
-          {abbreviation}
+          {abbreviation.toLowerCase()}
         </Text>
       </View>
     );
@@ -49,11 +49,12 @@ const styles = EStyleSheet.create({
     height: 30
   },
   icon: {
-    // opacity: .65,
+    opacity: .65,
   },
   abbreviation: {
     backgroundColor: 'transparent',
     color: '#fafafa',
-    textShadowRadius: 10
+    textShadowRadius: 10,
+    fontSize: 10,
 	},
 });
