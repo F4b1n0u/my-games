@@ -1,73 +1,14 @@
-import React, {
-  cloneElement,
-} from 'react';
+import React from 'react';
 import {
-  Button,
-  Dimensions,
-  Image,
-  Text,
-  TextInput,
-  View,
   UIManager,
   LayoutAnimation,
 } from 'react-native';
-import _ from 'lodash';
-import EStyleSheet from 'react-native-extended-stylesheet';
+import styled from 'styled-components/native';
+import SuggestionList from './suggestion-list'
 
-export default class SearchEngine extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      suggestions: [],
-    }
-  }
-
+export default class SearchEngineComponent extends React.Component {
   componentWillReceiveProps() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-  }
-
-  renderSuggestions() {
-    const {
-      suggestions,
-    } = this.props;
-
-    let element;
-
-    if (!_.isEmpty(suggestions)) {
-      element = (
-        <View style={styles.suggestions}>
-          {suggestions.map(this.renderSuggestion)}
-        </View>
-      )
-    } else {
-      element = null;
-    }
-
-    return element;
-  }
-
-  renderSuggestion(suggestion, index) {
-    const {
-      name,
-      cloudinary,
-    } = suggestion;
-
-    return (
-      <View
-        key={index}
-        style={styles.suggestion}
-      >
-        <Image
-          style={styles.thumbnail}
-          source={{uri: `https://images.igdb.com/igdb/image/upload/t_micro/${cloudinary}.jpg`}}
-        />
-        <View style={styles.name}>
-          <Text>
-            {name}
-          </Text>
-        </View>
-      </View>
-    );
   }
 
   render() {
@@ -76,69 +17,43 @@ export default class SearchEngine extends React.Component {
     } = this.props;
 
     return (
-      <View style={styles.searchEngine} >
-        <View style={styles.textInputWrapper} >
+      <SearchEngine>
+        <TextInputWrapper>
           <TextInput
-            style={styles.textInput}
             placeholder='type game name here'
             value={search}
             returnKeyLabel='done'
             selectTextOnFocus={true}
           />
-        </View>
-        {this.renderSuggestions()}
-      </View>
+        </TextInputWrapper>
+        <SuggestionList
+          {...this.props}
+        />
+      </SearchEngine>
     );
   }
 }
 
-const styles = EStyleSheet.create({
-  $searchEngineWidth:  '100% - 50',
-  searchEngine: {
-    position: 'absolute',
-    top: 25,
-    // minus padding
-    width: '$searchEngineWidth',
-    flexDirection:'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#e3e3e3',
-    borderWidth: 3,
-    borderRadius: 10,
-    backgroundColor: '#fafafa',
-    overflow: 'hidden', // to hide content durent anim
-  },
-  textInputWrapper: {
-    flexDirection: 'row',
-  },
-  textInput: {
-    // flex: 1,
-    height: '2rem',
-    textAlign: 'center',
-  },
-  suggestions: {
-    marginTop: 5,
-    marginBottom: 5,
-    // flex: 1,
-    justifyContent: 'flex-start',
-    flexDirection: 'column',
-  },
-  suggestion: {
-    // flex: .01,
-    // height: 20,
-    padding: 2,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  thumbnail: {
-    $thumbnailSize: '.15 * $searchEngineWidth',
-    height: '$thumbnailSize',
-    width: '$thumbnailSize',
-    marginRight: 10,
-  },
-  name: {
-    $nameSize: '.7 * $searchEngineWidth',
-    width: '$nameSize',
-  },
-});
+const SearchEngine = styled.View`
+  position: absolute;
+  top: 25;
+  width: 80%;
+  height: 35;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  border-color: #e3e3e3;
+  border-width: 3;
+  border-radius: 5;
+  background-color: #fafafa;
+  overflow: hidden;
+`
+
+const TextInputWrapper = styled.View`
+  flex-direction: row;
+`
+
+const TextInput = styled.TextInput`
+  height: 15;
+  text-align: center;
+`

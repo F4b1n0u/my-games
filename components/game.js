@@ -10,7 +10,6 @@ import {
 	LinearGradient,
 } from 'expo';
 import styled from 'styled-components/native';
-import EStyleSheet from 'react-native-extended-stylesheet';
 
 import PlatformList from './platform-list';
 
@@ -81,7 +80,6 @@ export default class GameComponent extends React.Component {
     }
 
     if (nextProps.isDetailed) {
-      // console.log('scroll bitch !!!')
       scrollToMe()
     }
 	}
@@ -136,8 +134,7 @@ export default class GameComponent extends React.Component {
             resizeMode="cover"
             source={image}
           >
-            <LinearGradient
-              style={styles.overlay}
+            <Overlay
               colors={['transparent', 'rgba(0,0,0,0.7)']}
             /> 
           </Cover>
@@ -158,7 +155,7 @@ export default class GameComponent extends React.Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#fafafa80'
+          backgroundColor: '#fafafac0'
         }}
       >
         <Game>
@@ -238,12 +235,10 @@ const Cover = styled.Image`
 	background-color: transparent;
 `;
 
-const styles = EStyleSheet.create({
-	overlay: {
-		position: 'absolute',
-		left: 0,
-		right: 0,
-		top: '70%',
-		bottom: 0,
-	}
-});
+const Overlay = styled(LinearGradient)`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 70%;
+  bottom: 0;
+`

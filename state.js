@@ -17,12 +17,20 @@ export const generateInitialState = ({hasSuggestions, amountOfGames}) => {
     games = _.concat(games, generateGame());
   }
 
+  let suggestions = [];
+  if (hasSuggestions) {
+    suggestions = generateSugestions();
+  }
+
   _.merge(
     nextState,
     {
       games,
+      suggestions,
     }
   );
+
+
 
   return nextState;
 }

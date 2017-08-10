@@ -1,13 +1,8 @@
 import React from 'react';
-import EStyleSheet from 'react-native-extended-stylesheet';
 import {
-  Animated,
-  Easing,
-  LayoutAnimation,
-  Text,
   UIManager,
-  View,
 } from 'react-native';
+import styled from 'styled-components/native';
 import Expo from 'expo';
 import _ from 'lodash';
 
@@ -20,16 +15,7 @@ import {
   generateGame,
 } from './state';
 
-EStyleSheet.build();
-
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-
-const styles = EStyleSheet.create({
-  app: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-});
 
 export default class AppContainer extends React.Component {
   constructor(props) {
@@ -40,8 +26,8 @@ export default class AppContainer extends React.Component {
   state = _.merge(
     {},
     generateInitialState({
-      hasSuggestions: false,
-      amountOfGames: 4,
+      hasSuggestions: true,
+      amountOfGames: 10,
     })
   );
 
@@ -64,13 +50,18 @@ export default class AppContainer extends React.Component {
 
   render() {
     return (
-      <View style={styles.app}>
+      <App>
         <Background />
         <GameExplorer
           {...this.state}
           toggleGameDetails={this._toggleGameDetails}
         />
-      </View>
+      </App>
     )
   }
 }
+
+const App = styled.View`
+  flex: 1;
+  flex-direction: row;
+`

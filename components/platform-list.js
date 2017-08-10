@@ -1,15 +1,12 @@
 import React from 'react';
 import {
 	FlatList,
-	Image,
-	Text,
-	View,
 } from 'react-native';
-import EStyleSheet from 'react-native-extended-stylesheet';
+import styled from 'styled-components/native';
 
 import Platform from './platform';
 
-export default class Game extends React.Component {
+export default class platformListComponent extends React.Component {
   constructor(props) {
 		super(props)
   }
@@ -20,28 +17,25 @@ export default class Game extends React.Component {
 		} = this.props;
 
     return (
-			<View
-				style={styles.list}
-			>
+			<PlatformList>
         {platforms.map(platform =>
           <Platform
             key={platform.id}
             {...platform}
           />
         )}
-			</View>
+			</PlatformList>
 		);
 	}
 }
 
-const styles = EStyleSheet.create({
-  list: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-		margin: 5,
-		flexDirection: 'row',
-		justifyContent: 'flex-start',
-		alignItems: 'center'
-  }
-});
+const PlatformList = styled.View`
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin-left: 5;
+	margin-bottom: 5;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+`

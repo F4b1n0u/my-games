@@ -24,10 +24,6 @@ export default class GameListComponent extends React.Component {
 	_keyExtractor = item => item.id
 
 	_setRef = (ref) => {
-		const {
-			maBite,
-		} = this.props
-
 		this.flatListRef = ref
 	}
 

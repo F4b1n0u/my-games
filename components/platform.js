@@ -1,13 +1,8 @@
 import React from 'react';
-import EStyleSheet from 'react-native-extended-stylesheet';
-import {
-	View,
-	Text,
-	Image,
-} from 'react-native';
+import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default class Platform extends React.Component {
+export default class PlatformComponent extends React.Component {
   constructor(props) {
 		super(props)
   }
@@ -19,42 +14,36 @@ export default class Platform extends React.Component {
     } = this.props;
 
 		return (
-			<View
+			<Platform
         key={id}
-				style={styles.platform}
 			>
-        <Ionicons
-          style={styles.icon}
+        <Icon
           name="ios-game-controller-b-outline"
           size={20}
           color='#fafafa'
         />
-        <Text
-          style={styles.abbreviation}
-        >
+        <Abbreviation>
           {abbreviation.toLowerCase()}
-        </Text>
-      </View>
+        </Abbreviation>
+      </Platform>
     );
   }
 }
 
-const styles = EStyleSheet.create({
-  platform: {
-    backgroundColor: 'transparent',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    margin: 2,
-    height: 30
-  },
-  icon: {
-    opacity: .65,
-  },
-  abbreviation: {
-    backgroundColor: 'transparent',
-    color: '#fafafa',
-    textShadowRadius: 10,
-    fontSize: 10,
-	},
-});
+const Platform = styled.View`
+  background-color: transparent;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 30;
+`
+
+const Icon = styled(Ionicons)`
+  opacity: .65;
+`
+
+const Abbreviation = styled.Text`
+  background-color: transparent;
+  color: #fafafa;
+  font-size: 10;
+`
