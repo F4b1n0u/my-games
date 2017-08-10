@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Animated,
-  View,
   Easing,
   StyleSheet
 } from 'react-native';
@@ -73,17 +72,17 @@ export default class Background extends React.Component {
     return (
       <Animated.Image
         source={require('../assets/images/all-games-wallpaper.png')}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          opacity: fadeIn,
-          transform: [{
-            translateX: backgroundPosX,
-          }, {
-            translateY: backgroundPosY,
-          }]
-        }}
+        style={[
+          styles.background,
+          {
+            opacity: fadeIn,
+            transform: [{
+              translateX: backgroundPosX,
+            }, {
+              translateY: backgroundPosY,
+            }],
+          },
+        ]}
       />
     );
   }
@@ -91,5 +90,8 @@ export default class Background extends React.Component {
 
 const styles = StyleSheet.create({
   background: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
   }
 });

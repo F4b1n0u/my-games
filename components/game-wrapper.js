@@ -126,12 +126,9 @@ export default class GameComponent extends React.Component {
           marginRight: marginAnimProgress,
         }}
       >
-        <TouchableOpacity
+        <GameWrapper
           activeOpacity={.5}
           onPress={this._handleToggle}
-          style={{
-            flex: 1,
-          }}
         >
           {(isDetailed) ? (
             <DetailedGame
@@ -142,11 +139,15 @@ export default class GameComponent extends React.Component {
               {...this.props}
             />
           )}
-        </TouchableOpacity>
+        </GameWrapper>
       </Animated.View>
 		);
 	}
 }
+
+const GameWrapper = styled.TouchableOpacity`
+  flex: 1;
+`
 
 const Game = styled.View`
   flex: 1;
@@ -156,7 +157,7 @@ const Game = styled.View`
 	border-radius: 5;
 	background-color: transparent;
 	overflow: hidden; // to avoid the image to be on top of the border
-`;
+`
 
 const Name = styled.Text`
 	position: absolute;
@@ -168,7 +169,7 @@ const Name = styled.Text`
 	alignItems: center;
 	fontSize: 8;
 	paddingLeft: 5;
-`;
+`
 
 const Cover = styled.Image`
 	position: absolute;
@@ -179,7 +180,7 @@ const Cover = styled.Image`
 	width: 100%;
 	height: 100%;
 	background-color: transparent;
-`;
+`
 
 const Overlay = styled(LinearGradient)`
   position: absolute;

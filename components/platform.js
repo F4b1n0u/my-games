@@ -36,6 +36,8 @@ const Platform = styled.View`
   justify-content: space-around;
   align-items: center;
   height: 30;
+  margin-left: 2.5;
+  margin-right: 2.5;
 `
 
 const Icon = styled(Ionicons)`
