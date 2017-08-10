@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import {
 	Dimensions,
 } from 'react-native';
-import Game from './game'
+import GameWrapper from './game-wrapper'
 
 const {
 	height,
@@ -48,7 +48,7 @@ export default class GameListComponent extends React.Component {
 		} = this.props;
 
 		return (
-			<Game
+			<GameWrapper
 				{...item}
 				scrollToMe={this._scrollToGame.bind(this, index)}
 				normalHeight={normalHeight}

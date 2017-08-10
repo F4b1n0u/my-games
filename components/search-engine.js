@@ -50,6 +50,7 @@ const SearchEngine = styled.View`
 `
 
 const TextInputWrapper = styled.View`
+  flex: 1;
   flex-direction: row;
 `
 

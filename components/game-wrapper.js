@@ -11,9 +11,8 @@ import {
 } from 'expo';
 import styled from 'styled-components/native';
 
-import PlatformList from './platform-list';
-
-const image = require('../assets/images/zelda.png')
+import DetailedGame from './detailed-game'
+import NotDetailedGame from './not-detailed-game'
 
 const animationDuration = 500;
 
@@ -31,14 +30,11 @@ export default class GameComponent extends React.Component {
   constructor(props) {
     super(props)
 
-    this._handlePress = this._handlePress.bind(this)
+    this._handleToggle = this._handleToggle.bind(this)
     this._toggleDetails = this._toggleDetails.bind(this)
-
-    this._renderNotDetailedGame = this._renderNotDetailedGame.bind(this)
-    this._renderDetailedGame = this._renderDetailedGame.bind(this)
   }
 
-  _handlePress = () => {
+  _handleToggle = () => {
     const {
       toggleGameDetails,
     } = this.props;
@@ -93,7 +89,7 @@ export default class GameComponent extends React.Component {
     } = this.props
 
     const {
-      animationProgression
+      animationProgression,
     } = this.state
 
     const heightAnimProgress = animationProgression.interpolate({
@@ -110,64 +106,6 @@ export default class GameComponent extends React.Component {
       heightAnimProgress,
       marginAnimProgress,
     })
-  }
-
-  _renderNotDetailedGame() {
-    const {
-			name,
-		} = this.props;
-    
-    return (
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <Name
-          numberOfLines={1}
-          ellipsizeMode="tail"
-        >
-          {name}
-        </Name>
-        <Game>
-          <Cover
-            resizeMode="cover"
-            source={image}
-          >
-            <Overlay
-              colors={['transparent', 'rgba(0,0,0,0.7)']}
-            /> 
-          </Cover>
-          <PlatformList
-            {...this.props}
-          />
-        </Game>
-      </View>
-    )
-  }
-
-  _renderDetailedGame() {
-    const {
-      name,
-		} = this.props;
-
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#fafafac0'
-        }}
-      >
-        <Game>
-          <Text>
-            {name}
-          </Text>
-          <PlatformList
-            {...this.props}
-          />
-        </Game>
-      </View>
-    )
   }
 
 	render() {
@@ -190,12 +128,20 @@ export default class GameComponent extends React.Component {
       >
         <TouchableOpacity
           activeOpacity={.5}
-          onPress={this._handlePress}
+          onPress={this._handleToggle}
           style={{
             flex: 1,
           }}
         >
-          {(isDetailed) ? this._renderDetailedGame() : this._renderNotDetailedGame()}
+          {(isDetailed) ? (
+            <DetailedGame
+              {...this.props}
+            />
+          ) : (
+            <NotDetailedGame
+              {...this.props}
+            />
+          )}
         </TouchableOpacity>
       </Animated.View>
 		);
