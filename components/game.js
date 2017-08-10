@@ -17,9 +17,11 @@ import PlatformList from './platform-list';
 
 const image = require('../assets/images/zelda.png')
 
+const animationDuration = 500;
+
 export default class GameComponent extends React.Component {
 	state = {
-    animationProgression: new Animated.Value(),
+    animationProgression: new Animated.Value(0),
     display: 'normal',
     layouts: null,
 	}
@@ -28,8 +30,7 @@ export default class GameComponent extends React.Component {
     super(props)
 
     this._handlePress = this._handlePress.bind(this)
-    this._showNormal = this._showNormal.bind(this)
-    this._showDetailed = this._showDetailed.bind(this)
+    this._toggleDetails = this._toggleDetails.bind(this)
     this._saveLayout = this._saveLayout.bind(this)
 
     this._renderNotDetailedGame = this._renderNotDetailedGame.bind(this)
@@ -51,41 +52,32 @@ export default class GameComponent extends React.Component {
           normal: event.nativeEvent.layout,
           detailed: {
             height: event.nativeEvent.layout.height * 2.2,
-            width: event.nativeEvent.layout.width * 2,
+            width: event.nativeEvent.layout.width,
           },
         },
       });
     }
   }
 
-	_showNormal() {
+	_toggleDetails() {
+    const {
+			isDetailed,
+    } = this.props;
+    
     const {
       animationProgression,
-      layouts,
     } = this.state;
     
-    animationProgression.setValue(layouts.detailed.height);
-    Animated.spring(
-      animationProgression,
-      {
-        toValue: layouts.normal.height
-      }
-    ).start();
-	}
+    const startValue = isDetailed ? 1 : 0
+    const endValue   = isDetailed ? 0 : 1
 
-	_showDetailed() {
-    const {
-      animationProgression,
-      layouts,
-    } = this.state;
-    
-    animationProgression.setValue(layouts.normal.height);
+    animationProgression.setValue(startValue);
     Animated.timing(
       animationProgression,
       {
-        easing: Easing.ease,
-        duration: 250,
-        toValue: layouts.detailed.height
+        easing: Easing.easeInOut,
+        duration: animationDuration,
+        toValue: endValue,
       }
     ).start();
 	}
@@ -96,11 +88,7 @@ export default class GameComponent extends React.Component {
 		} = this.props;
 
 		if (nextProps.isDetailed !== isDetailed) {
-			if (isDetailed) {
-				this._showNormal();
-			} else {
-				this._showDetailed();
-			}
+      this._toggleDetails()
 		}
 	}
 
@@ -148,6 +136,7 @@ export default class GameComponent extends React.Component {
       <View
         style={{
           flex: 1,
+          backgroundColor: '#fafafa80'
         }}
       >
         <Game>
@@ -172,11 +161,33 @@ export default class GameComponent extends React.Component {
       layouts,
 		} = this.state
 
+    const normalLayout = layouts ? layouts.normal : {
+      height: height / 3,
+      width: 0,
+    }
+
+    const detailedLayout = layouts ? layouts.detailed : {
+      height: height / 3,
+      width: 0,
+    }
+
+    const heightAnimProgress = animationProgression.interpolate({
+      inputRange: [0, 1],
+      outputRange: [normalLayout.height, detailedLayout.height],
+    });
+
+    const marginAnimProgress = animationProgression.interpolate({
+      inputRange: [0, 1],
+      outputRange: [10, 5],
+    });
+
     return (
       <Animated.View
         onLayout={this._saveLayout}
         style={{
-          height: animationProgression,
+          height: heightAnimProgress,
+          marginLeft: marginAnimProgress,
+          marginRight: marginAnimProgress,
         }}
       >
         <TouchableOpacity
@@ -198,9 +209,8 @@ const {
 } = Dimensions.get('window');
 
 const Game = styled.View`
-	flex: 1;
+  flex: 1;
 	margin-top: 15;
-	height: ${height / 3};
 	border-color: #e3e3e3;
 	border-width: 3;
 	border-radius: 5;

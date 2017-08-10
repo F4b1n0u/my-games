@@ -46,9 +46,9 @@ export default class GameListComponent extends React.Component {
 
 const GameList = styled.FlatList`
 	flex: 1;
-	margin-top: 45;
-	bottom: 0;
-	width: 90%;
 	background-color: transparent;
 	overflow: visible;
+	margin-top: 45;
+	bottom: 0;
+	width: 100%;
 `;
