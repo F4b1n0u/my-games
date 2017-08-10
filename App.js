@@ -59,9 +59,7 @@ export default class AppContainer extends React.Component {
       }
     );
 
-    this.setState(nextState, () => {
-      // console.log('detailedGameId:',this.state.detailedGameId);
-    })
+    this.setState(nextState)
   }
 
   render() {

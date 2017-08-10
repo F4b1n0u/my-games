@@ -1,7 +1,6 @@
 import React from 'react';
 import {
 	Animated,
-	Dimensions,
 	TouchableOpacity,
 	View,
   Easing,
@@ -23,15 +22,18 @@ export default class GameComponent extends React.Component {
 	state = {
     animationProgression: new Animated.Value(0),
     display: 'normal',
-    layouts: null,
 	}
+
+  static defaultProps = {
+    normalMargin: 10,
+    detailedMargin : 5,
+  };
 
   constructor(props) {
     super(props)
 
     this._handlePress = this._handlePress.bind(this)
     this._toggleDetails = this._toggleDetails.bind(this)
-    this._saveLayout = this._saveLayout.bind(this)
 
     this._renderNotDetailedGame = this._renderNotDetailedGame.bind(this)
     this._renderDetailedGame = this._renderDetailedGame.bind(this)
@@ -43,20 +45,6 @@ export default class GameComponent extends React.Component {
     } = this.props;
 
     toggleGameDetails(this.props);
-  }
-
-  _saveLayout(event) {
-    if (!this.state.layouts) {
-      this.setState({
-        layouts: {
-          normal: event.nativeEvent.layout,
-          detailed: {
-            height: event.nativeEvent.layout.height * 2.2,
-            width: event.nativeEvent.layout.width,
-          },
-        },
-      });
-    }
   }
 
 	_toggleDetails() {
@@ -84,13 +72,47 @@ export default class GameComponent extends React.Component {
 
 	componentWillUpdate(nextProps) {
 		const {
-			isDetailed,
+      isDetailed,
+      scrollToMe,
 		} = this.props;
 
 		if (nextProps.isDetailed !== isDetailed) {
       this._toggleDetails()
-		}
+    }
+
+    if (nextProps.isDetailed) {
+      // console.log('scroll bitch !!!')
+      scrollToMe()
+    }
 	}
+
+  componentDidMount() {
+    const {
+      normalHeight,
+      detailedHeight,
+      normalMargin,
+      detailedMargin,
+    } = this.props
+
+    const {
+      animationProgression
+    } = this.state
+
+    const heightAnimProgress = animationProgression.interpolate({
+      inputRange: [0, 1],
+      outputRange: [normalHeight, detailedHeight],
+    });
+
+    const marginAnimProgress = animationProgression.interpolate({
+      inputRange: [0, 1],
+      outputRange: [normalMargin, detailedMargin],
+    });
+
+    this.setState({
+      heightAnimProgress,
+      marginAnimProgress,
+    })
+  }
 
   _renderNotDetailedGame() {
     const {
@@ -129,9 +151,9 @@ export default class GameComponent extends React.Component {
 
   _renderDetailedGame() {
     const {
-			name,
+      name,
 		} = this.props;
-    
+
     return (
       <View
         style={{
@@ -157,33 +179,12 @@ export default class GameComponent extends React.Component {
     } = this.props;
 
 		const {
-      animationProgression,
-      layouts,
+      heightAnimProgress,
+      marginAnimProgress,
 		} = this.state
-
-    const normalLayout = layouts ? layouts.normal : {
-      height: height / 3,
-      width: 0,
-    }
-
-    const detailedLayout = layouts ? layouts.detailed : {
-      height: height / 3,
-      width: 0,
-    }
-
-    const heightAnimProgress = animationProgression.interpolate({
-      inputRange: [0, 1],
-      outputRange: [normalLayout.height, detailedLayout.height],
-    });
-
-    const marginAnimProgress = animationProgression.interpolate({
-      inputRange: [0, 1],
-      outputRange: [10, 5],
-    });
 
     return (
       <Animated.View
-        onLayout={this._saveLayout}
         style={{
           height: heightAnimProgress,
           marginLeft: marginAnimProgress,
@@ -203,10 +204,6 @@ export default class GameComponent extends React.Component {
 		);
 	}
 }
-
-const {
-	height,
-} = Dimensions.get('window');
 
 const Game = styled.View`
   flex: 1;
