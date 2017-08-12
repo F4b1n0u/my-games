@@ -81,7 +81,7 @@ const GameList = styled.FlatList`
 	flex: 1;
 	background-color: transparent;
 	overflow: visible;
-	margin-top: 45;
+	margin-top: 55;
 	bottom: 0;
 	width: 100%;
 `;

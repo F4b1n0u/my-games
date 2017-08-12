@@ -3,7 +3,9 @@ import {
   UIManager,
 } from 'react-native';
 import styled from 'styled-components/native';
-import Expo from 'expo';
+import Expo, {
+  Font
+} from 'expo';
 import _ from 'lodash';
 
 import Background from './components/background'
@@ -24,7 +26,9 @@ export default class AppContainer extends React.Component {
   }
 
   state = _.merge(
-    {},
+    {
+      isFontLoaded: false,
+    },
     generateInitialState({
       hasSuggestions: true,
       amountOfGames: 10,
@@ -48,16 +52,33 @@ export default class AppContainer extends React.Component {
     this.setState(nextState)
   }
 
+  async componentDidMount() {
+    await Font.loadAsync({
+      'florentia-extralight': require('./assets/fonts/florentia.extralight.ttf'),
+      'arista-pro-extralight': require('./assets/fonts/arista-pro-extralight.ttf'),
+      'let-that-be-enough-regular': require('./assets/fonts/let-that-be-enough.regular.ttf'),
+    });
+
+    this.setState({ isFontLoaded: true });
+  }
+
   render() {
-    return (
-      <App>
-        <Background />
-        <GameExplorer
-          {...this.state}
-          toggleGameDetails={this._toggleGameDetails}
-        />
-      </App>
-    )
+    const {
+      isFontLoaded,
+    } = this.state;
+
+    return (isFontLoaded) ?
+      (
+        <App>
+          <Background />
+          <GameExplorer
+            {...this.state}
+            toggleGameDetails={this._toggleGameDetails}
+          />
+        </App>
+      ) : (
+        <Expo.AppLoading />
+      )
   }
 }
 

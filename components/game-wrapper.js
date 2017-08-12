@@ -147,6 +147,7 @@ export default class GameComponent extends React.Component {
 
 const GameWrapper = styled.TouchableOpacity`
   flex: 1;
+  margin-bottom: 15;
 `
 
 const Game = styled.View`

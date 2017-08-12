@@ -40,7 +40,6 @@ export default class GameComponent extends React.Component {
 
 const Game = styled.View`
   flex: 1;
-	margin-top: 15;
 	border-color: #e3e3e3;
 	border-width: 3;
 	border-radius: 5;
@@ -78,3 +77,5 @@ const Overlay = styled(LinearGradient)`
   top: 70%;
   bottom: 0;
 `
+
+// TODO try to extend platformList style to avoid to use props

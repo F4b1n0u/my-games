@@ -30,33 +30,51 @@ export const generateInitialState = ({hasSuggestions, amountOfGames}) => {
     }
   );
 
-
-
   return nextState;
 }
 
 export const generateGame = () => {
   return {
-    id: Math.floor(Math.random() * 1000),
+    id: Math.floor(Math.random() * 100000),
     name: 'The Legend of Zelda: Breath of the Wild',
     platforms: [
       {
-        id: Math.floor(Math.random() * 1000),
+        id: Math.floor(Math.random() * 100000),
         name: 'Wii',
         abbreviation: 'Wii'
       },
       {
-        id: Math.floor(Math.random() * 1000),
+        id: Math.floor(Math.random() * 100000),
         name: 'Wii',
         abbreviation: 'snes'
       },
       {
-        id: Math.floor(Math.random() * 1000),
+        id: Math.floor(Math.random() * 100000),
         name: 'Wii',
         abbreviation: 'Wii'
       },
       {
-        id: Math.floor(Math.random() * 1000),
+        id: Math.floor(Math.random() * 100000),
+        name: 'Wii',
+        abbreviation: 'Wii'
+      },
+      {
+        id: Math.floor(Math.random() * 100000),
+        name: 'Wii',
+        abbreviation: 'Wii'
+      },
+      {
+        id: Math.floor(Math.random() * 100000),
+        name: 'Wii',
+        abbreviation: 'snes'
+      },
+      {
+        id: Math.floor(Math.random() * 100000),
+        name: 'Wii',
+        abbreviation: 'Wii'
+      },
+      {
+        id: Math.floor(Math.random() * 100000),
         name: 'Wii',
         abbreviation: 'Wii'
       },

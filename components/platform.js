@@ -11,18 +11,21 @@ export default class PlatformComponent extends React.Component {
     const {
       id,
       abbreviation,
+      isDetailed,
     } = this.props;
 
 		return (
 			<Platform
         key={id}
+        isDetailed={isDetailed}
 			>
         <Icon
           name="ios-game-controller-b-outline"
-          size={20}
-          color='#fafafa'
+          isDetailed={isDetailed}
         />
-        <Abbreviation>
+        <Abbreviation
+          isDetailed={isDetailed}
+        >
           {abbreviation.toLowerCase()}
         </Abbreviation>
       </Platform>
@@ -35,17 +38,21 @@ const Platform = styled.View`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 30;
-  margin-left: 2.5;
-  margin-right: 2.5;
+  height: ${props => props.isDetailed ? '35' 	: '30'};
+  margin-left:    ${props => props.isDetailed ? '7.5' 	: '4'};
+  margin-right:   ${props => props.isDetailed ? '7.5' 	: '4'};
+  margin-bottom:  ${props => props.isDetailed ? '12.5' 	: '0'};
 `
 
 const Icon = styled(Ionicons)`
-  opacity: .65;
+  opacity: ${props => props.isOwned ? '1' 	: '.5'};
+  font-size: ${props => props.isDetailed ? '40' 	: '20'};
+  color: ${props => props.isDetailed ? '#000000' 	: '#fafafa'};
 `
 
 const Abbreviation = styled.Text`
   background-color: transparent;
-  color: #fafafa;
-  font-size: 10;
+  font-family: 'florentia-extralight';
+  color: ${props => props.isDetailed ? '#000000' 	: '#fafafa'};
+  font-size: ${props => props.isDetailed ? '20' 	: '15'};
 `

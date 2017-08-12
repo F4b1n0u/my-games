@@ -45,16 +45,19 @@ const SearchEngine = styled.View`
   border-color: #e3e3e3;
   border-width: 3;
   border-radius: 5;
-  background-color: #fafafa;
+  background-color: #fafafac0;
   overflow: hidden;
 `
 
 const TextInputWrapper = styled.View`
   flex: 1;
   flex-direction: row;
+  justify-content: center;
+  alignItems: center;
 `
 
 const TextInput = styled.TextInput`
-  height: 15;
+  flex: 1;
+  margin-top: 10;
   text-align: center;
 `
