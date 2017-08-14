@@ -26,10 +26,8 @@ export default class GameExplorerComponent extends React.Component {
 
 const GameExplorer = styled.View`
   flex: 1;
-  padding-top: 20;
-  padding-Bottom: 20;
-  padding-left: 0;
-  padding-right: 0;
+  padding-vertical: 20;
+  padding-horizontal: 0;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;

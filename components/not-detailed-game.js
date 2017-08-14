@@ -8,14 +8,46 @@ import PlatformList from './platform-list';
 
 const image = require('../assets/images/zelda.png')
 
-export default class GameComponent extends React.Component {
+export default class NotDetailedGameComponent extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this._handleToggle = this._handleToggle.bind(this)
+    this._renderPlatformList = this._renderPlatformList.bind(this);
+  }
+
+  _handleToggle = () => {
+    const {
+      toggleGameDetails,
+    } = this.props;
+
+    toggleGameDetails(this.props);
+  }
+
+  _renderPlatformList() {
+    const {
+      hasDetailed,
+    } = this.props;
+    
+    return (hasDetailed) ?
+      null
+    : (
+      <PlatformList
+        {...this.props}
+      />
+    )
+  }
+
   render() {
     const {
-			name,
+      name,
 		} = this.props;
     
     return (
-      <Game>
+      <Game
+        activeOpacity={.5}
+        onPress={this._handleToggle}        
+      >
         <Name
           numberOfLines={1}
           ellipsizeMode="tail"
@@ -28,35 +60,33 @@ export default class GameComponent extends React.Component {
         >
           <Overlay
             colors={['transparent', 'rgba(0,0,0,0.7)']}
-          /> 
+          >
+            {this._renderPlatformList()}
+          </Overlay>
         </Cover>
-        <PlatformList
-          {...this.props}
-        />
       </Game>
     )
   }
 }
 
-const Game = styled.View`
+const Game = styled.TouchableOpacity`
   flex: 1;
 	border-color: #e3e3e3;
 	border-width: 3;
 	border-radius: 5;
 	background-color: transparent;
-	overflow: hidden; // to avoid the image to be on top of the border
 `;
 
 const Name = styled.Text`
 	position: absolute;
-	top: 5;
+	top: -14;
 	width: 100%;
-	textAlign: left;
-	color: black;
 	background-color: transparent;
-	alignItems: center;
+	paddingLeft: 2;
+	color: black;
+	textAlign: left;
 	fontSize: 8;
-	paddingLeft: 5;
+  font-family: 'florentia-extralight';
 `;
 
 const Cover = styled.Image`
@@ -67,7 +97,8 @@ const Cover = styled.Image`
 	bottom: 0;
 	width: 100%;
 	height: 100%;
-	background-color: transparent;
+  background-color: transparent;
+  overflow: hidden; 
 `;
 
 const Overlay = styled(LinearGradient)`

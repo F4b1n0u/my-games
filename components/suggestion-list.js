@@ -31,8 +31,7 @@ export default class SuggestionListComponent extends React.Component {
 }
 
 const SuggestionList = styled.View`
-  margin-top: 5;
-  margin-bottom: 5;
+  margin-vertical: 5;
   justify-content: flex-start;
   flex-direction: row;
 `

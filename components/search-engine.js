@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  UIManager,
   LayoutAnimation,
 } from 'react-native';
 import styled from 'styled-components/native';
@@ -14,9 +13,12 @@ export default class SearchEngineComponent extends React.Component {
   render() {
     const {
       search,
+      detailedGameId,
     } = this.props;
 
-    return (
+    const hasDetailedGame = !!detailedGameId
+
+    return (!hasDetailedGame) ? (
       <SearchEngine>
         <TextInputWrapper>
           <TextInput
@@ -30,7 +32,7 @@ export default class SearchEngineComponent extends React.Component {
           {...this.props}
         />
       </SearchEngine>
-    );
+    ) : null;
   }
 }
 

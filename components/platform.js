@@ -38,21 +38,20 @@ const Platform = styled.View`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: ${props => props.isDetailed ? '35' 	: '30'};
-  margin-left:    ${props => props.isDetailed ? '7.5' 	: '4'};
-  margin-right:   ${props => props.isDetailed ? '7.5' 	: '4'};
-  margin-bottom:  ${props => props.isDetailed ? '12.5' 	: '0'};
+  height:             ${props => props.isDetailed ? '35' 	: '30'};
+  margin-horizontal:  ${props => props.isDetailed ? '7.5' 	: '4'};
+  margin-bottom:      ${props => props.isDetailed ? '12.5' 	: '0'};
 `
 
 const Icon = styled(Ionicons)`
-  opacity: ${props => props.isOwned ? '1' 	: '.5'};
-  font-size: ${props => props.isDetailed ? '40' 	: '20'};
-  color: ${props => props.isDetailed ? '#000000' 	: '#fafafa'};
+  opacity:    ${props => props.isOwned ? '1' 	: '.5'};
+  font-size:  ${props => props.isDetailed ? '40' 	: '20'};
+  color:      ${props => props.isDetailed ? '#000000' 	: '#fafafa'};
 `
 
 const Abbreviation = styled.Text`
   background-color: transparent;
   font-family: 'florentia-extralight';
-  color: ${props => props.isDetailed ? '#000000' 	: '#fafafa'};
-  font-size: ${props => props.isDetailed ? '20' 	: '15'};
+  color:      ${props => props.isDetailed ? '#000000' 	: '#fafafa'};
+  font-size:  ${props => props.isDetailed ? '20' 	: '15'};
 `

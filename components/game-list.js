@@ -10,7 +10,7 @@ const {
 } = Dimensions.get('window');
 
 const normalHeight = height / 3
-const detailedHeight = height - 100 // should depend of the ratio of the screen, the idea is to allow the user to have it in full screen
+const detailedHeight = height - 50 // should depend of the ratio of the screen, the idea is to allow the user to have it in full screen
 
 export default class GameListComponent extends React.Component {
   constructor(props) {
@@ -63,10 +63,12 @@ export default class GameListComponent extends React.Component {
   render() {
     const {
 			games,
+			detailedGameId,
     } = this.props;
 
 		return (
 			<GameList
+				hasDetailedGame={!!detailedGameId}
 				ref={this._setRef}
 				data={games}
 				keyExtractor={this._keyExtractor}
@@ -81,7 +83,7 @@ const GameList = styled.FlatList`
 	flex: 1;
 	background-color: transparent;
 	overflow: visible;
-	margin-top: 55;
+	margin-top: ${props => props.hasDetailedGame ? 10 : 55};
 	bottom: 0;
 	width: 100%;
 `;

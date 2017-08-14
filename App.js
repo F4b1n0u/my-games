@@ -30,8 +30,8 @@ export default class AppContainer extends React.Component {
       isFontLoaded: false,
     },
     generateInitialState({
-      hasSuggestions: true,
-      amountOfGames: 10,
+      hasSuggestions: false,
+      amountOfGames: 1,
     })
   );
 

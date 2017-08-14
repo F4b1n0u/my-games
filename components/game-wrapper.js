@@ -14,9 +14,9 @@ import styled from 'styled-components/native';
 import DetailedGame from './detailed-game'
 import NotDetailedGame from './not-detailed-game'
 
-const animationDuration = 500;
+const animationDuration = 250;
 
-export default class GameComponent extends React.Component {
+export default class GameWrapperComponent extends React.Component {
 	state = {
     animationProgression: new Animated.Value(0),
     display: 'normal',
@@ -29,17 +29,8 @@ export default class GameComponent extends React.Component {
 
   constructor(props) {
     super(props)
-
-    this._handleToggle = this._handleToggle.bind(this)
+ 
     this._toggleDetails = this._toggleDetails.bind(this)
-  }
-
-  _handleToggle = () => {
-    const {
-      toggleGameDetails,
-    } = this.props;
-
-    toggleGameDetails(this.props);
   }
 
 	_toggleDetails() {
@@ -126,10 +117,7 @@ export default class GameComponent extends React.Component {
           marginRight: marginAnimProgress,
         }}
       >
-        <GameWrapper
-          activeOpacity={.5}
-          onPress={this._handleToggle}
-        >
+        <GameWrapper>
           {(isDetailed) ? (
             <DetailedGame
               {...this.props}
@@ -145,7 +133,7 @@ export default class GameComponent extends React.Component {
 	}
 }
 
-const GameWrapper = styled.TouchableOpacity`
+const GameWrapper = styled.View`
   flex: 1;
   margin-bottom: 15;
 `
