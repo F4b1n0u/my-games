@@ -4,6 +4,7 @@ import {
 } from 'expo';
 import styled from 'styled-components/native';
 
+import FitImage from './fit-image'
 import PlatformList from './platform-list';
 
 const image = require('../assets/images/zelda.png')
@@ -41,6 +42,8 @@ export default class NotDetailedGameComponent extends React.Component {
   render() {
     const {
       name,
+      cover,
+      coverMini,
 		} = this.props;
     
     return (
@@ -55,8 +58,8 @@ export default class NotDetailedGameComponent extends React.Component {
           {name}
         </Name>
         <Cover
-          resizeMode="cover"
-          source={image}
+          uri={cover}
+          fallbackUri={coverMini}
         >
           <Overlay
             colors={['transparent', 'rgba(0,0,0,0.7)']}
@@ -88,8 +91,9 @@ const Name = styled.Text`
   font-family: 'florentia-extralight';
 `;
 
-const Cover = styled.Image`
-	position: absolute;
+const Cover = styled(FitImage).attrs({
+})`
+  position: absolute;
 	left: 0;
 	right: 0;
 	top: 0;

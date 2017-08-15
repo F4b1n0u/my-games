@@ -38,6 +38,8 @@ export const generateGame = () => {
     id: Math.floor(Math.random() * 100000),
     name: 'The Legend of Zelda: Breath of the Wild',
     description: 'Link descends from his floating continent home to explore the dark and dangerous world below with the help of a magical sword, in this latest instalment of the Legend of Zelda series.',
+    cover: 'https://static.giantbomb.com/uploads/scale_super/8/82063/2328613-2328612-91kd81pgcul._aa1500_.jpg',
+    coverMini: 'https://static.giantbomb.com/uploads/square_mini/8/82063/2328613-2328612-91kd81pgcul._aa1500_.jpg',
     platforms: [
       {
         id: Math.floor(Math.random() * 100000),

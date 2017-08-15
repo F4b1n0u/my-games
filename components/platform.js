@@ -20,7 +20,6 @@ export default class PlatformComponent extends React.Component {
         isDetailed={isDetailed}
 			>
         <Icon
-          name="ios-game-controller-b-outline"
           isDetailed={isDetailed}
         />
         <Abbreviation
@@ -43,7 +42,9 @@ const Platform = styled.View`
   margin-bottom:      ${props => props.isDetailed ? '12.5' 	: '0'};
 `
 
-const Icon = styled(Ionicons)`
+const Icon = styled(Ionicons).attrs({
+  name: 'ios-game-controller-b-outline'
+})`
   opacity:    ${props => props.isOwned ? '1' 	: '.5'};
   font-size:  ${props => props.isDetailed ? '40' 	: '20'};
   color:      ${props => props.isDetailed ? '#000000' 	: '#fafafa'};

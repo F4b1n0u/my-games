@@ -8,7 +8,8 @@ import {
   BlurView,
 } from 'expo'
 import {
-  Ionicons,
+  MaterialCommunityIcons,
+  FontAwesome,
 } from '@expo/vector-icons';
 
 import PlatformList from './platform-list';
@@ -146,7 +147,9 @@ const StyledImage = styled.Image`
   resize-mode: cover;
 `;
 
-const Picture = styled.Image`
+const Picture = styled.Image.attrs({
+  blurRadius: 10,
+})`
   width: ${slideWidth};;
   resizeMode: cover;
   borderRadius: 5;
@@ -174,8 +177,8 @@ const BackButton = styled.TouchableOpacity`
   overflow: hidden;
 `;
 
-const BackIcon = styled(Ionicons).attrs({
-  name: 'md-return-left',
+const BackIcon = styled(MaterialCommunityIcons).attrs({
+  name: 'arrow-compress',
 })`
   font-size: 35;
   color: #a3a3a3;

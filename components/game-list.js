@@ -9,7 +9,7 @@ const {
 	height,
 } = Dimensions.get('window');
 
-const normalHeight = height / 3
+const normalHeight = height / 2.3
 const detailedHeight = height - 50 // should depend of the ratio of the screen, the idea is to allow the user to have it in full screen
 
 export default class GameListComponent extends React.Component {
