@@ -48,22 +48,16 @@ export default class NotDetailedGameComponent extends React.Component {
     
     return (
       <Game
-        activeOpacity={.5}
         onPress={this._handleToggle}        
       >
-        <Name
-          numberOfLines={1}
-          ellipsizeMode="tail"
-        >
+        <Name>
           {name}
         </Name>
         <Cover
           uri={cover}
           fallbackUri={coverMini}
         >
-          <Overlay
-            colors={['transparent', 'rgba(0,0,0,0.7)']}
-          >
+          <Overlay>
             {this._renderPlatformList()}
           </Overlay>
         </Cover>
@@ -72,14 +66,19 @@ export default class NotDetailedGameComponent extends React.Component {
   }
 }
 
-const Game = styled.TouchableOpacity`
+const Game = styled.TouchableOpacity.attrs({
+  activeOpacity: .5
+})`
   flex: 1;
   background-color: transparent;
   border-radius: 5;
   overflow: hidden;
 `;
 
-const Name = styled.Text`
+const Name = styled.Text.attrs({
+  numberOfLines: 1,
+  ellipsizeMode: 'tail',
+})`
 	position: absolute;
 	top: -14;
 	width: 100%;
@@ -101,10 +100,12 @@ const Cover = styled(FitImage).attrs({
 	width: 100%;
 	height: 100%;
   background-color: transparent;
-  overflow: hidden; 
+  overflow: hidden;
 `;
 
-const Overlay = styled(LinearGradient)`
+const Overlay = styled(LinearGradient).attrs({
+  colors: ['transparent', 'rgba(0,0,0,0.7)'],
+})`
   position: absolute;
   left: 0;
   right: 0;
@@ -113,5 +114,6 @@ const Overlay = styled(LinearGradient)`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  padding-bottom: 5;
+  padding-vertical: 5;
+  padding-horizontal: 5;
 `

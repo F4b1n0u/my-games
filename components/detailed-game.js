@@ -9,7 +9,6 @@ import {
 } from 'expo'
 import {
   MaterialCommunityIcons,
-  FontAwesome,
 } from '@expo/vector-icons';
 
 import PlatformList from './platform-list';
