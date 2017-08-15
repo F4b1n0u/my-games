@@ -37,6 +37,7 @@ export const generateGame = () => {
   return {
     id: Math.floor(Math.random() * 100000),
     name: 'The Legend of Zelda: Breath of the Wild',
+    description: 'Link descends from his floating continent home to explore the dark and dangerous world below with the help of a magical sword, in this latest instalment of the Legend of Zelda series.',
     platforms: [
       {
         id: Math.floor(Math.random() * 100000),

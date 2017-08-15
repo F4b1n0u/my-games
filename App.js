@@ -23,6 +23,7 @@ export default class AppContainer extends React.Component {
   constructor(props) {
     super(props)
     this._toggleGameDetails = this._toggleGameDetails.bind(this)
+    this._collapseDetailedGames = this._collapseDetailedGames.bind(this)
   }
 
   state = _.merge(
@@ -31,7 +32,7 @@ export default class AppContainer extends React.Component {
     },
     generateInitialState({
       hasSuggestions: false,
-      amountOfGames: 1,
+      amountOfGames: 10,
     })
   );
 
@@ -46,6 +47,19 @@ export default class AppContainer extends React.Component {
       nextState,
       this.state, {
         detailedGameId,
+      }
+    );
+
+    this.setState(nextState)
+  }
+
+  _collapseDetailedGames = (game) => {
+    let nextState = {}
+
+    _.merge(
+      nextState,
+      this.state, {
+        detailedGameId: null,
       }
     );
 
@@ -74,6 +88,7 @@ export default class AppContainer extends React.Component {
           <GameExplorer
             {...this.state}
             toggleGameDetails={this._toggleGameDetails}
+            collapseDetailedGames={this._collapseDetailedGames}
           />
         </App>
       ) : (

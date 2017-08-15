@@ -42,8 +42,8 @@ export default class GameListComponent extends React.Component {
 		index,
 	}) {
 		const {
-			games,
 			toggleGameDetails,
+			collapseDetailedGames,
 			detailedGameId,
 		} = this.props;
 
@@ -54,6 +54,7 @@ export default class GameListComponent extends React.Component {
 				normalHeight={normalHeight}
 				detailedHeight={detailedHeight}
 				toggleGameDetails={toggleGameDetails}
+				collapseDetailedGames={collapseDetailedGames}
 				isDetailed={detailedGameId === item.id}
 				hasDetailed={!!detailedGameId}
 			/>
@@ -66,14 +67,17 @@ export default class GameListComponent extends React.Component {
 			detailedGameId,
     } = this.props;
 
+		const hasDetailedGame = !!detailedGameId
+
 		return (
 			<GameList
-				hasDetailedGame={!!detailedGameId}
+				hasDetailedGame={hasDetailedGame}
 				ref={this._setRef}
 				data={games}
 				keyExtractor={this._keyExtractor}
 				getItemLayout={this._getItemLayout}
 				renderItem={this._renderItem.bind(this)}
+				scrollEnabled={!hasDetailedGame}
 			/>
     );
   }

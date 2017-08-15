@@ -71,10 +71,9 @@ export default class NotDetailedGameComponent extends React.Component {
 
 const Game = styled.TouchableOpacity`
   flex: 1;
-	border-color: #e3e3e3;
-	border-width: 3;
-	border-radius: 5;
-	background-color: transparent;
+  background-color: transparent;
+  border-radius: 5;
+  overflow: hidden;
 `;
 
 const Name = styled.Text`
@@ -107,6 +106,8 @@ const Overlay = styled(LinearGradient)`
   right: 0;
   top: 70%;
   bottom: 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-bottom: 5;
 `
-
-// TODO try to extend platformList style to avoid to use props

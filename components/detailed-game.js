@@ -7,6 +7,9 @@ import {
 import {
   BlurView,
 } from 'expo'
+import {
+  Ionicons,
+} from '@expo/vector-icons';
 
 import PlatformList from './platform-list';
 
@@ -22,7 +25,7 @@ function wp (percentage) {
   return Math.round(value);
 }
 
-const slideHeight = viewportHeight * 0.4;
+const slideHeight = 100;
 const slideWidth = viewportWidth - wp(15);
 const itemHorizontalMargin = wp(2);
 
@@ -30,81 +33,107 @@ const sliderWidth = viewportWidth;
 const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 export default class DetailedGameComponent extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this._handleCollapse = this._handleCollapse.bind(this);
+  }
+  static defaultProps = {
+    screenshots: [1,2,3,4],
+  }
+
+  _handleCollapse() {
+    const {
+      collapseDetailedGames,
+    } = this.props
+
+    collapseDetailedGames()
+  }
+
   render() {
     const {
-			name,
+      name,
+      description,
+      screenshots,
 		} = this.props;
-    
+
     return (
-      <Game
-        tint="light"
-        intensity={60}
-      >
-        <Name
-          numberOfLines={2}
-          ellipsizeMode="tail"
-        >
+      <Game>
+        <Name>
           {name}
         </Name>
 
         <SlideShow
           ref={(carousel) => { this._carousel = carousel; }}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          inactiveSlideScale={1}
         >
-          {[1,2,3,4].map(index => (
+          {screenshots.map(index => (
             <Slide
               key={index}
             >
               <ImageContainer>
                 <Picture
                   source={image}
-                >
-                  <Plop>
-                    {index}
-                  </Plop>
-                </Picture>
+                />
               </ImageContainer>
             </Slide>
           ))}
         </SlideShow>
 
+        <Description>
+          {description}
+        </Description>
+
         <PlatformList
           isDetailed={true}
           {...this.props}
         />
+
+        <BackButton
+          onPress={this._handleCollapse}
+        >
+          <BackIcon />
+        </BackButton>
       </Game>
     )
   }
 }
 
-const Game = styled(BlurView)`
+const Game = styled(BlurView).attrs({
+  tint: 'light',
+  intensity: 60,
+})`
   flex: 1;
-  border-color: #e3e3e3;
-  border-width: 3;
-  border-radius: 5;
-  margin-horizontal: 5;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  padding-top: 5;
+  padding-bottom: 10;
 `;
 
-const Name = styled.Text`
-  margin-top: 5;
+const Name = styled.Text.attrs({
+  numberOfLines: 2,
+  ellipsizeMode: 'tail',
+})`
+  margin-bottom: 15;
   margin-horizontal: 15;
   font-size: 20;
   text-align: center;
   font-family: 'florentia-extralight';
-`;
+`
 
-const SlideShow = styled(Carousel)`
-  flex: 1;
+const SlideShow = styled(Carousel).attrs({
+  sliderWidth,
+  slideHeight,
+  itemWidth,
+  inactiveSlideScale: 1,
+  dotsLength: 4,
+  activeDotIndex: 1,
+})`
+  width: 100%;
 `
 
 const Slide = styled.View`
   width: ${itemWidth};
-  background-color: #e3e3e3c0;
 `
 
 const ImageContainer = styled.View`
@@ -117,10 +146,37 @@ const StyledImage = styled.Image`
   resize-mode: cover;
 `;
 
-const Plop = styled.Text``
-
 const Picture = styled.Image`
   width: ${slideWidth};;
   resizeMode: cover;
   borderRadius: 5;
+  background-color: #e3e3e3a0;
+`
+
+const Description = styled.Text.attrs({
+  numberOfLines: 6,
+  ellipsizeMode: 'tail',
+  textAlign: 'justify',
+})`
+  margin-vertical: 10;
+  margin-horizontal: ${itemHorizontalMargin};
+  font-size: 16;
+  font-family: 'florentia-extralight';
+  background-color: transparent;
+`
+
+const BackButton = styled.TouchableOpacity`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding-horizontal: 5;
+  background-color: transparent;
+  overflow: hidden;
+`;
+
+const BackIcon = styled(Ionicons).attrs({
+  name: 'md-return-left',
+})`
+  font-size: 35;
+  color: #a3a3a3;
 `
