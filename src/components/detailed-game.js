@@ -13,7 +13,7 @@ import {
 
 import PlatformList from './platform-list';
 
-const image = require('../assets/images/zelda.png')
+const image = require('../../assets/images/zelda.png')
 
 const {
   width: viewportWidth,

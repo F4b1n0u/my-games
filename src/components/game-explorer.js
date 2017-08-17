@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import Background from './background'
-import SearchEngine from './search-engine'
+import SearchEngine from '../containers/search-engine'
 import GameList from './game-list'
 
 export default class GameExplorerComponent extends React.Component {

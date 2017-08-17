@@ -7,7 +7,7 @@ import styled from 'styled-components/native';
 import FitImage from './fit-image'
 import PlatformList from './platform-list';
 
-const image = require('../assets/images/zelda.png')
+const image = require('../../assets/images/zelda.png')
 
 export default class NotDetailedGameComponent extends React.Component {
   constructor(props) {

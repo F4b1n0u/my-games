@@ -12,20 +12,20 @@ export default class SearchEngineComponent extends React.Component {
 
   render() {
     const {
-      search,
-      detailedGameId,
+      searchText,
+      detailedGameId: hasDetailedGame,
+      updateSearchText,
     } = this.props;
-
-    const hasDetailedGame = !!detailedGameId
 
     return (!hasDetailedGame) ? (
       <SearchEngine>
         <TextInputWrapper>
           <TextInput
             placeholder='type game name here'
-            value={search}
             returnKeyLabel='done'
             selectTextOnFocus={true}
+            value={searchText}
+            onChangeText={updateSearchText}
           />
         </TextInputWrapper>
         <SuggestionList
@@ -60,6 +60,6 @@ const TextInputWrapper = styled.View`
 
 const TextInput = styled.TextInput`
   flex: 1;
-  margin-top: 10;
+  font-family: 'florentia-extralight';
   text-align: center;
 `

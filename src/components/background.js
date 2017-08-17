@@ -71,7 +71,7 @@ export default class Background extends React.Component {
 
     return (
       <Animated.Image
-        source={require('../assets/images/all-games-wallpaper.png')}
+        source={require('../../assets/images/all-games-wallpaper.png')}
         style={[
           styles.background,
           {
