@@ -6,8 +6,31 @@ import styled from 'styled-components/native';
 import SuggestionList from './suggestion-list'
 
 export default class SearchEngineComponent extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this._handleFocus = this._handleFocus.bind(this)
+    this._handleBlur = this._handleBlur.bind(this)
+  }
+
   componentWillReceiveProps() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+  }
+
+  _handleFocus() {
+    const {
+      startSearching,
+    } = this.props
+
+    startSearching()
+  }
+
+  _handleBlur() {
+    const {
+      stopSearching,
+    } = this.props
+
+    stopSearching()
   }
 
   render() {
@@ -26,6 +49,8 @@ export default class SearchEngineComponent extends React.Component {
             selectTextOnFocus={true}
             value={searchText}
             onChangeText={updateSearchText}
+            onFocus={this._handleFocus}
+            onBlur={this._handleBlur}
           />
         </TextInputWrapper>
         <SuggestionList
@@ -40,7 +65,6 @@ const SearchEngine = styled.View`
   position: absolute;
   top: 25;
   width: 80%;
-  height: 35;
   flex-direction:column;
   justify-content: center;
   align-items: center;
@@ -49,10 +73,11 @@ const SearchEngine = styled.View`
   border-radius: 5;
   background-color: #fafafac0;
   overflow: hidden;
+  padding-vertical: 2;
+  padding-horizontal: 2;
 `
 
 const TextInputWrapper = styled.View`
-  flex: 1;
   flex-direction: row;
   justify-content: center;
   alignItems: center;

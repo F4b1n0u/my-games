@@ -4,14 +4,14 @@ export function getSearchText(state) {
   return state.searchText || '';
 }
 
-export function getSuggestions(state) {
-  return state.suggestions;
+export function getGameSuggestions(state) {
+  return state.suggestions.filter(suggestion => suggestion.resource_type === 'game')
 }
 
-export function isSuggestionsRequestFailed(state) {
-  return state.cart.suggestionsStatus.error
+export function getFranchiseSuggestions(state) {
+  return state.suggestions.filter(suggestion => suggestion.resource_type === 'franchise')
 }
 
-export function isSuggestionsPending(state) {
-  return state.cart.suggestionsStatus.pending
+export function getSuggestionsStatus(state) {
+  return state.suggestionsStatus
 }

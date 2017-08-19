@@ -1,42 +1,42 @@
-import React from 'react';
-import styled from 'styled-components/native';
-import Carousel from 'react-native-snap-carousel';
+import React from 'react'
+import styled from 'styled-components/native'
+import Carousel from 'react-native-snap-carousel'
 import {
   Dimensions,
-} from 'react-native';
+} from 'react-native'
 import {
   BlurView,
 } from 'expo'
 import {
   MaterialCommunityIcons,
-} from '@expo/vector-icons';
+} from '@expo/vector-icons'
 
-import PlatformList from './platform-list';
+import PlatformList from './platform-list'
 
 const image = require('../../assets/images/zelda.png')
 
 const {
   width: viewportWidth,
   height: viewportHeight,
-} = Dimensions.get('window');
+} = Dimensions.get('window')
 
 function wp (percentage) {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
+  const value = (percentage * viewportWidth) / 100
+  return Math.round(value)
 }
 
-const slideHeight = 100;
-const slideWidth = viewportWidth - wp(15);
-const itemHorizontalMargin = wp(2);
+const slideHeight = 100
+const slideWidth = viewportWidth - wp(15)
+const itemHorizontalMargin = wp(2)
 
-const sliderWidth = viewportWidth;
-const itemWidth = slideWidth + itemHorizontalMargin * 2;
+const sliderWidth = viewportWidth
+const itemWidth = slideWidth + itemHorizontalMargin * 2
 
 export default class DetailedGameComponent extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this._handleCollapse = this._handleCollapse.bind(this);
+    this._handleCollapse = this._handleCollapse.bind(this)
   }
   static defaultProps = {
     screenshots: [1,2,3,4],
@@ -55,7 +55,7 @@ export default class DetailedGameComponent extends React.Component {
       name,
       description,
       screenshots,
-		} = this.props;
+		} = this.props
 
     return (
       <Game>
@@ -64,7 +64,7 @@ export default class DetailedGameComponent extends React.Component {
         </Name>
 
         <SlideShow
-          ref={(carousel) => { this._carousel = carousel; }}
+          ref={(carousel) => { this._carousel = carousel }}
         >
           {screenshots.map(index => (
             <Slide

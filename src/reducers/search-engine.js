@@ -2,14 +2,17 @@ import {
   combineReducers,
 } from 'redux'
 import {
+  START_SEARCHING,
   UPDATE_SEARCHTEXT,
   REQUEST_SUGGESTIONS,
   RECEIVE_SUGGESTIONS_SUCCESS,
   RECEIVE_SUGGESTIONS_FAILURE,
+  SELECT_SUGGESTION,
+  STOP_SEARCHING,
 } from '../actions'
 
 const initialState = {
-  searchText: 'zelda',
+  searchText: '',
   suggestions: [],
   suggestionsStatus: {
     pending: false,
@@ -22,15 +25,16 @@ function searchText(
   action,
 ) {
   const {
-    type,
-    searchText,
+    type
   } = action
   
   switch (type) {
     case UPDATE_SEARCHTEXT:
-    return searchText;
+      return action.searchText
+    case SELECT_SUGGESTION:
+      return action.selectedSuggestion.name
     default:
-    return state
+      return state
   }
 }
 
@@ -38,9 +42,9 @@ function suggestions(
   state = initialState.suggestions,
   action,
 ) {
-  switch (action.type) {
-    case REQUEST_SUGGESTIONS:
+  switch (action.type) {    
     case RECEIVE_SUGGESTIONS_FAILURE:
+    case STOP_SEARCHING:
       return []
     case RECEIVE_SUGGESTIONS_SUCCESS:
       return action.suggestions;
@@ -53,6 +57,7 @@ function suggestionsStatus(
   state = initialState.suggestionsStatus,
   action,
 ) {
+  console.log(action.type)
   switch (action.type) {
     case REQUEST_SUGGESTIONS:
       return {
@@ -72,6 +77,7 @@ function suggestionsStatus(
 }
 
 export default combineReducers({
-  suggestionsStatus,
   searchText,
+  suggestions,
+  suggestionsStatus,
 })
