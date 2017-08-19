@@ -4,17 +4,20 @@
   "description": "Hello Expo!",
   "author": null,
   "private": true,
-  "main": "./index.js",
+  "main": "./src/index.js",
   "dependencies": {
     "expo": "^19.0.0",
     "lodash": "^4.17.4",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",
+    "react-native-dotenv": "^0.1.0",
     "react-native-snap-carousel": "^2.4.0",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
+    "redux-observable": "^0.16.0",
     "reselect": "^3.0.1",
+    "rxjs": "^5.4.3",
     "styled-components": "^2.1.2"
   }
 }
