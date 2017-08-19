@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 import {
   Animated,
   Easing,
   StyleSheet
-} from 'react-native';
+} from 'react-native'
 
 const backgroundPos = {
   start: {
@@ -16,12 +16,12 @@ const backgroundPos = {
   },
 }
 
-const animationAccuracy = 1;
-const animationDuration = 80000;
-const animationStepX = ( backgroundPos.end.x - backgroundPos.start.x ) / animationAccuracy;
-const animationStepY = ( backgroundPos.end.y - backgroundPos.start.y ) / animationAccuracy;
+const animationAccuracy = 1
+const animationDuration = 80000
+const animationStepX = ( backgroundPos.end.x - backgroundPos.start.x ) / animationAccuracy
+const animationStepY = ( backgroundPos.end.y - backgroundPos.start.y ) / animationAccuracy
 
-const fadeInDuration = 1000;
+const fadeInDuration = 1000
 
 export default class Background extends React.Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export default class Background extends React.Component {
         duration: fadeInDuration,
         useNativeDriver: true
       }
-    ).start();
+    ).start()
 
     Animated.loop(
       Animated.timing(
@@ -64,7 +64,7 @@ export default class Background extends React.Component {
     const {
       animationProgression,
       fadeIn,
-    } = this.state;
+    } = this.state
 
     const backgroundPosX = Animated.add(backgroundPos.start.x, Animated.multiply(animationStepX, animationProgression), )
     const backgroundPosY = Animated.add(backgroundPos.start.y, Animated.multiply(animationStepY, animationProgression), )
@@ -84,7 +84,7 @@ export default class Background extends React.Component {
           },
         ]}
       />
-    );
+    )
   }
 }
 
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   }
-});
+})
