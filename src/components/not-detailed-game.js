@@ -19,7 +19,7 @@ export default class NotDetailedGameComponent extends React.Component {
 
   _handleToggle = () => {
     const {
-      toggleGameDetails,
+      toggleGameDetails = () => {},
     } = this.props;
 
     toggleGameDetails(this.props);
@@ -42,8 +42,7 @@ export default class NotDetailedGameComponent extends React.Component {
   render() {
     const {
       name,
-      cover,
-      coverMini,
+      image,
 		} = this.props;
     
     return (
@@ -53,14 +52,18 @@ export default class NotDetailedGameComponent extends React.Component {
         <Name>
           {name}
         </Name>
-        <Cover
-          uri={cover}
-          fallbackUri={coverMini}
-        >
-          <Overlay>
-            {this._renderPlatformList()}
-          </Overlay>
-        </Cover>
+        {
+          image ? (
+            <Cover
+              uri={image.super_url}
+              fallbackUri={image.thumb_url}
+            >
+              <Overlay>
+                {this._renderPlatformList()}
+              </Overlay>
+            </Cover>
+          ) : null
+        }
       </Game>
     )
   }
