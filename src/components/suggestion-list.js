@@ -1,10 +1,10 @@
-import React from 'react';
-import _ from 'lodash';
-import styled from 'styled-components/native';
+import React from 'react'
+import _ from 'lodash'
+import styled from 'styled-components/native'
 import {
   Animated,
   Easing,
-} from 'react-native';
+} from 'react-native'
 import {
   EvilIcons,
 } from '@expo/vector-icons'
@@ -25,21 +25,22 @@ export default class SuggestionListComponent extends React.Component {
   }
 
   componentDidMount() {
-    Animated.loop(
-      Animated.timing(
-        this.state.spinValue,
-        {
-          toValue: 1,
-          easing: Easing.linear,
-          duration: spinDuration,
-          useNativeDriver: true
-        }
-      )
-    ).start(() => {
-      this.state = {
-        spinValue: new Animated.Value(0),
-      }
-    })
+    // Animated.loop(
+    //   Animated.timing(
+    //     this.state.spinValue,
+    //     {
+    //       toValue: 1,
+    //       easing: Easing.linear,
+    //       duration: spinDuration,
+    //       useNativeDriver: true
+    //     }
+    //   )
+    // ).start(() => {
+    //   console.log('spin')
+    //   this.setState({
+    //     spinValue: new Animated.Value(0),
+    //   })
+    // })
   }
 
   _handlePressItem(item) {
@@ -71,14 +72,14 @@ export default class SuggestionListComponent extends React.Component {
       element = (
         <SuggestionList>
           {gameSuggestions.map((gameSuggestion, index) => (
-            <SuggestioWrapper
+            <TouchableSuggestion
               key={index}
               onPress={this._handlePressItem.bind(this, gameSuggestion)}
             >
               <GameSuggestion
                 {...gameSuggestion}
               />
-            </SuggestioWrapper>
+            </TouchableSuggestion>
           ))}
           {status.pending ? (
             <SpinnerWrapper>
@@ -124,7 +125,7 @@ const Spinner = styled(EvilIcons).attrs({
   color: #e3e3e3;
 `
 
-const SuggestioWrapper = styled.TouchableOpacity`
+const TouchableSuggestion = styled.TouchableOpacity`
   flex: 1;
   margin-top: ${props => props.key != 0 ? 2: 0}
 `

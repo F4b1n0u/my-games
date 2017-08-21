@@ -32,6 +32,13 @@ export function receiveSuggestions(suggestions) {
   }
 }
 
+export function receiveSuggestionsFailure(error) {
+  return {
+    type: RECEIVE_SUGGESTIONS_FAILURE,
+    error,
+  }
+}
+
 export function selectSuggestion(selectedSuggestion) {
   return {
     type: SELECT_SUGGESTION,
