@@ -1,17 +1,7 @@
 import { createSelector } from 'reselect'
 
-export function getSearchText(state) {
-  return state.searchText || '';
-}
+export const getSearchText = (state) => state.searchText || ''
 
-export function getGameSuggestions(state) {
-  return state.suggestions.filter(suggestion => suggestion.resource_type === 'game')
-}
+export const getFranchiseFranchises = (state) => state.franchises.filter(franchise => franchise.resource_type === 'franchise')
 
-export function getFranchiseSuggestions(state) {
-  return state.suggestions.filter(suggestion => suggestion.resource_type === 'franchise')
-}
-
-export function getSuggestionsStatus(state) {
-  return state.suggestionsStatus
-}
+export const getFranchisesStatus = (state) => state.franchisesStatus

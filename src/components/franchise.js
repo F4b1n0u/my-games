@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import styled from 'styled-components/native';
 
-export default class GameFranchiseComponent extends React.Component {
+export default class FranchiseFranchiseComponent extends React.Component {
   render() {
     const {
       name,
@@ -11,9 +11,15 @@ export default class GameFranchiseComponent extends React.Component {
 
     return (
       <Franchise>
-        <Thumbnail
-          source={{uri: image.thumb_url}}
-        />
+        {
+          image ? (
+            <Thumbnail
+              source={{uri: image.thumb_url}}
+            />
+          ) : 
+          // TODO display a list icon or something
+          null
+        }
         <Name>
           {name}
         </Name>
@@ -34,6 +40,7 @@ const Thumbnail = styled.Image`
   width: 35;
   margin-right: 5;
   border-radius: 2;
+  resize-mode: contain;
 `
 
 const Name = styled.Text.attrs({

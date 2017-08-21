@@ -4,17 +4,17 @@ import {
 import {
   START_SEARCHING,
   UPDATE_SEARCHTEXT,
-  REQUEST_SUGGESTIONS,
-  RECEIVE_SUGGESTIONS_SUCCESS,
-  RECEIVE_SUGGESTIONS_FAILURE,
-  SELECT_SUGGESTION,
+  REQUEST_FRANCHISES,
+  RECEIVE_FRANCHISES_SUCCESS,
+  RECEIVE_FRANCHISES_FAILURE,
+  SELECT_FRANCHISE,
   STOP_SEARCHING,
-} from '../actions'
+} from '../actions/search-engine'
 
 const initialState = {
   searchText: '',
-  suggestions: [],
-  suggestionsStatus: {
+  franchises: [],
+  franchisesStatus: {
     pending: false,
     error: null
   },
@@ -31,42 +31,41 @@ function searchText(
   switch (type) {
     case UPDATE_SEARCHTEXT:
       return action.searchText
-    case SELECT_SUGGESTION:
-      return action.selectedSuggestion.name
+    case SELECT_FRANCHISE:
+      return action.selectedFranchise.name
     default:
       return state
   }
 }
 
-function suggestions(
-  state = initialState.suggestions,
+function franchises(
+  state = initialState.franchises,
   action,
 ) {
   switch (action.type) {    
-    case RECEIVE_SUGGESTIONS_FAILURE:
+    case RECEIVE_FRANCHISES_SUCCESS:
+      return action.franchises;
+    case RECEIVE_FRANCHISES_FAILURE:
     case STOP_SEARCHING:
       return []
-    case RECEIVE_SUGGESTIONS_SUCCESS:
-      return action.suggestions;
     default:
       return state
   }
 }
 
-function suggestionsStatus(
-  state = initialState.suggestionsStatus,
+function franchisesStatus(
+  state = initialState.franchisesStatus,
   action,
 ) {
-  console.log(action.type)
   switch (action.type) {
-    case REQUEST_SUGGESTIONS:
+    case REQUEST_FRANCHISES:
       return {
         pending: true,
         error: null
       }
-    case RECEIVE_SUGGESTIONS_SUCCESS:
-      return initialState.suggestionsStatus;
-    case RECEIVE_SUGGESTIONS_FAILURE:
+    case RECEIVE_FRANCHISES_SUCCESS:
+      return initialState.franchisesStatus;
+    case RECEIVE_FRANCHISES_FAILURE:
       return {
         pending: false,
         error: action.error
@@ -78,6 +77,6 @@ function suggestionsStatus(
 
 export default combineReducers({
   searchText,
-  suggestions,
-  suggestionsStatus,
+  franchises,
+  franchisesStatus,
 })

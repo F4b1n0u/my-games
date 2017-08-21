@@ -11,16 +11,33 @@ const defaultQueryParams = {
   format: 'json',
 }
 
-export function fetchSuggestions(searchText) {
+export const fetchFranchiseFranchises = (searchText) => {
   const queryParams = _.merge(
     defaultQueryParams,
     {
-      query: searchText,
-      resources: "game",
-      field_list: "name,image,id",
+      query: `%${searchText}%`,
+      resources: [
+        'franchise'
+      ].join(','),
+      field_list: "",
       limit: 6,
     }
   )
 
-  return ajax.getJSON(`http://www.giantbomb.com/api/search/?${qs.stringify(queryParams)}`)
+  return ajax.getJSON(`https://www.giantbomb.com/api/search/?${qs.stringify(queryParams)}`)
+}
+
+export const fetchGames = (searchText) => {
+  const queryParams = _.merge(
+    defaultQueryParams,
+    {
+      query: `%${searchText}%`,
+      resources: [
+        'game'
+      ].join(','),
+      field_list: "id,name,images,deck,api_detail_url,platforms",
+    }
+  )
+
+  return ajax.getJSON(`https://www.giantbomb.com/api/search/?${qs.stringify(queryParams)}`)
 }

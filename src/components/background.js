@@ -23,6 +23,7 @@ const animationStepY = ( backgroundPos.end.y - backgroundPos.start.y ) / animati
 
 const fadeInDuration = 1000
 
+const backgroundImage = require('../../assets/images/all-games-wallpaper.png')
 export default class Background extends React.Component {
   constructor(props) {
     super(props)
@@ -71,7 +72,7 @@ export default class Background extends React.Component {
 
     return (
       <Animated.Image
-        source={require('../../assets/images/all-games-wallpaper.png')}
+        source={backgroundImage}
         style={[
           styles.background,
           {

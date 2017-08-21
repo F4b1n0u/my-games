@@ -9,11 +9,11 @@ import {
   EvilIcons,
 } from '@expo/vector-icons'
 
-import GameSuggestionComponent from './game-suggestion'
+import FranchiseComponent from './franchise'
 
 const spinDuration = 3000
 
-export default class SuggestionListComponent extends React.Component {
+export default class FranchiseListComponent extends React.Component {
   constructor(props) {
     super(props)
 
@@ -45,15 +45,15 @@ export default class SuggestionListComponent extends React.Component {
 
   _handlePressItem(item) {
     const {
-      selectSuggestion,
+      selectFranchise,
     } = this.props;
 
-    selectSuggestion(item)
+    selectFranchise(item)
   }
 
   render() {
     const {
-      gameSuggestions,
+      franchiseFranchises,
       status,
     } = this.props
 
@@ -68,18 +68,18 @@ export default class SuggestionListComponent extends React.Component {
 
     let element;
 
-    if (!_.isEmpty(gameSuggestions)) {
+    if (!_.isEmpty(franchiseFranchises)) {
       element = (
-        <SuggestionList>
-          {gameSuggestions.map((gameSuggestion, index) => (
-            <TouchableSuggestion
+        <FranchiseList>
+          {franchiseFranchises.map((franchise, index) => (
+            <TouchableFranchise
               key={index}
-              onPress={this._handlePressItem.bind(this, gameSuggestion)}
+              onPress={this._handlePressItem.bind(this, franchise)}
             >
-              <GameSuggestion
-                {...gameSuggestion}
+              <Franchise
+                {...franchise}
               />
-            </TouchableSuggestion>
+            </TouchableFranchise>
           ))}
           {status.pending ? (
             <SpinnerWrapper>
@@ -90,7 +90,7 @@ export default class SuggestionListComponent extends React.Component {
               </Animated.View>
             </SpinnerWrapper>
            ) : null}
-        </SuggestionList>
+        </FranchiseList>
       )
     } else {
       element = null;
@@ -100,7 +100,7 @@ export default class SuggestionListComponent extends React.Component {
   }
 }
 
-const SuggestionList = styled.View`
+const FranchiseList = styled.View`
   width: 100%;
   justify-content: flex-start;
   flex-direction: column;
@@ -125,12 +125,12 @@ const Spinner = styled(EvilIcons).attrs({
   color: #e3e3e3;
 `
 
-const TouchableSuggestion = styled.TouchableOpacity`
+const TouchableFranchise = styled.TouchableOpacity`
   flex: 1;
   margin-top: ${props => props.key != 0 ? 2: 0}
 `
 
-const GameSuggestion = styled(GameSuggestionComponent)`
+const Franchise = styled(FranchiseComponent)`
   flex: 1;
   height: 20;
 `

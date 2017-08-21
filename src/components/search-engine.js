@@ -3,14 +3,14 @@ import {
   LayoutAnimation,
 } from 'react-native';
 import styled from 'styled-components/native';
-import SuggestionList from './suggestion-list'
+import FranchiseList from './franchise-list'
 
 export default class SearchEngineComponent extends React.Component {
   constructor(props) {
     super(props)
 
     this._handleFocus = this._handleFocus.bind(this)
-    this._handleBlur = this._handleBlur.bind(this)
+    this._handleSubmit = this._handleSubmit.bind(this)
   }
 
   componentWillReceiveProps() {
@@ -25,12 +25,12 @@ export default class SearchEngineComponent extends React.Component {
     startSearching()
   }
 
-  _handleBlur() {
+  _handleSubmit() {
     const {
-      stopSearching,
+      submitSearch,
     } = this.props
 
-    stopSearching()
+    submitSearch()
   }
 
   render() {
@@ -50,10 +50,11 @@ export default class SearchEngineComponent extends React.Component {
             value={searchText}
             onChangeText={updateSearchText}
             onFocus={this._handleFocus}
-            onBlur={this._handleBlur}
+            onSubmitEditing={this._handleSubmit}
+            blurOnSubmit={true}
           />
         </TextInputWrapper>
-        <SuggestionList
+        <FranchiseList
           {...this.props}
         />
       </SearchEngine>
