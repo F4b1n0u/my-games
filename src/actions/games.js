@@ -17,7 +17,7 @@ export const requestGames = () => ({
 })
 
 export const receiveGames = (games) => ({
-  type: RECEIVE_games_SUCCESS,
+  type: RECEIVE_GAMES_SUCCESS,
   games,
 })
 

@@ -10,5 +10,5 @@ import {
 
 export default combineEpics(
   searchEngineEpic,
-  // gameEpic,
+  gameEpic,
 );

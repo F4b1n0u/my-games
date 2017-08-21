@@ -35,7 +35,7 @@ export const fetchGames = (searchText) => {
       resources: [
         'game'
       ].join(','),
-      field_list: "id,name,images,deck,api_detail_url,platforms",
+      field_list: "id,name,image,deck,api_detail_url,platforms",
     }
   )
 

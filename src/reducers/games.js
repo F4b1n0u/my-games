@@ -2,6 +2,9 @@ import {
   combineReducers,
 } from 'redux'
 import {
+  SUBMIT_SEARCH,
+} from '../actions/search-engine'
+import {
   REQUEST_GAMES,
   RECEIVE_GAMES_SUCCESS,
   RECEIVE_GAMES_FAILURE,
@@ -25,8 +28,8 @@ function list(
   
   switch (action.type) {    
     case RECEIVE_GAMES_SUCCESS:
-      console.log(action.games)
       return action.games;
+    case SUBMIT_SEARCH:
     case RECEIVE_GAMES_FAILURE:
       return []
     default:
