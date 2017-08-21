@@ -21,10 +21,18 @@ const requestSuggestionsEpic = (action$, store) => {
     .switchMap(() => {
       const searchEngineState = store.getState().searchEngine
       const searchText = getSearchText(searchEngineState);
-      return fetchSuggestions(searchText)
-        .map(response => {
-          return actions.receiveSuggestions(response.results)
-        })
+
+      let observable
+
+      if (searchText) {
+        observable = fetchSuggestions(searchText)
+          .map(response => actions.receiveSuggestions(response.results))
+          .catch(error => Observable.of(actions.receiveSuggestionsFailure(error)))
+      } else {
+        observable = Observable.of(actions.receiveSuggestions([]))
+      }
+
+      return observable
     })
 }
 
