@@ -27,8 +27,10 @@ import {
   receiveFranchiseCompletion,
   receiveFranchiseCompletionFailure,
 } from '@actions/search-engine'
+import {
+  receiveGames,
+} from '@actions/games'
 
-fetchFranchiseCompletion
 const updateSearchTextEpic = (action$, store) => {
   return action$
     .ofType(UPDATE_SEARCHTEXT)
@@ -90,7 +92,7 @@ const selectFranchiseEpic = (action$, store) => {
 const requestFranchiseCompletionEpic = (action$, store) => action$
   .ofType(REQUEST_FRANCHISE_COMPLETION)
   .mergeMap(action => fetchFranchiseCompletion(action.selectedFranchise))
-    .map(response => receiveFranchiseCompletion(response.results))
+    .map(response => receiveGames(response.results.games))
     .takeUntil(action$.ofType(SUBMIT_SEARCH))
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error))
   )

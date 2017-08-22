@@ -7,8 +7,13 @@ import {
   RECEIVE_GAMES_FAILURE,
   REQUEST_GAME_COMPLETION,
   RECEIVE_GAME_COMPLETION_SUCCESS,
-  RECEIVE_GAME_COMPLETION_FAILURE,
 } from '@actions/games'
+
+import {
+  RECEIVE_GAME_COMPLETION_FAILURE,
+  RECEIVE_FRANCHISE_COMPLETION_SUCCESS,
+  RECEIVE_FRANCHISE_COMPLETION_FAILURE,
+} from '@actions/search-engine'
 
 import {
   default as gameReducer,
@@ -45,6 +50,16 @@ function list(
           action,
         )
       )
+    case RECEIVE_FRANCHISE_COMPLETION_SUCCESS:
+      return action.completedFranchise.games.map(
+        game => gameReducer(
+          {
+            game,
+          },
+          action,
+        )
+      )
+    case RECEIVE_FRANCHISE_COMPLETION_FAILURE:
     case RECEIVE_GAMES_FAILURE:
       return []
     default:

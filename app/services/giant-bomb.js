@@ -16,8 +16,8 @@ const markGamesAsComplete = response => {
   return response
 }
 
-const markGamesAsIncomplete = response => {
-  response.results = response.results.map(game => _.merge(game, {isComplete: false}))
+const markFranchiseGamesAsIncomplete = response => {
+  response.results.games = response.results.games.map(game => _.merge(game, {isComplete: false}))
   return response
 }
 
@@ -50,7 +50,7 @@ export const fetchGames = (searchText) => {
 
   return ajax
     .getJSON(`https://www.giantbomb.com/api/games/?${qs.stringify(queryParams)}`)
-    .map(markGamesAsIncomplete)
+    .map(markGamesAsComplete)
 }
 
 export const fetchGame = ({id}) => {
@@ -63,7 +63,7 @@ export const fetchGame = ({id}) => {
   )
 
   return ajax
-    .getJSON(`https://www.giantbomb.com/api/game/${prefix}-${id}?${qs.stringify(queryParams)}`)
+    .getJSON(`https://www.giantbomb.com/api/game/${prefix}-${id}/?${qs.stringify(queryParams)}`)
 }
 
 export const fetchFranchiseCompletion = ({id}) => {
@@ -76,5 +76,6 @@ export const fetchFranchiseCompletion = ({id}) => {
   )
 
   return ajax
-    .getJSON(`https://www.giantbomb.com/api/franchise/${prefix}-${id}?${qs.stringify(queryParams)}`)
+    .getJSON(`https://www.giantbomb.com/api/franchise/${prefix}-${id}/?${qs.stringify(queryParams)}`)
+    .map(markFranchiseGamesAsIncomplete)
 }
