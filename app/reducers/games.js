@@ -5,7 +5,7 @@ import {
   REQUEST_GAMES,
   RECEIVE_GAMES_SUCCESS,
   RECEIVE_GAMES_FAILURE,
-} from '../actions/games'
+} from '@actions/games'
 
 const initialState = {
   list: [],

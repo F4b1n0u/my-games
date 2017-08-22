@@ -2,24 +2,24 @@ import 'rxjs';
 import _ from 'lodash'
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs/Observable'
-import { getSearchText } from '../selectors/search-engine'
-import { fetchFranchiseFranchises } from '../services/giant-bomb'
+import { getSearchText } from '@selectors/search-engine'
+import { fetchFranchiseFranchises } from '@services/giant-bomb'
 import {
   getGamesStatus,
-} from '../selectors/games'
+} from '@selectors/games'
 import {
   UPDATE_SEARCHTEXT,
   REQUEST_FRANCHISES,
   SELECT_FRANCHISE,
   SUBMIT_SEARCH,
   STOP_SEARCHING,
-} from '../actions/search-engine'
+} from '@actions/search-engine'
 import {
   requestFranchises,
   receiveFranchises,
   receiveFranchisesFailure,
   stopSearching,
-} from '../actions/search-engine'
+} from '@actions/search-engine'
 
 const updateSearchTextEpic = (action$, store) => {
   return action$

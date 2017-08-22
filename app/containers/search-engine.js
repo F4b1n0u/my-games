@@ -7,14 +7,14 @@ import {
   selectFranchise,
   submitSearch,
   stopSearching,
-} from '../actions/search-engine'
+} from '@actions/search-engine'
 import { 
   getSearchText,
   getFranchiseFranchises,
   getFranchisesStatus,
-} from '../selectors/search-engine'
+} from '@selectors/search-engine'
 
-import SearchEngine from '../components/search-engine'
+import SearchEngine from '@components/search-engine'
 
 const mapStateToProps = state => {
   return ({

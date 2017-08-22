@@ -10,10 +10,10 @@ import {
   SUBMIT_SEARCH,
   SELECT_FRANCHISE,
   STOP_SEARCHING,
-} from '../actions/search-engine'
+} from '@actions/search-engine'
 import {
   RECEIVE_GAMES_SUCCESS,
-} from '../actions/games'
+} from '@actions/games'
 
 const initialState = {
   searchText: '',

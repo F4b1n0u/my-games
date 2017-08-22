@@ -2,11 +2,11 @@ import { combineEpics } from 'redux-observable';
 
 import {
   default as searchEngineEpic,
- } from './search-engine';
+ } from '@epics/search-engine';
 
  import {
   default as gameEpic,
- } from './games';
+ } from '@epics/games';
 
 export default combineEpics(
   searchEngineEpic,

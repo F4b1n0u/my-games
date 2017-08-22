@@ -2,22 +2,22 @@ import 'rxjs';
 import _ from 'lodash'
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs/Observable'
-import { getSearchText } from '../selectors/search-engine'
-import { fetchGames } from '../services/giant-bomb'
+import { getSearchText } from '@selectors/search-engine'
+import { fetchGames } from '@services/giant-bomb'
 import {
   SUBMIT_SEARCH
-} from '../actions/search-engine'
+} from '@actions/search-engine'
 import {
   stopSearching,
-} from '../actions/search-engine'
+} from '@actions/search-engine'
 import {
   REQUEST_GAMES,
-} from '../actions/games'
+} from '@actions/games'
 import {
   requestGames,
   receiveGames,
   receiveGamesFailure,
-} from '../actions/games'
+} from '@actions/games'
 
 const submitSearchEpic = (action$, store) => {
   return action$

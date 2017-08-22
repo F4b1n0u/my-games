@@ -8,8 +8,8 @@ import Expo, {
 } from 'expo'
 import _ from 'lodash'
 
-import Background from '../components/background'
-import GameExplorer from '../components/game-explorer'
+import Background from '@components/background'
+import GameExplorer from '@components/game-explorer'
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
 

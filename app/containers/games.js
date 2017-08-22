@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { 
   getGames,
   getGamesStatus,
-} from '../selectors/games'
+} from '@selectors/games'
 
-import GameList from '../components/game-list'
+import GameList from '@components/game-list'
 
 const mapStateToProps = state => {
   return ({
