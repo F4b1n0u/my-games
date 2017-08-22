@@ -2,20 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux'
 
 import { 
-  getGames,
-  getGamesStatus,
+  getList,
+  getListStatus,
 } from '@selectors/games'
+
+import {
+  requestGameCompletion,
+} from '@actions/games'
 
 import GameList from '@components/game-list'
 
 const mapStateToProps = state => {
   return ({
-    games: getGames(state.games),
-    status: getGamesStatus(state.games)
+    list: getList(state.games),
+    status: getListStatus(state.games)
   })
 }
 
 const mapDispatchToProps = dispatch => ({
+  requestGameCompletion: game => dispatch(requestGameCompletion(game)),
   // showDetailedGame: franchise => {
   //   dispatch(showDetailedGame(game))
   // },

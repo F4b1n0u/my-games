@@ -21,7 +21,7 @@ export default class GameListComponent extends React.Component {
 		this._setRef = this._setRef.bind(this)
   }
 
-	_keyExtractor = item => item.id
+	_keyExtractor = item => item.game.id
 
 	_setRef = (ref) => {
 		this.flatListRef = ref
@@ -44,6 +44,7 @@ export default class GameListComponent extends React.Component {
 		const {
 			toggleGameDetails,
 			collapseDetailedGames,
+			requestGameCompletion,
 			detailedGameId,
 		} = this.props;
 
@@ -55,6 +56,7 @@ export default class GameListComponent extends React.Component {
 				detailedHeight={detailedHeight}
 				toggleGameDetails={toggleGameDetails}
 				collapseDetailedGames={collapseDetailedGames}
+				requestGameCompletion={requestGameCompletion.bind(this, item)}
 				isDetailed={detailedGameId === item.id}
 				hasDetailed={!!detailedGameId}
 			/>
@@ -63,9 +65,11 @@ export default class GameListComponent extends React.Component {
 
   render() {
     const {
-			games,
+			list,
 			detailedGameId,
     } = this.props;
+
+		console.log(this.props)
 
 		const hasDetailedGame = !!detailedGameId
 
@@ -73,7 +77,7 @@ export default class GameListComponent extends React.Component {
 			<GameList
 				hasDetailedGame={hasDetailedGame}
 				ref={this._setRef}
-				data={games}
+				data={list}
 				keyExtractor={this._keyExtractor}
 				getItemLayout={this._getItemLayout}
 				renderItem={this._renderItem.bind(this)}

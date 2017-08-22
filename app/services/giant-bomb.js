@@ -12,12 +12,12 @@ const defaultQueryParams = {
 }
 
 const markGamesAsComplete = response => {
-  response.results = response.results.map(game => _.merge(game, {isComplet: true}))
+  response.results = response.results.map(game => _.merge(game, {isComplete: true}))
   return response
 }
 
 const markGamesAsIncomplete = response => {
-  response.results = response.results.map(game => _.merge(game, {isComplet: false}))
+  response.results = response.results.map(game => _.merge(game, {isComplete: false}))
   return response
 }
 
@@ -44,6 +44,7 @@ export const fetchGames = (searchText) => {
       filter: `name:%${searchText.replace(' ', '%')}%`,
       sort: 'number_of_user_reviews:desc',
       field_list: "id,name,image,deck,platforms",
+      limit: 10,
     }
   )
 
@@ -52,18 +53,18 @@ export const fetchGames = (searchText) => {
     .map(markGamesAsComplete)
 }
 
-export const fetchGame = ({id}) => {
-  const gamePrefix = 3030 // don;t ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
-  const queryParams = _.merge(
-    defaultQueryParams,
-    {
-      filter: `name:%${searchText.replace(' ', '%')}%`,
-      sort: 'number_of_user_reviews:desc',
-      field_list: 'id,name,image,deck,platforms'
-    }
-  )
+// export const fetchGame = ({id}) => {
+//   const gamePrefix = 3030 // don;t ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
+//   const queryParams = _.merge(
+//     defaultQueryParams,
+//     {
+//       filter: `name:%${searchText.replace(' ', '%')}%`,
+//       sort: 'number_of_user_reviews:desc',
+//       field_list: 'id,name,image,deck,platforms'
+//     }
+//   )
 
-  return ajax
-    .getJSON(`https://www.giantbomb.com/api/game/${gamePrefix}-${id}?${qs.stringify(queryParams)}`)
-    .map(markGamesAsComplete)
-}
+//   return ajax
+//     .getJSON(`https://www.giantbomb.com/api/game/${gamePrefix}-${id}?${qs.stringify(queryParams)}`)
+//     .map(markGamesAsComplete)
+// }

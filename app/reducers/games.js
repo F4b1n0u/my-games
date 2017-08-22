@@ -5,7 +5,14 @@ import {
   REQUEST_GAMES,
   RECEIVE_GAMES_SUCCESS,
   RECEIVE_GAMES_FAILURE,
+  REQUEST_GAME_COMPLETION,
+  RECEIVE_GAME_COMPLETION_SUCCESS,
+  RECEIVE_GAME_COMPLETION_FAILURE,
 } from '@actions/games'
+
+import {
+  default as gameReducer,
+} from '@reducers/game'
 
 const initialState = {
   list: [],
@@ -19,20 +26,31 @@ function list(
   state = initialState.list,
   action,
 ) {
-  const {
-    type
-  } = action
-  
   switch (action.type) {    
+    case REQUEST_GAME_COMPLETION:
+    case RECEIVE_GAME_COMPLETION_SUCCESS:
+    case RECEIVE_GAME_COMPLETION_FAILURE:
+      return state.map(
+        item => gameReducer(
+          item,
+          action,
+        )
+      )
     case RECEIVE_GAMES_SUCCESS:
-      return action.games;
+      return action.games.map(
+        game => gameReducer(
+          {
+            game,
+          },
+          action,
+        )
+      )
     case RECEIVE_GAMES_FAILURE:
       return []
     default:
       return state
   }
 }
-
 
 function listStatus(
   state = initialState.listStatus,

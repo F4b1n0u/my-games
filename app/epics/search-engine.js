@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable'
 import { getSearchText } from '@selectors/search-engine'
 import { fetchFranchiseFranchises } from '@services/giant-bomb'
 import {
-  getGamesStatus,
+  getListStatus,
 } from '@selectors/games'
 import {
   UPDATE_SEARCHTEXT,
@@ -46,7 +46,7 @@ const requestFranchisesEpic = (action$, store) => {
       const searchText = getSearchText(searchEngineState);
 
       const gamesState = store.getState().games
-      const gamesStatus = getGamesStatus(gamesState)
+      const gamesStatus = getListStatus(gamesState)
       const isGamesPending = gamesStatus.pending
 
       let observable

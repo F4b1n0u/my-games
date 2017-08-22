@@ -37,9 +37,7 @@ export default class AppComponents extends React.Component {
       (
         <App>
           <Background />
-          <GameExplorer
-            {...this.props}
-          />
+          <GameExplorer/>
         </App>
       ) : (
         <Expo.AppLoading />

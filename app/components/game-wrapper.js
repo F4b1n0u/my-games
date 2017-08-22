@@ -12,14 +12,14 @@ import {
 import styled from 'styled-components/native';
 
 import DetailedGame from './detailed-game'
-import NotDetailedGame from './not-detailed-game'
+import CompleteNotDetailedGame from './complete-not-detailed-game'
+import IncompleteNotDetailedGame from './incomplete-not-detailed-game'
 
 const animationDuration = 250;
 
 export default class GameWrapperComponent extends React.Component {
 	state = {
     animationProgression: new Animated.Value(0),
-    display: 'normal',
 	}
 
   static defaultProps = {
@@ -35,15 +35,15 @@ export default class GameWrapperComponent extends React.Component {
 
 	_toggleDetails() {
     const {
-			isDetailed,
+			game,
     } = this.props;
     
     const {
       animationProgression,
     } = this.state;
     
-    const startValue = isDetailed ? 1 : 0
-    const endValue   = isDetailed ? 0 : 1
+    const startValue = isDetailed.isDetailed ? 1 : 0
+    const endValue   = isDetailed.isDetailed ? 0 : 1
 
     animationProgression.setValue(startValue);
     Animated.timing(
@@ -58,15 +58,15 @@ export default class GameWrapperComponent extends React.Component {
 
 	componentWillUpdate(nextProps) {
 		const {
-      isDetailed,
       scrollToMe,
+      game,
 		} = this.props;
 
-		if (nextProps.isDetailed !== isDetailed) {
+		if (nextProps.game.isDetailed !== game.isDetailed) {
       this._toggleDetails()
     }
 
-    if (nextProps.isDetailed) {
+    if (nextProps.game.isDetailed) {
       scrollToMe()
     }
 	}
@@ -77,6 +77,8 @@ export default class GameWrapperComponent extends React.Component {
       detailedHeight,
       normalMargin,
       detailedMargin,
+      requestGameCompletion,
+      game,
     } = this.props
 
     const {
@@ -97,11 +99,15 @@ export default class GameWrapperComponent extends React.Component {
       heightAnimProgress,
       marginAnimProgress,
     })
+
+    if (!game.isComplete) {
+      requestGameCompletion()
+    }
   }
 
 	render() {
     const {
-      isDetailed,
+      game,
     } = this.props;
 
 		const {
@@ -118,15 +124,23 @@ export default class GameWrapperComponent extends React.Component {
         }}
       >
         <GameWrapper>
-          {(isDetailed) ? (
-            <DetailedGame
-              {...this.props}
-            />
-          ) : (
-            <NotDetailedGame
-              {...this.props}
-            />
-          )}
+          {
+            (!game.isComplete) ? (
+              <IncompleteNotDetailedGame
+                {...game}
+              />
+            ) : (
+              (!game.isDetailed) ? (
+                <CompleteNotDetailedGame
+                  {...game}
+                />
+              ) : (
+                <DetailedGame
+                  {...game}
+                />
+              )
+            )
+          }
         </GameWrapper>
       </Animated.View>
 		);
