@@ -87,7 +87,7 @@ const GameList = styled.FlatList`
 	flex: 1;
 	background-color: transparent;
 	overflow: visible;
-	margin-top: ${props => props.hasDetailedGame ? 10 : 55};
+	margin-top: ${props => props.hasDetailedGame ? 10 : 50};
 	bottom: 0;
 	width: 100%;
 `;

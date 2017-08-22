@@ -7,9 +7,13 @@ import {
   REQUEST_FRANCHISES,
   RECEIVE_FRANCHISES_SUCCESS,
   RECEIVE_FRANCHISES_FAILURE,
+  SUBMIT_SEARCH,
   SELECT_FRANCHISE,
   STOP_SEARCHING,
 } from '../actions/search-engine'
+import {
+  RECEIVE_GAMES_SUCCESS,
+} from '../actions/games'
 
 const initialState = {
   searchText: '',
@@ -46,7 +50,8 @@ function franchises(
     case RECEIVE_FRANCHISES_SUCCESS:
       return action.franchises;
     case RECEIVE_FRANCHISES_FAILURE:
-    case STOP_SEARCHING:
+    case STOP_SEARCHING: // maybe a hide could be better to avoid to request the api again :s
+    case RECEIVE_GAMES_SUCCESS: // to close the suggestion to be sure to see the games
       return []
     default:
       return state

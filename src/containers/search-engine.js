@@ -26,6 +26,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   startSearching: () => {
+    if(true) {}
     dispatch(startSearching())
   },
   updateSearchText: searchText => {

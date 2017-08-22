@@ -8,6 +8,9 @@ import {
   SUBMIT_SEARCH
 } from '../actions/search-engine'
 import {
+  stopSearching,
+} from '../actions/search-engine'
+import {
   REQUEST_GAMES,
 } from '../actions/games'
 import {
@@ -22,9 +25,16 @@ const submitSearchEpic = (action$, store) => {
     .mapTo(requestGames())
 }
 
-const requestGamesEpic = (action$, store) => {
+const requestGamesToStopEpic = (action$, store) => {
   return action$
     .ofType(REQUEST_GAMES)
+    .mapTo(stopSearching())
+}
+
+const requestGamesToFetchEpic = (action$, store) => {
+  return action$
+    .ofType(REQUEST_GAMES)
+    .mapTo(stopSearching())
     .switchMap(() => {
       const searchEngineState = store.getState().searchEngine
       const searchText = getSearchText(searchEngineState);
@@ -33,7 +43,9 @@ const requestGamesEpic = (action$, store) => {
 
       if (searchText) {
         observable = fetchGames(searchText)
-          .map(response => receiveGames(response.results))
+          .map(response => {
+            return receiveGames(response.results)
+          })
           .catch(error => Observable.of(receiveGamesFailure(error)))
       } else {
         observable = Observable.of(receiveGames([]))
@@ -45,5 +57,6 @@ const requestGamesEpic = (action$, store) => {
 
 export default combineEpics(
   submitSearchEpic,
-  requestGamesEpic,
+  requestGamesToStopEpic,
+  requestGamesToFetchEpic,
 )

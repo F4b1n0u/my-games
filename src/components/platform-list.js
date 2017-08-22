@@ -13,7 +13,7 @@ export default class platformListComponent extends React.Component {
 
 	render() {
     const {
-			platforms = [],
+			platforms,
 			isDetailed,
 		} = this.props;
 
@@ -21,7 +21,7 @@ export default class platformListComponent extends React.Component {
 			<PlatformList
 				isDetailed={isDetailed}
 			>
-        {platforms.map(platform =>
+        {(platforms || []).map(platform =>
           <Platform
             key={platform.id}
 						isDetailed={isDetailed}

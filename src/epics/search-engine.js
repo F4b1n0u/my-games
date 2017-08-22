@@ -5,6 +5,9 @@ import { Observable } from 'rxjs/Observable'
 import { getSearchText } from '../selectors/search-engine'
 import { fetchFranchiseFranchises } from '../services/giant-bomb'
 import {
+  getGamesStatus,
+} from '../selectors/games'
+import {
   UPDATE_SEARCHTEXT,
   REQUEST_FRANCHISES,
   SELECT_FRANCHISE,
@@ -25,18 +28,41 @@ const updateSearchTextEpic = (action$, store) => {
     .mapTo(requestFranchises())
 }
 
+// TODO
+// Req G
+// Res G <-|
+// Req F   |-- inferior to 250, due to the debounce, not even sure this case is possible
+// Res F <-|
 const requestFranchisesEpic = (action$, store) => {
+  // check if a request game is pending
+  // Req G
+  // Req F <- game is pending
+  // Res G
+  // Res F
   return action$
     .ofType(REQUEST_FRANCHISES)
     .flatMap(() => {
       const searchEngineState = store.getState().searchEngine
       const searchText = getSearchText(searchEngineState);
 
+      const gamesState = store.getState().games
+      const gamesStatus = getGamesStatus(gamesState)
+      const isGamesPending = gamesStatus.pending
+
       let observable
 
-      if (searchText) {
+      if(isGamesPending) {
+        observable = Observable.of({
+          type: 'DO_NOTHING'
+        })
+      } else if (searchText) {
         observable = fetchFranchiseFranchises(searchText)
           .map(response => receiveFranchises(response.results))
+          // check if a request game is pending
+          // Req F
+          // Req G <- similar to STOP_SEARCHING here due to requestGamesToStopEpic
+          // Res G
+          // Res F
           .takeUntil(action$.ofType(STOP_SEARCHING))
           .catch(error => Observable.of(receiveFranchisesFailure(error)))
       } else {
@@ -47,14 +73,7 @@ const requestFranchisesEpic = (action$, store) => {
     })
 }
 
-const selectFranchiseEpic = (action$, store) => {
-  return action$
-    .ofType(SELECT_FRANCHISE)
-    .mapTo(stopSearching())
-}
-
 export default combineEpics(
-  selectFranchiseEpic,
   updateSearchTextEpic,
   requestFranchisesEpic,
 )
