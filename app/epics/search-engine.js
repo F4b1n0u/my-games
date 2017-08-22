@@ -3,15 +3,19 @@ import _ from 'lodash'
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs/Observable'
 import { getSearchText } from '@selectors/search-engine'
-import { fetchFranchiseFranchises } from '@services/giant-bomb'
+import { fetchFranchises } from '@services/giant-bomb'
+import {
+  fetchFranchiseCompletion,
+} from '@services/giant-bomb'
 import {
   getListStatus,
 } from '@selectors/games'
 import {
   UPDATE_SEARCHTEXT,
   REQUEST_FRANCHISES,
-  SELECT_FRANCHISE,
   SUBMIT_SEARCH,
+  SELECT_FRANCHISE,
+  REQUEST_FRANCHISE_COMPLETION,
   STOP_SEARCHING,
 } from '@actions/search-engine'
 import {
@@ -19,8 +23,12 @@ import {
   receiveFranchises,
   receiveFranchisesFailure,
   stopSearching,
+  requestFranchiseCompletion,
+  receiveFranchiseCompletion,
+  receiveFranchiseCompletionFailure,
 } from '@actions/search-engine'
 
+fetchFranchiseCompletion
 const updateSearchTextEpic = (action$, store) => {
   return action$
     .ofType(UPDATE_SEARCHTEXT)
@@ -56,7 +64,7 @@ const requestFranchisesEpic = (action$, store) => {
           type: 'DO_NOTHING'
         })
       } else if (searchText) {
-        observable = fetchFranchiseFranchises(searchText)
+        observable = fetchFranchises(searchText)
           .map(response => receiveFranchises(response.results))
           // check if a request game is pending
           // Req F
@@ -73,7 +81,23 @@ const requestFranchisesEpic = (action$, store) => {
     })
 }
 
+const selectFranchiseEpic = (action$, store) => {
+  return action$
+    .ofType(SELECT_FRANCHISE)
+    .flatMap(action => Observable.of(requestFranchiseCompletion(action.selectedFranchise)))
+}
+
+const requestFranchiseCompletionEpic = (action$, store) => action$
+  .ofType(REQUEST_FRANCHISE_COMPLETION)
+  .mergeMap(action => fetchFranchiseCompletion(action.selectedFranchise))
+    .map(response => receiveFranchiseCompletion(response.results))
+    .takeUntil(action$.ofType(SUBMIT_SEARCH))
+    .catch(error => Observable.of(receiveFranchiseCompletionFailure(error))
+  )
+
 export default combineEpics(
   updateSearchTextEpic,
   requestFranchisesEpic,
+  selectFranchiseEpic,
+  requestFranchiseCompletionEpic,
 )

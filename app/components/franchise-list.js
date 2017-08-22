@@ -53,7 +53,7 @@ export default class FranchiseListComponent extends React.Component {
 
   render() {
     const {
-      franchiseFranchises,
+      franchises,
       status,
     } = this.props
 
@@ -68,10 +68,10 @@ export default class FranchiseListComponent extends React.Component {
 
     let element;
 
-    if (!_.isEmpty(franchiseFranchises)) {
+    if (!_.isEmpty(franchises)) {
       element = (
         <FranchiseList>
-          {franchiseFranchises.map((franchise, index) => (
+          {franchises.map((franchise, index) => (
             <TouchableFranchise
               key={index}
               onPress={this._handlePressItem.bind(this, franchise)}

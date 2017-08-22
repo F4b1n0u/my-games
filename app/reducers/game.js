@@ -28,7 +28,10 @@ function game(
         nextState = _.merge(
           {},
           state,
-          action.completedGame
+          action.completedGame,
+          {
+            isComplete: true,
+          }
         )
       }
 
@@ -50,7 +53,7 @@ function status(
         error: null
       }
     case RECEIVE_GAME_COMPLETION_SUCCESS:
-      return initialState.listStatus;
+      return initialState.status;
     case RECEIVE_GAME_COMPLETION_FAILURE:
       return {
         pending: false,

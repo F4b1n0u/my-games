@@ -3,7 +3,10 @@ import _ from 'lodash'
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs/Observable'
 import { getSearchText } from '@selectors/search-engine'
-import { fetchGames } from '@services/giant-bomb'
+import {
+  fetchGames,
+  fetchGame,
+} from '@services/giant-bomb'
 import {
   SUBMIT_SEARCH
 } from '@actions/search-engine'
@@ -12,51 +15,54 @@ import {
 } from '@actions/search-engine'
 import {
   REQUEST_GAMES,
+  REQUEST_GAME_COMPLETION,
 } from '@actions/games'
 import {
   requestGames,
   receiveGames,
   receiveGamesFailure,
+  receiveGameCompletion,
+  receiveGameCompletionFailure,
 } from '@actions/games'
 
-const submitSearchEpic = (action$, store) => {
-  return action$
-    .ofType(SUBMIT_SEARCH)
-    .mapTo(requestGames())
-}
+const submitSearchEpic = action$ => action$
+  .ofType(SUBMIT_SEARCH)
+  .mapTo(requestGames())
 
-const requestGamesToStopEpic = (action$, store) => {
-  return action$
-    .ofType(REQUEST_GAMES)
-    .mapTo(stopSearching())
-}
+const requestGamesToStopEpic = action$ => action$
+  .ofType(REQUEST_GAMES)
+  .mapTo(stopSearching())
 
-const requestGamesToFetchEpic = (action$, store) => {
-  return action$
-    .ofType(REQUEST_GAMES)
-    .mapTo(stopSearching())
-    .switchMap(() => {
-      const searchEngineState = store.getState().searchEngine
-      const searchText = getSearchText(searchEngineState);
+const requestGamesToFetchEpic = (action$, store) => action$
+  .ofType(REQUEST_GAMES)
+  .switchMap(() => {
+    const searchEngineState = store.getState().searchEngine
+    const searchText = getSearchText(searchEngineState);
 
-      let observable
+    let observable
 
-      if (searchText) {
-        observable = fetchGames(searchText)
-          .map(response => {
-            return receiveGames(response.results)
-          })
-          .catch(error => Observable.of(receiveGamesFailure(error)))
-      } else {
-        observable = Observable.of(receiveGames([]))
-      }
+    if (searchText) {
+      observable = fetchGames(searchText)
+        .map(response => receiveGames(response.results))
+        .catch(error => Observable.of(receiveGamesFailure(error)))
+    } else {
+      observable = Observable.of(receiveGames([]))
+    }
 
-      return observable
-    })
-}
+    return observable
+  })
+
+const requestGameCompletionEpic = action$ => action$
+  .ofType(REQUEST_GAME_COMPLETION)
+  .mergeMap(action => fetchGame(action.game)
+    .map(response => receiveGameCompletion(response.results))
+    .takeUntil(action$.ofType(SUBMIT_SEARCH))
+    .catch(error => Observable.of(receiveGameCompletionFailure(error)))
+  )
 
 export default combineEpics(
   submitSearchEpic,
   requestGamesToStopEpic,
   requestGamesToFetchEpic,
+  requestGameCompletionEpic,
 )

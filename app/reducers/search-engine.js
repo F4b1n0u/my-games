@@ -48,6 +48,7 @@ function franchises(
 ) {
   switch (action.type) {    
     case RECEIVE_FRANCHISES_SUCCESS:
+      console.log(action)
       return action.franchises;
     case RECEIVE_FRANCHISES_FAILURE:
     case STOP_SEARCHING: // maybe a hide could be better to avoid to request the api again :s

@@ -10,7 +10,7 @@ import {
 } from '@actions/search-engine'
 import { 
   getSearchText,
-  getFranchiseFranchises,
+  getFranchises,
   getFranchisesStatus,
 } from '@selectors/search-engine'
 
@@ -19,14 +19,13 @@ import SearchEngine from '@components/search-engine'
 const mapStateToProps = state => {
   return ({
     searchText: getSearchText(state.searchEngine),
-    franchiseFranchises: getFranchiseFranchises(state.searchEngine),
+    franchises: getFranchises(state.searchEngine),
     status: getFranchisesStatus(state.searchEngine)
   })
 }
 
 const mapDispatchToProps = dispatch => ({
   startSearching: () => {
-    if(true) {}
     dispatch(startSearching())
   },
   updateSearchText: searchText => {

@@ -21,7 +21,7 @@ const markGamesAsIncomplete = response => {
   return response
 }
 
-export const fetchFranchiseFranchises = (searchText) => {
+export const fetchFranchises = (searchText) => {
   const queryParams = _.merge(
     defaultQueryParams,
     {
@@ -44,27 +44,37 @@ export const fetchGames = (searchText) => {
       filter: `name:%${searchText.replace(' ', '%')}%`,
       sort: 'number_of_user_reviews:desc',
       field_list: "id,name,image,deck,platforms",
-      limit: 10,
+      limit: 20,
     }
   )
 
   return ajax
     .getJSON(`https://www.giantbomb.com/api/games/?${qs.stringify(queryParams)}`)
-    .map(markGamesAsComplete)
+    .map(markGamesAsIncomplete)
 }
 
-// export const fetchGame = ({id}) => {
-//   const gamePrefix = 3030 // don;t ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
-//   const queryParams = _.merge(
-//     defaultQueryParams,
-//     {
-//       filter: `name:%${searchText.replace(' ', '%')}%`,
-//       sort: 'number_of_user_reviews:desc',
-//       field_list: 'id,name,image,deck,platforms'
-//     }
-//   )
+export const fetchGame = ({id}) => {
+  const prefix = 3030 // don't ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
+  const queryParams = _.merge(
+    defaultQueryParams,
+    {
+      field_list: 'id,name,image,deck,platforms'
+    }
+  )
 
-//   return ajax
-//     .getJSON(`https://www.giantbomb.com/api/game/${gamePrefix}-${id}?${qs.stringify(queryParams)}`)
-//     .map(markGamesAsComplete)
-// }
+  return ajax
+    .getJSON(`https://www.giantbomb.com/api/game/${prefix}-${id}?${qs.stringify(queryParams)}`)
+}
+
+export const fetchFranchiseCompletion = ({id}) => {
+  const prefix = 3025 // don't ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
+  const queryParams = _.merge(
+    defaultQueryParams,
+    {
+      field_list: 'games'
+    }
+  )
+
+  return ajax
+    .getJSON(`https://www.giantbomb.com/api/franchise/${prefix}-${id}?${qs.stringify(queryParams)}`)
+}
