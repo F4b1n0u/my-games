@@ -4,18 +4,23 @@ import {
 
 import {
   default as log,
-} from './log'
+} from '@reducers/log'
 
 import {
   default as searchEngine,
-} from './search-engine'
+} from '@reducers/search-engine'
 
 import {
   default as games,
-} from './games'
+} from '@reducers/games'
+
+import {
+  default as app,
+} from '@reducers/app'
 
 export default combineReducers({
   searchEngine,
   games,
+  app,
   log,
 })

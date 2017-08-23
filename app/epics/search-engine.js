@@ -8,7 +8,7 @@ import {
   fetchFranchiseCompletion,
 } from '@services/giant-bomb'
 import {
-  getListStatus,
+  getStatus as getListStatus,
 } from '@selectors/games'
 import {
   UPDATE_SEARCHTEXT,
@@ -83,7 +83,13 @@ const requestFranchisesEpic = (action$, store) => {
     })
 }
 
-const selectFranchiseEpic = (action$, store) => {
+const selectFranchiseToStopEpic = (action$, store) => {
+  return action$
+    .ofType(SELECT_FRANCHISE)
+    .mapTo(stopSearching())
+}
+
+const selectFranchiseTofetchEpic = (action$, store) => {
   return action$
     .ofType(SELECT_FRANCHISE)
     .flatMap(action => Observable.of(requestFranchiseCompletion(action.selectedFranchise)))
@@ -100,6 +106,7 @@ const requestFranchiseCompletionEpic = (action$, store) => action$
 export default combineEpics(
   updateSearchTextEpic,
   requestFranchisesEpic,
-  selectFranchiseEpic,
+  selectFranchiseToStopEpic,
+  selectFranchiseTofetchEpic,
   requestFranchiseCompletionEpic,
 )

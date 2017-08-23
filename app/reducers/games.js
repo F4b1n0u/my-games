@@ -1,16 +1,18 @@
 import {
   combineReducers,
 } from 'redux'
+
 import {
   REQUEST_GAMES,
   RECEIVE_GAMES_SUCCESS,
   RECEIVE_GAMES_FAILURE,
   REQUEST_GAME_COMPLETION,
   RECEIVE_GAME_COMPLETION_SUCCESS,
+} from '@actions/games'
+import {
   SHOW_GAME_DETAILS,
   HIDE_GAME_DETAILS,
-} from '@actions/games'
-
+} from '@actions/app'
 import {
   SELECT_FRANCHISE,
   RECEIVE_GAME_COMPLETION_FAILURE,
@@ -24,11 +26,16 @@ import {
 
 const initialState = {
   list: [],
-  listStatus: {
+  status: {
     pending: false,
     error: null
   },
-  detailedGameId: null,
+  pagintion: {
+    max: 10, 
+    amount: 0,
+    total: 0,
+    offset: 0,
+  },
 }
 
 function list(
@@ -73,8 +80,8 @@ function list(
   }
 }
 
-function listStatus(
-  state = initialState.listStatus,
+function status(
+  state = initialState.status,
   action,
 ) {
   switch (action.type) {
@@ -85,7 +92,7 @@ function listStatus(
         error: null
       }
     case RECEIVE_GAMES_SUCCESS:
-      return initialState.listStatus;
+      return initialState.status;
     case RECEIVE_GAMES_FAILURE:
       return {
         pending: false,
@@ -96,22 +103,13 @@ function listStatus(
   }
 }
 
-function detailedGameId(
-  state = initialState.detailedGameId,
-  action,
+function listPagination(
+
 ) {
-  switch (action.type) {
-    case SHOW_GAME_DETAILS:
-      return action.detailedGame.id
-    case HIDE_GAME_DETAILS:
-      return initialState.detailedGameId
-    default:
-      return state
-  }
+  
 }
 
 export default combineReducers({
   list,
-  listStatus,
-  detailedGameId,
+  status,
 })

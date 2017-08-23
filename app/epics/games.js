@@ -43,7 +43,12 @@ const requestGamesToFetchEpic = (action$, store) => action$
 
     if (searchText) {
       observable = fetchGames(searchText)
-        .map(response => receiveGames(response.results))
+        .map(response => receiveGames(response.results, {
+          max: response.limit, 
+          amount: response.number_of_page_results,
+          total: response.number_of_total_results,
+          offset: response.offset,
+        }))
         .catch(error => Observable.of(receiveGamesFailure(error)))
     } else {
       observable = Observable.of(receiveGames([]))

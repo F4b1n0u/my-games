@@ -2,16 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux'
 
 import { 
-  getList,
-  getListStatus,
   getDetailedGameId,
+} from '@selectors/app'
+
+import { 
+  getList,
+  getStatus as getListStatus,
 } from '@selectors/games'
 
 import {
   requestGameCompletion,
+} from '@actions/games'
+
+import {
   showGameDetails,
   hideGameDetails,
-} from '@actions/games'
+} from '@actions/app'
 
 import GameList from '@components/game-list'
 
@@ -19,7 +25,7 @@ const mapStateToProps = state => {
   return ({
     list: getList(state.games),
     status: getListStatus(state.games),
-    detailedGameId: getDetailedGameId(state.games),
+    detailedGameId: getDetailedGameId(state.app),
   })
 }
 

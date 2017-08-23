@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import Carousel from 'react-native-snap-carousel'
+import _ from 'lodash'
 import {
   Dimensions,
 } from 'react-native'
@@ -55,6 +56,12 @@ export default class CompleteDetailedGameComponent extends React.Component {
       images,
 		} = this.props
 
+    let slideshow = images
+      .filter(image => image.tags.match('(Screenshots|Wallpaper)'))
+    if (_.isEmpty(slideshow)) {
+      slideshow = images.filter(image => !image.tags.match('(Fan art|Concept Art)'))
+    }
+
     return (
       <Game>
         <Name>
@@ -64,9 +71,8 @@ export default class CompleteDetailedGameComponent extends React.Component {
         <SlideShow
           ref={(carousel) => { this._carousel = carousel }}
         >
-          {images
-            .filter(image => image.tags.match('(Screenshots|Wallpaper)'))
-            .map((image, index) => {
+          {
+            slideshow.map((image, index) => {
               return (
                 <Slide
                   key={index}
