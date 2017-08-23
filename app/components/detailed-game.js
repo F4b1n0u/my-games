@@ -25,7 +25,7 @@ function wp (percentage) {
   return Math.round(value)
 }
 
-const slideHeight = 100
+const slideHeight = 200
 const slideWidth = viewportWidth - wp(15)
 const itemHorizontalMargin = wp(2)
 
@@ -38,23 +38,20 @@ export default class DetailedGameComponent extends React.Component {
 
     this._handleCollapse = this._handleCollapse.bind(this)
   }
-  static defaultProps = {
-    screenshots: [1,2,3,4],
-  }
-
+  
   _handleCollapse() {
     const {
-      collapseDetailedGames,
+      hideGameDetails,
     } = this.props
 
-    collapseDetailedGames()
+    hideGameDetails()
   }
 
   render() {
     const {
       name,
-      description,
-      screenshots,
+      deck,
+      images,
 		} = this.props
 
     return (
@@ -66,21 +63,26 @@ export default class DetailedGameComponent extends React.Component {
         <SlideShow
           ref={(carousel) => { this._carousel = carousel }}
         >
-          {screenshots.map(index => (
-            <Slide
-              key={index}
-            >
-              <ImageContainer>
-                <Picture
-                  source={image}
-                />
-              </ImageContainer>
-            </Slide>
-          ))}
+          {images
+            .filter(image => image.tags.match('(Screenshots|Wallpaper)'))
+            .map((image, index) => {
+              return (
+                <Slide
+                  key={index}
+                >
+                  <ImageContainer>
+                    <Picture
+                      source={{uri: image.super_url}}
+                    />
+                  </ImageContainer>
+                </Slide>
+                )}
+              )
+          }
         </SlideShow>
 
         <Description>
-          {description}
+          {deck}
         </Description>
 
         <PlatformList
@@ -147,9 +149,10 @@ const StyledImage = styled.Image`
 `;
 
 const Picture = styled.Image.attrs({
-  blurRadius: 10,
+  blurRadius: 0,
 })`
-  width: ${slideWidth};;
+  width: ${slideWidth};
+  height: ${slideHeight};
   resizeMode: cover;
   borderRadius: 5;
   background-color: #e3e3e3a0;

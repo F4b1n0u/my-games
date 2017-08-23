@@ -51,7 +51,7 @@ const requestFranchisesEpic = (action$, store) => {
   // Res F
   return action$
     .ofType(REQUEST_FRANCHISES)
-    .flatMap(() => {
+    .switchMap(() => {
       const searchEngineState = store.getState().searchEngine
       const searchText = getSearchText(searchEngineState);
 

@@ -48,7 +48,7 @@ const Name = styled.Text.attrs({
   ellipsizeMode: 'tail',
 })`
   flex: 1;
-  font-size: 12;
+  font-size: 16;
   text-align: left;
   font-family: 'florentia-extralight';
 `

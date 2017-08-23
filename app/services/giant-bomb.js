@@ -43,14 +43,13 @@ export const fetchGames = (searchText) => {
     {
       filter: `name:%${searchText.replace(' ', '%')}%`,
       sort: 'number_of_user_reviews:desc',
-      field_list: "id,name,image,deck,platforms",
+      field_list: "id,name,image,images,deck,platforms",
       limit: 20,
     }
   )
 
   return ajax
     .getJSON(`https://www.giantbomb.com/api/games/?${qs.stringify(queryParams)}`)
-    .map(markGamesAsComplete)
 }
 
 export const fetchGame = ({id}) => {
@@ -58,7 +57,7 @@ export const fetchGame = ({id}) => {
   const queryParams = _.merge(
     defaultQueryParams,
     {
-      field_list: 'id,name,image,deck,platforms'
+      field_list: 'id,name,image,images,deck,platforms'
     }
   )
 

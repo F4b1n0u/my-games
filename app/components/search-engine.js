@@ -33,25 +33,42 @@ export default class SearchEngineComponent extends React.Component {
     submitSearch()
   }
 
+  componentDidUpdate() {
+    const {
+      hasLoadingGames,
+    } = this.props
+
+    const {
+      _searchInput
+    } = this
+
+    // not sure why the press on franchise does not blur the input ...
+    if (_searchInput && _searchInput.root.isFocused() && hasLoadingGames) {
+      _searchInput.root.blur()
+      console.log('blur')
+    }
+  }
+
   render() {
     const {
       searchText,
-      detailedGameId: hasDetailedGame,
+      hasDetailedGame,
       updateSearchText,
     } = this.props;
 
     return (!hasDetailedGame) ? (
       <SearchEngine>
         <TextInputWrapper>
-          <TextInput
+          <Search
+            ref={ref => { this._searchInput = ref}}
             placeholder='type game name here'
-            returnKeyLabel='done'
             selectTextOnFocus={true}
             value={searchText}
             onChangeText={updateSearchText}
             onFocus={this._handleFocus}
             onSubmitEditing={this._handleSubmit}
             blurOnSubmit={true}
+            keyboardShouldPersistTaps={false}
           />
         </TextInputWrapper>
         <FranchiseList
@@ -72,7 +89,7 @@ const SearchEngine = styled.View`
   border-color: #e3e3e3;
   border-width: 3;
   border-radius: 5;
-  background-color: #fafafac0;
+  background-color: #fafafaf0;
   overflow: hidden;
   padding-vertical: 2;
   padding-horizontal: 2;
@@ -84,7 +101,12 @@ const TextInputWrapper = styled.View`
   alignItems: center;
 `
 
-const TextInput = styled.TextInput`
+const Search = styled.TextInput.attrs({
+  underlineColorAndroid: 'transparent',
+  returnKeyType: 'search',
+  autoCapitalize: 'none',
+  returnKeyLabel: 'done',
+})`
   flex: 1;
   font-family: 'florentia-extralight';
   text-align: center;

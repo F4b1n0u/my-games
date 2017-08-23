@@ -5,10 +5,10 @@ import {
  } from '@epics/search-engine';
 
  import {
-  default as gameEpic,
+  default as gamesEpic,
  } from '@epics/games';
 
 export default combineEpics(
   searchEngineEpic,
-  gameEpic,
+  gamesEpic,
 );

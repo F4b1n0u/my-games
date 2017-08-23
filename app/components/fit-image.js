@@ -4,17 +4,16 @@ import styled from 'styled-components/native';
 export default class FitImageComponent extends React.Component {
   render() {
     const {
-      uri,
-      fallbackUri,
+      image,
       children,
 		} = this.props;
-    
+
     return (
       <FallbackImage
-        source={{uri: fallbackUri}}
+        source={{uri: image.thumb_url}}
       >
         <Image
-          source={{uri,}}
+          source={{uri: image.super_url}}
         />
         {children}
       </FallbackImage>
