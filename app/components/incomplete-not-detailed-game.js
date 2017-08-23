@@ -4,8 +4,6 @@ import {
 } from 'expo';
 import styled from 'styled-components/native';
 
-const image = require('../../assets/images/zelda.png')
-
 export default class IncompleteNotDetailedGameComponent extends React.Component {
   render() {
     const {

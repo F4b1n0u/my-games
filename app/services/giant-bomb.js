@@ -21,6 +21,13 @@ const markFranchiseGamesAsIncomplete = response => {
   return response
 }
 
+export const extractPagination = response => ({
+  max: response.limit,
+  amount: response.number_of_page_results,
+  total: response.number_of_total_results,
+  offset: response.offset,
+})
+
 export const fetchFranchises = (searchText) => {
   const queryParams = _.merge(
     {},

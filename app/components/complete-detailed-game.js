@@ -15,8 +15,6 @@ import {
 import ProgressiveImage from './progressive-image'
 import PlatformList from './platform-list'
 
-const image = require('../../assets/images/zelda.png')
-
 const {
   width: viewportWidth,
   height: viewportHeight,

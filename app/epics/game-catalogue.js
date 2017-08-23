@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable'
 import {
   fetchGames,
   fetchGame,
+  extractPagination,
 } from '@services/giant-bomb'
 
 import {
@@ -55,12 +56,10 @@ const requestGamesToFetchEpic = (action$, store) => action$
 
     if (searchText) {
       observable = fetchGames(searchText)
-        .map(response => receiveGames(response.results, {
-          max: response.limit, 
-          amount: response.number_of_page_results,
-          total: response.number_of_total_results,
-          offset: response.offset,
-        }))
+        .map(response => receiveGames(
+          response.results,
+          extractPagination(response),
+        ))
         .catch(error => Observable.of(receiveGamesFailure(error)))
     } else {
       observable = Observable.of(receiveGames([]))
@@ -84,12 +83,10 @@ const reauestMoreGameEpic = (action$, store) => action$
       observable = fetchGames(searchText, {
         offset,
       })
-        .map(response => receiveMoreGames(response.results, {
-          max: response.limit, 
-          amount: response.number_of_page_results,
-          total: response.number_of_total_results,
-          offset: response.offset,
-        }))
+        .map(response => receiveMoreGames(
+          response.results,
+          extractPagination(response),
+        ))
         .catch(error => Observable.of(receiveMoreGamesFailure(error)))
     } else {
       observable = Observable.of(receiveGames([]))

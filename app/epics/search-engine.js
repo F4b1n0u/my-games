@@ -6,6 +6,7 @@ import { getSearchText } from '@selectors/search-engine'
 import { fetchFranchises } from '@services/giant-bomb'
 import {
   fetchFranchiseCompletion,
+  extractPagination,
 } from '@services/giant-bomb'
 import {
   isPending as isCataloguePending,
@@ -97,7 +98,10 @@ const selectFranchiseTofetchEpic = (action$, store) => {
 const requestFranchiseCompletionEpic = (action$, store) => action$
   .ofType(REQUEST_FRANCHISE_COMPLETION)
   .mergeMap(action => fetchFranchiseCompletion(action.selectedFranchise))
-    .map(response => receiveGames(response.results.games))
+    .map(response => receiveGames(
+      response.results.games,
+      extractPagination(response),
+    ))
     .takeUntil(action$.ofType(SUBMIT_SEARCH))
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error))
   )
