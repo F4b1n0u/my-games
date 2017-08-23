@@ -9,7 +9,7 @@ import PlatformList from './platform-list';
 
 const image = require('../../assets/images/zelda.png')
 
-export default class NotDetailedGameComponent extends React.Component {
+export default class IncompleteNotDetailedGameComponent extends React.Component {
   render() {
     const {
       name,

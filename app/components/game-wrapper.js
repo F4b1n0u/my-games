@@ -35,15 +35,15 @@ export default class GameWrapperComponent extends React.Component {
 
 	_toggleDetails() {
     const {
-			game,
+			isDetailed,
     } = this.props;
     
     const {
       animationProgression,
     } = this.state;
     
-    const startValue = isDetailed.isDetailed ? 1 : 0
-    const endValue   = isDetailed.isDetailed ? 0 : 1
+    const startValue = isDetailed ? 1 : 0
+    const endValue   = isDetailed ? 0 : 1
 
     animationProgression.setValue(startValue);
     Animated.timing(
@@ -59,14 +59,14 @@ export default class GameWrapperComponent extends React.Component {
 	componentWillUpdate(nextProps) {
 		const {
       scrollToMe,
-      game,
+      isDetailed,
 		} = this.props;
 
-		if (nextProps.game.isDetailed !== game.isDetailed) {
+		if (nextProps.isDetailed !== isDetailed) {
       this._toggleDetails()
     }
 
-    if (nextProps.game.isDetailed) {
+    if (nextProps.isDetailed) {
       scrollToMe()
     }
 	}
@@ -108,6 +108,9 @@ export default class GameWrapperComponent extends React.Component {
 	render() {
     const {
       game,
+      isDetailed,
+      showGameDetails,
+      hideGameDetails,
     } = this.props;
 
 		const {
@@ -130,13 +133,15 @@ export default class GameWrapperComponent extends React.Component {
                 {...game}
               />
             ) : (
-              (!game.isDetailed) ? (
+              (!isDetailed) ? (
                 <CompleteNotDetailedGame
                   {...game}
+                  showGameDetails={showGameDetails}
                 />
               ) : (
                 <DetailedGame
                   {...game}
+                  hideGameDetails={hideGameDetails}
                 />
               )
             )

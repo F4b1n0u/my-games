@@ -2,6 +2,7 @@ export const REQUEST_GAMES                    = 'my-games/game-list/REQUEST_GAME
 export const RECEIVE_GAMES_SUCCESS            = 'my-games/game-list/RECEIVE_GAMES_SUCCESS'
 export const RECEIVE_GAMES_FAILURE            = 'my-games/game-list/RECEIVE_GAMES_FAILURE'
 export const SHOW_GAME_DETAILS                = 'my-games/game-list/SHOW_GAME_DETAILS'
+export const HIDE_GAME_DETAILS                = 'my-games/game-list/HIDE_GAME_DETAILS'
 export const REQUEST_GAME_COMPLETION          = 'my-games/game-list/REQUEST_GAME_COMPLETION'
 export const RECEIVE_GAME_COMPLETION_SUCCESS  = 'my-games/game-list/RECEIVE_GAME_COMPLETION_SUCCESS'
 export const RECEIVE_GAME_COMPLETION_FAILURE  = 'my-games/game-list/RECEIVE_GAME_COMPLETION_FAILURE'
@@ -32,6 +33,10 @@ export const receiveGamesFailure = error => ({
 export const showGameDetails = detailedGame => ({
   type: SHOW_GAME_DETAILS,
   detailedGame,
+})
+
+export const hideGameDetails = () => ({
+  type: HIDE_GAME_DETAILS,
 })
 
 export const requestGameCompletion = game => ({

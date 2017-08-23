@@ -7,9 +7,12 @@ import {
   RECEIVE_GAMES_FAILURE,
   REQUEST_GAME_COMPLETION,
   RECEIVE_GAME_COMPLETION_SUCCESS,
+  SHOW_GAME_DETAILS,
+  HIDE_GAME_DETAILS,
 } from '@actions/games'
 
 import {
+  SELECT_FRANCHISE,
   RECEIVE_GAME_COMPLETION_FAILURE,
   RECEIVE_FRANCHISE_COMPLETION_SUCCESS,
   RECEIVE_FRANCHISE_COMPLETION_FAILURE,
@@ -25,6 +28,7 @@ const initialState = {
     pending: false,
     error: null
   },
+  detailedGameId: null,
 }
 
 function list(
@@ -59,6 +63,8 @@ function list(
           action,
         )
       )
+    case REQUEST_GAMES:
+    case SELECT_FRANCHISE:
     case RECEIVE_FRANCHISE_COMPLETION_FAILURE:
     case RECEIVE_GAMES_FAILURE:
       return []
@@ -73,6 +79,7 @@ function listStatus(
 ) {
   switch (action.type) {
     case REQUEST_GAMES:
+    case SELECT_FRANCHISE:
       return {
         pending: true,
         error: null
@@ -89,7 +96,22 @@ function listStatus(
   }
 }
 
+function detailedGameId(
+  state = initialState.detailedGameId,
+  action,
+) {
+  switch (action.type) {
+    case SHOW_GAME_DETAILS:
+      return action.detailedGame.id
+    case HIDE_GAME_DETAILS:
+      return initialState.detailedGameId
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   list,
   listStatus,
+  detailedGameId,
 })

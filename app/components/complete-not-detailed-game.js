@@ -9,20 +9,20 @@ import PlatformList from './platform-list';
 
 const image = require('../../assets/images/zelda.png')
 
-export default class NotDetailedGameComponent extends React.Component {
+export default class CompleteNotDetailedGameComponent extends React.Component {
   constructor(props) {
     super(props)
 
-    this._handleToggle = this._handleToggle.bind(this)
+    this._handlePressHide = this._handlePressHide.bind(this)
     this._renderPlatformList = this._renderPlatformList.bind(this);
   }
 
-  _handleToggle = () => {
+  _handlePressHide = () => {
     const {
-      toggleGameDetails = () => {},
+      showGameDetails,
     } = this.props;
 
-    toggleGameDetails(this.props);
+    showGameDetails();
   }
 
   _renderPlatformList() {
@@ -47,7 +47,7 @@ export default class NotDetailedGameComponent extends React.Component {
     
     return (
       <Game
-        onPress={this._handleToggle}        
+        onPress={this._handlePressHide}        
       >
         <Name>
           {name}
@@ -55,8 +55,7 @@ export default class NotDetailedGameComponent extends React.Component {
         {
           image ? (
             <Cover
-              uri={image.super_url}
-              fallbackUri={image.thumb_url}
+              image={image}
             >
               <Overlay>
                 {this._renderPlatformList()}

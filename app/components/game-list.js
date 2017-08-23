@@ -46,6 +46,8 @@ export default class GameListComponent extends React.Component {
 			collapseDetailedGames,
 			requestGameCompletion,
 			detailedGameId,
+			showGameDetails,
+			hideGameDetails,
 		} = this.props;
 
 		return (
@@ -54,10 +56,10 @@ export default class GameListComponent extends React.Component {
 				scrollToMe={this._scrollToGame.bind(this, index)}
 				normalHeight={normalHeight}
 				detailedHeight={detailedHeight}
-				toggleGameDetails={toggleGameDetails}
-				collapseDetailedGames={collapseDetailedGames}
+				showGameDetails={showGameDetails.bind(this, item.game)}
+				hideGameDetails={hideGameDetails}
 				requestGameCompletion={requestGameCompletion.bind(this, item.game)}
-				isDetailed={detailedGameId === item.id}
+				isDetailed={detailedGameId === item.game.id}
 				hasDetailed={!!detailedGameId}
 			/>
 		);
