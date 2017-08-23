@@ -20,29 +20,6 @@ export default class FranchiseListComponent extends React.Component {
     this._handlePressItem = this._handlePressItem.bind(this)
   }
 
-  state = {
-    spinValue: new Animated.Value(0),
-  }
-
-  componentDidMount() {
-    // Animated.loop(
-    //   Animated.timing(
-    //     this.state.spinValue,
-    //     {
-    //       toValue: 1,
-    //       easing: Easing.linear,
-    //       duration: spinDuration,
-    //       useNativeDriver: true
-    //     }
-    //   )
-    // ).start(() => {
-    //   console.log('spin')
-    //   this.setState({
-    //     spinValue: new Animated.Value(0),
-    //   })
-    // })
-  }
-
   _handlePressItem(item) {
     const {
       selectFranchise,
@@ -57,15 +34,6 @@ export default class FranchiseListComponent extends React.Component {
       status,
     } = this.props
 
-    const {
-      spinValue,
-    } = this.state
-
-    const spinDegValue = spinValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '360deg']
-    })
-
     let element;
 
     if (!_.isEmpty(franchises)) {
@@ -73,7 +41,7 @@ export default class FranchiseListComponent extends React.Component {
         <FranchiseList>
           {franchises.map((franchise, index) => (
             <TouchableFranchise
-              key={index}
+              key={franchise.id}
               onPress={this._handlePressItem.bind(this, franchise)}
             >
               <Franchise
@@ -81,15 +49,6 @@ export default class FranchiseListComponent extends React.Component {
               />
             </TouchableFranchise>
           ))}
-          {status.pending ? (
-            <SpinnerWrapper>
-              <Animated.View
-                style={{transform: [{rotate: spinDegValue}] }}
-              >
-                <Spinner />
-              </Animated.View>
-            </SpinnerWrapper>
-           ) : null}
         </FranchiseList>
       )
     } else {
@@ -104,25 +63,6 @@ const FranchiseList = styled.View`
   width: 100%;
   justify-content: flex-start;
   flex-direction: column;
-`
-
-const SpinnerWrapper = styled.View`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: transparent;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-
-const Spinner = styled(EvilIcons).attrs({
-  name: 'spinner-2'
-})`
-  font-size: 100;
-  color: #e3e3e3;
 `
 
 const TouchableFranchise = styled.TouchableOpacity`

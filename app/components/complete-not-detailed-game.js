@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 import {
 	LinearGradient,
-} from 'expo';
-import styled from 'styled-components/native';
+} from 'expo'
+import styled from 'styled-components/native'
 
-import FitImage from './fit-image'
-import PlatformList from './platform-list';
+import RatioLessImage from './ratio-less-image'
+import PlatformList from './platform-list'
 
 const image = require('../../assets/images/zelda.png')
 
@@ -14,15 +14,15 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
     super(props)
 
     this._handlePressHide = this._handlePressHide.bind(this)
-    this._renderPlatformList = this._renderPlatformList.bind(this);
+    this._renderPlatformList = this._renderPlatformList.bind(this)
   }
 
   _handlePressHide = () => {
     const {
       showGameDetails,
-    } = this.props;
+    } = this.props
 
-    showGameDetails();
+    showGameDetails()
   }
 
   _renderPlatformList() {
@@ -92,7 +92,7 @@ const Name = styled.Text.attrs({
   font-family: 'florentia-extralight';
 `;
 
-const Cover = styled(FitImage).attrs({
+const Cover = styled(RatioLessImage).attrs({
 })`
   position: absolute;
 	left: 0;

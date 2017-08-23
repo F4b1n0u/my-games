@@ -45,7 +45,6 @@ export default class SearchEngineComponent extends React.Component {
     // not sure why the press on franchise does not blur the input ...
     if (_searchInput && _searchInput.root.isFocused() && hasLoadingGames) {
       _searchInput.root.blur()
-      console.log('blur')
     }
   }
 

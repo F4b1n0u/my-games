@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import styled from 'styled-components/native';
 
+import ProgressiveImage from './progressive-image'
 export default class FranchiseFranchiseComponent extends React.Component {
   render() {
     const {
@@ -14,7 +15,7 @@ export default class FranchiseFranchiseComponent extends React.Component {
         {
           image ? (
             <Thumbnail
-              source={{uri: image.thumb_url}}
+              imageSource={{ uri: image.thumb_url }}
             />
           ) : 
           // TODO display a list icon or something
@@ -35,12 +36,13 @@ const Franchise = styled.View`
   alignItems: center;
 `
 
-const Thumbnail = styled.Image`
+const Thumbnail = styled(ProgressiveImage).attrs({
+  resizeMode: 'contain',
+})`
   height: 35;
   width: 35;
   margin-right: 5;
   border-radius: 2;
-  resize-mode: contain;
 `
 
 const Name = styled.Text.attrs({

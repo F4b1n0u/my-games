@@ -11,6 +11,7 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons'
 
+import ProgressiveImage from './progressive-image'
 import PlatformList from './platform-list'
 
 const image = require('../../assets/images/zelda.png')
@@ -32,7 +33,7 @@ const itemHorizontalMargin = wp(2)
 const sliderWidth = viewportWidth
 const itemWidth = slideWidth + itemHorizontalMargin * 2
 
-export default class DetailedGameComponent extends React.Component {
+export default class CompleteDetailedGameComponent extends React.Component {
   constructor(props) {
     super(props)
 
@@ -72,7 +73,8 @@ export default class DetailedGameComponent extends React.Component {
                 >
                   <ImageContainer>
                     <Picture
-                      source={{uri: image.super_url}}
+                      thumbnailSource={{ uri: image.thumb_url }}
+                      imageSource={{ uri: image.super_url }}
                     />
                   </ImageContainer>
                 </Slide>
@@ -143,17 +145,15 @@ const ImageContainer = styled.View`
   padding-horizontal: ${itemHorizontalMargin};
 `
 
-const StyledImage = styled.Image`
+const StyledImage = styled.Image.attrs({
+  resizeMode: 'cover',
+})`
   flex: 1;
-  resize-mode: cover;
 `;
 
-const Picture = styled.Image.attrs({
-  blurRadius: 0,
-})`
+const Picture = styled(ProgressiveImage)`
   width: ${slideWidth};
   height: ${slideHeight};
-  resizeMode: cover;
   borderRadius: 5;
   background-color: #e3e3e3a0;
 `

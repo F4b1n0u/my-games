@@ -11,7 +11,7 @@ import {
 } from 'expo';
 import styled from 'styled-components/native';
 
-import DetailedGame from './detailed-game'
+import CompleteDetailedGame from './complete-detailed-game'
 import CompleteNotDetailedGame from './complete-not-detailed-game'
 import IncompleteNotDetailedGame from './incomplete-not-detailed-game'
 
@@ -139,7 +139,7 @@ export default class GameWrapperComponent extends React.Component {
                   showGameDetails={showGameDetails}
                 />
               ) : (
-                <DetailedGame
+                <CompleteDetailedGame
                   {...game}
                   hideGameDetails={hideGameDetails}
                 />

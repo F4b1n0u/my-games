@@ -2,7 +2,7 @@ import React from 'react'
 import {
   Animated,
   Easing,
-  StyleSheet
+  StyleSheet,
 } from 'react-native'
 
 const backgroundPos = {
@@ -27,11 +27,11 @@ const backgroundImage = require('../../assets/images/all-games-wallpaper.png')
 export default class Background extends React.Component {
   constructor(props) {
     super(props)
+  }
 
-    this.state = {
-      fadeIn: new Animated.Value(0),
-      animationProgression: new Animated.Value(0),
-    }
+  state = {
+    fadeIn: new Animated.Value(0),
+    animationProgression: new Animated.Value(0),
   }
 
   componentDidMount() {

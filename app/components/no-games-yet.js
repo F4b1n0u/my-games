@@ -26,9 +26,9 @@ const NoResult = styled.View`
 
 const Arrows = styled.Image.attrs({
   source: arrows,
+  resizeMode: 'contain',
 })`
   height: 150;
-  resize-mode: contain;
 `
 
 const Instructions = styled.Text`
