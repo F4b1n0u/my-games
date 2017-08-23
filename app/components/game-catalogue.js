@@ -18,6 +18,8 @@ export default class GameListComponent extends React.Component {
 		
 		this._scrollToGame = this._scrollToGame.bind(this)
 		this._renderItem = this._renderItem.bind(this)
+		this._renderFooter = this._renderFooter.bind(this)
+		this._handleEndReached = this._handleEndReached.bind(this)
 		this._setRef = this._setRef.bind(this)
   }
 
@@ -37,6 +39,18 @@ export default class GameListComponent extends React.Component {
 		this.flatListRef.root.scrollToIndex({animated: true, index: "" + index});
   }
 
+	_handleEndReached = () => {
+		const {
+			requestMoreGames,
+			hasMore,
+			isPending,
+		} = this.props
+
+		if (hasMore && !isPending) {
+			requestMoreGames()
+		}
+	}
+	
 	_renderItem({
 		item,
 		index,
@@ -65,6 +79,18 @@ export default class GameListComponent extends React.Component {
 		);
 	}
 
+	_renderFooter = () => {
+		const {
+			isPending,
+		} = this.props
+
+		return (isPending) ? (
+			<Footer>
+        <Spinner />
+      </Footer>
+		) : null
+  };
+
   render() {
     const {
 			list,
@@ -81,6 +107,8 @@ export default class GameListComponent extends React.Component {
 				keyExtractor={this._keyExtractor}
 				getItemLayout={this._getItemLayout}
 				renderItem={this._renderItem.bind(this)}
+				ListFooterComponent={this._renderFooter}
+				onEndReached={this._handleEndReached}
 				scrollEnabled={!hasDetailedGame}
 			/>
     );
@@ -95,3 +123,12 @@ const GameList = styled.FlatList`
 	bottom: 0;
 	width: 100%;
 `;
+
+const Footer = styled.View`
+	padding-vertical: 20;
+`
+
+const Spinner = styled.ActivityIndicator.attrs({
+	animating: true,
+	size: 'large',
+})``

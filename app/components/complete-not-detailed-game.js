@@ -73,7 +73,7 @@ const Game = styled.TouchableOpacity.attrs({
 })`
   flex: 1;
   background-color: transparent;
-  border-radius: 5;
+  border-radius: 2;
   overflow: hidden;
 `;
 

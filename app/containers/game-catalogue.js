@@ -7,9 +7,12 @@ import {
 
 import { 
   getList,
+  isPending,
+  hasMore,
 } from '@selectors/game-catalogue'
 
 import {
+  requestMoreGames,
   requestGameCompletion,
 } from '@actions/game-catalogue'
 
@@ -18,16 +21,19 @@ import {
   hideGameDetails,
 } from '@actions/app'
 
-import GameList from '@components/game-list'
+import GameCatalogue from '@components/game-catalogue'
 
 const mapStateToProps = state => {
   return ({
     list: getList(state.gameCatalogue),
+    hasMore: hasMore(state.gameCatalogue),
+    isPending: isPending(state.gameCatalogue),
     detailedGameId: getDetailedGameId(state.app),
   })
 }
 
 const mapDispatchToProps = dispatch => ({
+  requestMoreGames: () => dispatch(requestMoreGames()),
   requestGameCompletion: game => dispatch(requestGameCompletion(game)),
   showGameDetails: game => dispatch(showGameDetails(game)),
   hideGameDetails: () => dispatch(hideGameDetails()),
@@ -36,4 +42,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(GameList)
+)(GameCatalogue)

@@ -2,11 +2,13 @@ import 'rxjs';
 import _ from 'lodash'
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs/Observable'
-import { getSearchText } from '@selectors/search-engine'
+
+
 import {
   fetchGames,
   fetchGame,
 } from '@services/giant-bomb'
+
 import {
   SUBMIT_SEARCH
 } from '@actions/search-engine'
@@ -14,16 +16,26 @@ import {
   stopSearching,
 } from '@actions/search-engine'
 import {
+  getSearchText,
+} from '@selectors/search-engine'
+
+import {
   REQUEST_GAMES,
+  REQUEST_MORE_GAMES,
   REQUEST_GAME_COMPLETION,
 } from '@actions/game-catalogue'
 import {
   requestGames,
   receiveGames,
   receiveGamesFailure,
+  receiveMoreGames,
+  receiveMoreGamesFailure,
   receiveGameCompletion,
   receiveGameCompletionFailure,
 } from '@actions/game-catalogue'
+import { 
+  getNextOffset,
+} from '@selectors/game-catalogue'
 
 const submitSearchEpic = action$ => action$
   .ofType(SUBMIT_SEARCH)
@@ -57,6 +69,35 @@ const requestGamesToFetchEpic = (action$, store) => action$
     return observable
   })
 
+const reauestMoreGameEpic = (action$, store) => action$
+  .ofType(REQUEST_MORE_GAMES)
+  .switchMap(() => {
+    const searchEngineState = store.getState().searchEngine
+    const gameCatalogueState = store.getState().gameCatalogue
+
+    const searchText = getSearchText(searchEngineState);
+    const offset = getNextOffset(gameCatalogueState)
+
+    let observable
+
+    if (searchText) {
+      observable = fetchGames(searchText, {
+        offset,
+      })
+        .map(response => receiveMoreGames(response.results, {
+          max: response.limit, 
+          amount: response.number_of_page_results,
+          total: response.number_of_total_results,
+          offset: response.offset,
+        }))
+        .catch(error => Observable.of(receiveMoreGamesFailure(error)))
+    } else {
+      observable = Observable.of(receiveGames([]))
+    }
+
+    return observable
+  })
+
 const requestGameCompletionEpic = action$ => action$
   .ofType(REQUEST_GAME_COMPLETION)
   .mergeMap(action => fetchGame(action.game)
@@ -70,4 +111,5 @@ export default combineEpics(
   requestGamesToStopEpic,
   requestGamesToFetchEpic,
   requestGameCompletionEpic,
+  reauestMoreGameEpic,
 )

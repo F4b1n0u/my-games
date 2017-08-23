@@ -1,11 +1,15 @@
 import {
   combineReducers,
 } from 'redux'
+import _ from 'lodash'
 
 import {
   REQUEST_GAMES,
   RECEIVE_GAMES_SUCCESS,
   RECEIVE_GAMES_FAILURE,
+  REQUEST_MORE_GAMES,
+  RECEIVE_MORE_GAMES_SUCCESS,
+  RECEIVE_MORE_GAMES_FAILURE,
   REQUEST_GAME_COMPLETION,
   RECEIVE_GAME_COMPLETION_SUCCESS,
 } from '@actions/game-catalogue'
@@ -30,7 +34,7 @@ const initialState = {
     pending: false,
     error: null
   },
-  pagintion: {
+  pagination: {
     max: 10, 
     amount: 0,
     total: 0,
@@ -61,6 +65,16 @@ function list(
           action,
         )
       )
+    case RECEIVE_MORE_GAMES_SUCCESS:
+      return _.concat(
+        state,
+        action.games.map(game => gameReducer(
+          {
+            game,
+          },
+          action,
+        )),
+      )
     case RECEIVE_FRANCHISE_COMPLETION_SUCCESS:
       return action.completedFranchise.games.map(
         game => gameReducer(
@@ -86,12 +100,14 @@ function status(
 ) {
   switch (action.type) {
     case REQUEST_GAMES:
+    case REQUEST_MORE_GAMES:
     case SELECT_FRANCHISE:
       return {
         pending: true,
         error: null
       }
     case RECEIVE_GAMES_SUCCESS:
+    case RECEIVE_MORE_GAMES_SUCCESS:
       return initialState.status;
     case RECEIVE_GAMES_FAILURE:
       return {
@@ -103,13 +119,23 @@ function status(
   }
 }
 
-function listPagination(
-
+function pagination(
+  state = initialState.pagination,
+  action,
 ) {
-  
+  switch (action.type) {
+    case RECEIVE_GAMES_SUCCESS:
+    case RECEIVE_MORE_GAMES_SUCCESS:
+      return action.pagination
+    case RECEIVE_GAMES_FAILURE:
+      return initialState.pagination
+    default:
+      return state
+  }
 }
 
 export default combineReducers({
   list,
   status,
+  pagination,
 })
