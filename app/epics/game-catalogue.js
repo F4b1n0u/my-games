@@ -16,14 +16,14 @@ import {
 import {
   REQUEST_GAMES,
   REQUEST_GAME_COMPLETION,
-} from '@actions/games'
+} from '@actions/game-catalogue'
 import {
   requestGames,
   receiveGames,
   receiveGamesFailure,
   receiveGameCompletion,
   receiveGameCompletionFailure,
-} from '@actions/games'
+} from '@actions/game-catalogue'
 
 const submitSearchEpic = action$ => action$
   .ofType(SUBMIT_SEARCH)

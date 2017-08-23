@@ -11,8 +11,8 @@ import {
 } from '@reducers/search-engine'
 
 import {
-  default as games,
-} from '@reducers/games'
+  default as gameCatalogue,
+} from '@reducers/game-catalogue'
 
 import {
   default as app,
@@ -20,7 +20,7 @@ import {
 
 export default combineReducers({
   searchEngine,
-  games,
+  gameCatalogue,
   app,
   log,
 })

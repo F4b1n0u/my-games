@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 
 import Background from './background'
 import SearchEngineContainer from '@containers/search-engine'
-import GameListContainer from '@containers/games'
+import GameCatalogueContainer from '@containers/game-catalogue'
 import NoGamesYetComponent from './no-games-yet'
 export default class GameExplorerComponent extends React.Component {
   constructor(props) {
@@ -40,5 +40,5 @@ const SearchEngine = styled(SearchEngineContainer)`
   position: absolute;
 `;
 
-const GameList = styled(GameListContainer)`
+const GameList = styled(GameCatalogueContainer)`
 `;

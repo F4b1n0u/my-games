@@ -8,8 +8,8 @@ import {
   fetchFranchiseCompletion,
 } from '@services/giant-bomb'
 import {
-  getStatus as getListStatus,
-} from '@selectors/games'
+  isPending as isCataloguePending,
+} from '@selectors/game-catalogue'
 import {
   UPDATE_SEARCHTEXT,
   REQUEST_FRANCHISES,
@@ -29,7 +29,7 @@ import {
 } from '@actions/search-engine'
 import {
   receiveGames,
-} from '@actions/games'
+} from '@actions/game-catalogue'
 
 const updateSearchTextEpic = (action$, store) => {
   return action$
@@ -53,15 +53,14 @@ const requestFranchisesEpic = (action$, store) => {
     .ofType(REQUEST_FRANCHISES)
     .switchMap(() => {
       const searchEngineState = store.getState().searchEngine
+      const gameCatalogueState = store.getState().gameCatalogue
+      
       const searchText = getSearchText(searchEngineState);
-
-      const gamesState = store.getState().games
-      const gamesStatus = getListStatus(gamesState)
-      const isGamesPending = gamesStatus.pending
+      const isPending = isCataloguePending(gameCatalogueState)
 
       let observable
 
-      if(isGamesPending) {
+      if (isPending) {
         observable = Observable.of({
           type: 'DO_NOTHING'
         })

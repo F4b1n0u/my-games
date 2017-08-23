@@ -8,6 +8,7 @@
   "dependencies": {
     "expo": "^19.0.0",
     "lodash": "^4.17.4",
+    "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
     "react": "16.0.0-alpha.12",
     "react-native": "https://github.com/expo/react-native/archive/sdk-19.0.0.tar.gz",

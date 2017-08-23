@@ -6,7 +6,7 @@ import {
   REQUEST_GAME_COMPLETION,
   RECEIVE_GAME_COMPLETION_SUCCESS,
   RECEIVE_GAME_COMPLETION_FAILURE,
-} from '@actions/games'
+} from '@actions/game-catalogue'
 
 const initialState = {
   game: {},

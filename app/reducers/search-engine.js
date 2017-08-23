@@ -13,7 +13,7 @@ import {
 } from '@actions/search-engine'
 import {
   RECEIVE_GAMES_SUCCESS,
-} from '@actions/games'
+} from '@actions/game-catalogue'
 
 const initialState = {
   searchText: '',

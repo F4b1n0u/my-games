@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Animated, View, Image, StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
 
 export default class ProgressiveImage extends Component {
   constructor(props) {

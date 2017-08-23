@@ -8,7 +8,7 @@ import {
   RECEIVE_GAMES_FAILURE,
   REQUEST_GAME_COMPLETION,
   RECEIVE_GAME_COMPLETION_SUCCESS,
-} from '@actions/games'
+} from '@actions/game-catalogue'
 import {
   SHOW_GAME_DETAILS,
   HIDE_GAME_DETAILS,

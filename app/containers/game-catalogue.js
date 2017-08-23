@@ -7,12 +7,11 @@ import {
 
 import { 
   getList,
-  getStatus as getListStatus,
-} from '@selectors/games'
+} from '@selectors/game-catalogue'
 
 import {
   requestGameCompletion,
-} from '@actions/games'
+} from '@actions/game-catalogue'
 
 import {
   showGameDetails,
@@ -23,8 +22,7 @@ import GameList from '@components/game-list'
 
 const mapStateToProps = state => {
   return ({
-    list: getList(state.games),
-    status: getListStatus(state.games),
+    list: getList(state.gameCatalogue),
     detailedGameId: getDetailedGameId(state.app),
   })
 }
