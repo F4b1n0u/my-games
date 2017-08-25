@@ -65,7 +65,7 @@ export default class GameListComponent extends React.Component {
 		} = this.props;
 
 		return (
-			<GameWrapper
+			<Game
 				{...item}
 				scrollToMe={this._scrollToGame.bind(this, index)}
 				normalHeight={normalHeight}
@@ -124,7 +124,9 @@ const GameList = styled.FlatList`
 	width: 100%;
 `;
 
+// TODO extract the style from the wrapper because it have sens only in the list context
 const Game = styled(GameWrapper)`
+
 `
 
 const Footer = styled.View`
