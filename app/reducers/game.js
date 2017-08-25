@@ -29,9 +29,6 @@ function game(
           {},
           state,
           action.completedGame,
-          {
-            isComplete: true,
-          }
         )
       }
 

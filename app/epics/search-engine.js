@@ -59,13 +59,9 @@ const requestFranchisesEpic = (action$, store) => {
       const searchText = getSearchText(searchEngineState);
       const isPending = isCataloguePending(gameCatalogueState)
 
-      let observable
+      let observable = Observable.empty()
 
-      if (isPending) {
-        observable = Observable.of({
-          type: 'DO_NOTHING'
-        })
-      } else if (searchText) {
+      if (!isPending && searchText) {
         observable = fetchFranchises(searchText)
           .map(response => receiveFranchises(response.results))
           // check if a request game is pending

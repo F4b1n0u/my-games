@@ -74,7 +74,7 @@ export default class GameListComponent extends React.Component {
 				hideGameDetails={hideGameDetails}
 				requestGameCompletion={requestGameCompletion.bind(this, item.game)}
 				isDetailed={detailedGameId === item.game.id}
-				hasDetailed={!!detailedGameId}
+				hasDetailedGame={!!detailedGameId}
 			/>
 		);
 	}
@@ -123,6 +123,9 @@ const GameList = styled.FlatList`
 	bottom: 0;
 	width: 100%;
 `;
+
+const Game = styled(GameWrapper)`
+`
 
 const Footer = styled.View`
 	padding-vertical: 20;

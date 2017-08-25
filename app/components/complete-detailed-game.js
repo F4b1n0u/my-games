@@ -51,11 +51,19 @@ export default class CompleteDetailedGameComponent extends React.Component {
     const {
       name,
       deck,
+      image,
       images,
+      completionLevel,
 		} = this.props
 
-    let slideshow = images
-      .filter(image => image.tags.match('(Screenshots|Wallpaper)'))
+    let slideshow
+
+    if (completionLevel < 3) {
+      slideshow = [image]
+    } else {
+      slideshow = images.filter(image => image.tags.match('(Screenshots|Wallpaper)'))
+    }
+    
     if (_.isEmpty(slideshow)) {
       slideshow = images.filter(image => !image.tags.match('(Fan art|Concept Art)'))
     }

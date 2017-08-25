@@ -5,13 +5,15 @@ import { Observable } from 'rxjs/Observable'
 
 
 import {
-  fetchGames,
-  fetchGame,
+  fetchGamesBySearch,
+  fetchFullGame,
+  fetchGamesByBulk,
   extractPagination,
 } from '@services/giant-bomb'
 
 import {
-  SUBMIT_SEARCH
+  REQUEST_FRANCHISES,
+  SUBMIT_SEARCH,
 } from '@actions/search-engine'
 import {
   stopSearching,
@@ -24,6 +26,7 @@ import {
   REQUEST_GAMES,
   REQUEST_MORE_GAMES,
   REQUEST_GAME_COMPLETION,
+  REQUEST_GAMES_COMPLETION,
 } from '@actions/game-catalogue'
 import {
   requestGames,
@@ -31,6 +34,7 @@ import {
   receiveGamesFailure,
   receiveMoreGames,
   receiveMoreGamesFailure,
+  requestGamesCompletion,
   receiveGameCompletion,
   receiveGameCompletionFailure,
 } from '@actions/game-catalogue'
@@ -55,7 +59,7 @@ const requestGamesToFetchEpic = (action$, store) => action$
     let observable
 
     if (searchText) {
-      observable = fetchGames(searchText)
+      observable = fetchGamesBySearch(searchText)
         .map(response => receiveGames(
           response.results,
           extractPagination(response),
@@ -68,7 +72,7 @@ const requestGamesToFetchEpic = (action$, store) => action$
     return observable
   })
 
-const reauestMoreGameEpic = (action$, store) => action$
+const requestMoreGameEpic = (action$, store) => action$
   .ofType(REQUEST_MORE_GAMES)
   .switchMap(() => {
     const searchEngineState = store.getState().searchEngine
@@ -80,7 +84,7 @@ const reauestMoreGameEpic = (action$, store) => action$
     let observable
 
     if (searchText) {
-      observable = fetchGames(searchText, {
+      observable = fetchGamesBySearch(searchText, {
         offset,
       })
         .map(response => receiveMoreGames(
@@ -97,9 +101,25 @@ const reauestMoreGameEpic = (action$, store) => action$
 
 const requestGameCompletionEpic = action$ => action$
   .ofType(REQUEST_GAME_COMPLETION)
-  .mergeMap(action => fetchGame(action.game)
-    .map(response => receiveGameCompletion(response.results))
-    .takeUntil(action$.ofType(SUBMIT_SEARCH))
+  .bufferTime(1000)
+  .switchMap(requests => {
+    const games = requests.map(request => request.game)
+    let observable = Observable.empty()
+
+    if (!_.isEmpty(games)) {
+      observable = Observable.of(requestGamesCompletion(games))
+    }
+
+    return observable
+  })
+
+const requestGamesCompletionEpic  = action$ => action$
+  .ofType(REQUEST_GAMES_COMPLETION)
+  .switchMap(action => fetchGamesByBulk(action.games)
+    .takeUntil(REQUEST_FRANCHISES)
+    .flatMap(response => response.results.map(
+      result => receiveGameCompletion(result)
+    ))
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
@@ -108,5 +128,6 @@ export default combineEpics(
   requestGamesToStopEpic,
   requestGamesToFetchEpic,
   requestGameCompletionEpic,
-  reauestMoreGameEpic,
+  requestGamesCompletionEpic,
+  requestMoreGameEpic,
 )

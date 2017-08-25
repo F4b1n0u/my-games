@@ -100,7 +100,7 @@ export default class GameWrapperComponent extends React.Component {
       marginAnimProgress,
     })
 
-    if (!game.isComplete) {
+    if (game.completionLevel < 2) {
       requestGameCompletion()
     }
   }
@@ -128,7 +128,7 @@ export default class GameWrapperComponent extends React.Component {
       >
         <GameWrapper>
           {
-            (!game.isComplete) ? (
+            (game.completionLevel < 2) ? (
               <IncompleteNotDetailedGame
                 {...game}
               />
@@ -154,8 +154,4 @@ export default class GameWrapperComponent extends React.Component {
 
 const GameWrapper = styled.View`
   flex: 1;
-  margin-bottom: 15;
-  border-color: #e3e3e3;
-	border-width: 3;
-  border-radius: 5;
 `

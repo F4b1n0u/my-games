@@ -1,22 +1,9 @@
-import {
-  combineReducers
-} from 'redux'
+import { combineReducers } from 'redux'
 
-import {
-  default as log,
-} from '@reducers/log'
-
-import {
-  default as searchEngine,
-} from '@reducers/search-engine'
-
-import {
-  default as gameCatalogue,
-} from '@reducers/game-catalogue'
-
-import {
-  default as app,
-} from '@reducers/app'
+import log from '@reducers/log'
+import searchEngine from '@reducers/search-engine'
+import gameCatalogue from '@reducers/game-catalogue'
+import app from '@reducers/app'
 
 export default combineReducers({
   searchEngine,

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { 
   getDetailedGameId,
+  hasDetailedGame,
 } from '@selectors/app'
 
 import { 
@@ -29,6 +30,7 @@ const mapStateToProps = state => {
     hasMore: hasMore(state.gameCatalogue),
     isPending: isPending(state.gameCatalogue),
     detailedGameId: getDetailedGameId(state.app),
+    hasDetailedGame: hasDetailedGame(state.app),
   })
 }
 

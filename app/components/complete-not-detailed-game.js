@@ -25,10 +25,10 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
 
   _renderPlatformList() {
     const {
-      hasDetailed,
+      hasDetailedGame,
     } = this.props;
     
-    return (hasDetailed) ?
+    return (hasDetailedGame) ?
       null
     : (
       <PlatformList
