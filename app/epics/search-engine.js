@@ -93,7 +93,7 @@ const selectFranchiseTofetchEpic = (action$, store) => {
 
 const requestFranchiseCompletionEpic = (action$, store) => action$
   .ofType(REQUEST_FRANCHISE_COMPLETION)
-  .mergeMap(action => fetchFranchiseCompletion(action.selectedFranchise))
+  .mergeMap(action => fetchFranchiseCompletion(action.selectedFranchise)
     .map(response => receiveGames(
       response.results.games,
       extractPagination(response),
@@ -101,6 +101,7 @@ const requestFranchiseCompletionEpic = (action$, store) => action$
     .takeUntil(action$.ofType(SUBMIT_SEARCH))
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error))
   )
+)
 
 export default combineEpics(
   updateSearchTextEpic,

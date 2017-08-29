@@ -116,10 +116,10 @@ const requestGameCompletionEpic = action$ => action$
 const requestGamesCompletionEpic  = action$ => action$
   .ofType(REQUEST_GAMES_COMPLETION)
   .switchMap(action => fetchGamesByBulk(action.games)
-    .takeUntil(REQUEST_FRANCHISES)
     .flatMap(response => response.results.map(
       result => receiveGameCompletion(result)
     ))
+    // .takeUntil(REQUEST_FRANCHISES)
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
