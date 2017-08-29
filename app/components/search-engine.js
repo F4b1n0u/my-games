@@ -86,7 +86,7 @@ const SearchEngine = styled.View`
   justify-content: center;
   align-items: center;
   border-color: #e3e3e3;
-  border-width: 1;
+  border-width: 2;
   border-radius: 5;
   background-color: #fafafaf0;
   overflow: hidden;
