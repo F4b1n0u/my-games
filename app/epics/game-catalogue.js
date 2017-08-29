@@ -25,7 +25,7 @@ import {
 import {
   REQUEST_GAMES,
   REQUEST_MORE_GAMES,
-  REQUEST_GAME_COMPLETION,
+  REQUEST_GAME_PARTIAL_COMPLETION,
   REQUEST_GAMES_COMPLETION,
 } from '@actions/game-catalogue'
 import {
@@ -99,8 +99,8 @@ const requestMoreGameEpic = (action$, store) => action$
     return observable
   })
 
-const requestGameCompletionEpic = action$ => action$
-  .ofType(REQUEST_GAME_COMPLETION)
+const requestGamePartialCompletionEpic = action$ => action$
+  .ofType(REQUEST_GAME_PARTIAL_COMPLETION)
   .bufferTime(1000)
   .switchMap(requests => {
     const games = requests.map(request => request.game)
@@ -116,9 +116,11 @@ const requestGameCompletionEpic = action$ => action$
 const requestGamesCompletionEpic  = action$ => action$
   .ofType(REQUEST_GAMES_COMPLETION)
   .switchMap(action => fetchGamesByBulk(action.games)
-    .flatMap(response => response.results.map(
-      result => receiveGameCompletion(result)
-    ))
+    .flatMap(response => Observable.of(
+      response.results.map(
+        result => receiveGameCompletion(result)
+      ))
+    )
     // .takeUntil(REQUEST_FRANCHISES)
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
@@ -127,7 +129,7 @@ export default combineEpics(
   submitSearchEpic,
   requestGamesToStopEpic,
   requestGamesToFetchEpic,
-  requestGameCompletionEpic,
+  requestGamePartialCompletionEpic,
   requestGamesCompletionEpic,
   requestMoreGameEpic,
 )

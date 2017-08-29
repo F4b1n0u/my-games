@@ -87,7 +87,10 @@ export const fetchFullGame = ({id}) => {
 
   return ajax
     .getJSON(`https://www.giantbomb.com/api/game/${prefix}-${id}/?${qs.stringify(queryParams)}`)
-    .map(markGameCompletionLevel.bind(null, 3))
+    .map(response => {
+      response.results = markGameCompletionLevel(3, response.results)
+      return response
+    })
 }
 
 export const fetchGamesByBulk = (games) => {

@@ -19,7 +19,7 @@ import {
 
 import {
   requestMoreGames,
-  requestGameCompletion,
+  requestGamePartialCompletion,
 } from '@actions/game-catalogue'
 
 import GameCatalogue from '@components/game-catalogue'
@@ -36,7 +36,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   requestMoreGames: () => dispatch(requestMoreGames()),
-  requestGameCompletion: game => dispatch(requestGameCompletion(game)),
+  requestGamePartialCompletion: game => dispatch(requestGamePartialCompletion(game)),
   showGameDetails: game => dispatch(showGameDetails(game)),
   hideGameDetails: () => dispatch(hideGameDetails()),
 })

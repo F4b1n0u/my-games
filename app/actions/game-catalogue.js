@@ -1,7 +1,8 @@
 export const REQUEST_GAMES                    = 'my-games/game-catalogue/REQUEST_GAMES'
 export const RECEIVE_GAMES_SUCCESS            = 'my-games/game-catalogue/RECEIVE_GAMES_SUCCESS'
 export const RECEIVE_GAMES_FAILURE            = 'my-games/game-catalogue/RECEIVE_GAMES_FAILURE'
-export const REQUEST_GAME_COMPLETION          = 'my-games/game-catalogue/REQUEST_GAME_COMPLETION'
+export const REQUEST_GAME_PARTIAL_COMPLETION  = 'my-games/game-catalogue/REQUEST_GAME_PARTIAL_COMPLETION'
+export const REQUEST_GAME_FULL_COMPLETION     = 'my-games/game-catalogue/REQUEST_GAME_FULL_COMPLETION'
 export const REQUEST_GAMES_COMPLETION         = 'my-games/game-catalogue/REQUEST_GAMES_COMPLETION'
 export const RECEIVE_GAME_COMPLETION_SUCCESS  = 'my-games/game-catalogue/RECEIVE_GAME_COMPLETION_SUCCESS'
 export const RECEIVE_GAME_COMPLETION_FAILURE  = 'my-games/game-catalogue/RECEIVE_GAME_COMPLETION_FAILURE'
@@ -36,8 +37,13 @@ export const receiveGamesFailure = error => ({
   error,
 })
 
-export const requestGameCompletion = game => ({
-  type: REQUEST_GAME_COMPLETION,
+export const requestGamePartialCompletion = game => ({
+  type: REQUEST_GAME_PARTIAL_COMPLETION,
+  game,
+})
+
+export const requestGameFullCompletion = game => ({
+  type: REQUEST_GAME_FULL_COMPLETION,
   game,
 })
 

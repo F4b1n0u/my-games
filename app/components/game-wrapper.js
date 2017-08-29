@@ -77,7 +77,7 @@ export default class GameWrapperComponent extends React.Component {
       detailedHeight,
       normalMargin,
       detailedMargin,
-      requestGameCompletion,
+      requestGamePartialCompletion,
       game,
     } = this.props
 
@@ -101,7 +101,7 @@ export default class GameWrapperComponent extends React.Component {
     })
 
     if (game.completionLevel < 2) {
-      requestGameCompletion()
+      requestGamePartialCompletion()
     }
   }
 

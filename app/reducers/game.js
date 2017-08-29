@@ -3,7 +3,8 @@ import {
 } from 'redux'
 import _ from 'lodash'
 import {
-  REQUEST_GAME_COMPLETION,
+  REQUEST_GAME_PARTIAL_COMPLETION,
+  REQUEST_GAME_FULL_COMPLETION,
   RECEIVE_GAME_COMPLETION_SUCCESS,
   RECEIVE_GAME_COMPLETION_FAILURE,
 } from '@actions/game-catalogue'
@@ -44,7 +45,8 @@ function status(
   action,
 ) {
   switch (action.type) {
-    case REQUEST_GAME_COMPLETION:
+    case REQUEST_GAME_PARTIAL_COMPLETION:
+    case REQUEST_GAME_FULL_COMPLETION:
       return {
         pending: true,
         error: null
