@@ -14,7 +14,7 @@ export default class SearchEngineComponent extends React.Component {
   }
 
   componentWillReceiveProps() {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   }
 
   _handleFocus() {
