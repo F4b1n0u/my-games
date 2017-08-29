@@ -4,7 +4,12 @@ import { connect } from 'react-redux'
 import { 
   getDetailedGameId,
   hasDetailedGame,
-} from '@selectors/app'
+} from '@selectors/game-explorer'
+
+import {
+  showGameDetails,
+  hideGameDetails,
+} from '@actions/game-explorer'
 
 import { 
   getList,
@@ -17,11 +22,6 @@ import {
   requestGameCompletion,
 } from '@actions/game-catalogue'
 
-import {
-  showGameDetails,
-  hideGameDetails,
-} from '@actions/app'
-
 import GameCatalogue from '@components/game-catalogue'
 
 const mapStateToProps = state => {
@@ -29,8 +29,8 @@ const mapStateToProps = state => {
     list: getList(state.gameCatalogue),
     hasMore: hasMore(state.gameCatalogue),
     isPending: isPending(state.gameCatalogue),
-    detailedGameId: getDetailedGameId(state.app),
-    hasDetailedGame: hasDetailedGame(state.app),
+    detailedGameId: getDetailedGameId(state.gameExplorer),
+    hasDetailedGame: hasDetailedGame(state.gameExplorer),
   })
 }
 

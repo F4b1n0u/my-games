@@ -18,13 +18,13 @@ import {
 } from '@selectors/game-catalogue'
 import { 
   hasDetailedGame,
-} from '@selectors/app'
+} from '@selectors/game-explorer'
 
 import SearchEngine from '@components/search-engine'
 
 const mapStateToProps = state => {
   const {
-    app,
+    gameEngine,
     searchEngine,
     gameCatalogue,
   } = state
@@ -34,7 +34,7 @@ const mapStateToProps = state => {
     franchises: getFranchises(state.searchEngine),
     status: getFranchisesStatus(state.searchEngine),
     hasLoadingGames: isCataloguePending(state.gameCatalogue),
-    hasDetailedGame: hasDetailedGame(state.app),
+    hasDetailedGame: hasDetailedGame(state.gameExplorer),
   })
 }
 

@@ -5,7 +5,7 @@ import {
 import {
   SHOW_GAME_DETAILS,
   HIDE_GAME_DETAILS,
-} from '@actions/app'
+} from '@actions/game-explorer'
 
 const initialState = {
   detailedGameId: null,
