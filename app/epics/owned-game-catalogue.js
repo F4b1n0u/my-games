@@ -12,6 +12,7 @@ import {
 } from '@selectors/owned-game-catalogue'
 
 import {
+  TOGGLE_PLATFORM_OWNERSHIP,
   markGameOwnership,
 } from '@actions/owned-game-catalogue'
 
@@ -30,6 +31,16 @@ const receiveGamesEpic = (action$, store) => action$
     return observable
   })
 
+const togglePlatformOwnershipEpic = (action$, store) => action$
+  .ofType(TOGGLE_PLATFORM_OWNERSHIP)
+  .flatMap((action) => {
+    const ownedGameCatatlogueState = store.getState().ownedGameCatalogue
+    const ownedPlatforms = getOwnedPlatforms(ownedGameCatatlogueState, action.game)
+
+    return Observable.of(markGameOwnership(action.game, ownedPlatforms))
+  })
+
 export default combineEpics(
-  receiveGamesEpic
+  receiveGamesEpic,
+  togglePlatformOwnershipEpic
 )

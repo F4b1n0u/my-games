@@ -6,6 +6,7 @@ import Platform from './platform'
 export default ({
   platforms,
   isDetailed,
+  togglePlatformOwnership = () => {},
 }) => (
   <PlatformList
     isDetailed={isDetailed}
@@ -15,6 +16,7 @@ export default ({
         key={platform.id}
         isDetailed={isDetailed}
         {...platform}
+        togglePlatformOwnership={togglePlatformOwnership.bind(this, platform)}
       />
     ))}
   </PlatformList>

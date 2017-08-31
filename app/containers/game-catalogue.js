@@ -21,6 +21,10 @@ import {
   requestGamePartialCompletion,
 } from '@actions/game-catalogue'
 
+import {
+  togglePlatformOwnership,
+} from '@actions/owned-game-catalogue'
+
 import GameCatalogue from '@components/game-catalogue'
 
 const mapStateToProps = state => ({
@@ -36,6 +40,10 @@ const mapDispatchToProps = dispatch => ({
   requestGamePartialCompletion: game => dispatch(requestGamePartialCompletion(game)),
   showGameDetails: game => dispatch(showGameDetails(game)),
   hideGameDetails: () => dispatch(hideGameDetails()),
+  togglePlatformOwnership: (game, platform) => dispatch(togglePlatformOwnership(game, platform)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameCatalogue)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GameCatalogue)

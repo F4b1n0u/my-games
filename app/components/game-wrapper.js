@@ -111,6 +111,7 @@ export default class GameWrapperComponent extends React.Component {
       isDetailed,
       showGameDetails,
       hideGameDetails,
+      togglePlatformOwnership,
     } = this.props;
 
 		const {
@@ -142,6 +143,7 @@ export default class GameWrapperComponent extends React.Component {
                 <CompleteDetailedGame
                   {...game}
                   hideGameDetails={hideGameDetails}
+                  togglePlatformOwnership={togglePlatformOwnership}
                 />
               )
             )

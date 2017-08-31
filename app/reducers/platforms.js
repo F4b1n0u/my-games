@@ -58,6 +58,7 @@ export default (
       return nextState
     case MARK_GAME_OWNERSHIP:
       if (!_.isEmpty(action.ownedPlatforms)) {
+        // need to mark at least one platform as owned
         if (_.isEmpty(state)) {
           // no platforms yet (completion level < 2)
           nextState = _.concat(nextState, action.ownedPlatforms)
@@ -71,6 +72,15 @@ export default (
             }
           ))
         }
+      } else {
+        // need to mark all the platforms as NOT owned
+        nextState = nextState.map(platform => _.merge(
+          {},
+          platform,
+          {
+            isOwned: false,
+          }
+        ))
       }
 
       return nextState

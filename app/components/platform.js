@@ -7,24 +7,40 @@ export default ({
   abbreviation,
   isDetailed,
   isOwned,
-}) => (
-  <Platform
-    key={id}
-    isDetailed={isDetailed}
-  >
-    <Icon
-      isDetailed={isDetailed}
-      isOwned={isOwned}
-    />
-    <Abbreviation
-      isDetailed={isDetailed}
-    >
-      {abbreviation.toLowerCase()}
-    </Abbreviation>
-  </Platform>
-)
+  togglePlatformOwnership,
+}) => {
+  const Platform = isDetailed ? PlatformTouchable : PlatformNotTouchable
 
-const Platform = styled.View`
+  return (
+    <Platform
+      key={id}
+      isDetailed={isDetailed}
+      onPress={togglePlatformOwnership}
+    >
+      <Icon
+        isDetailed={isDetailed}
+        isOwned={isOwned}
+      />
+      <Abbreviation
+        isDetailed={isDetailed}
+      >
+        {abbreviation.toLowerCase()}
+      </Abbreviation>
+    </Platform>
+  )
+}
+
+const PlatformNotTouchable = styled.View`
+  background-color: transparent;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height:             ${props => props.isDetailed ? '35' : '30'};
+  margin-horizontal:  ${props => props.isDetailed ? '7.5' : '4'};
+  margin-bottom:      ${props => props.isDetailed ? '12.5' : '0'};
+`
+
+const PlatformTouchable = styled.TouchableOpacity`
   background-color: transparent;
   flex-direction: column;
   justify-content: space-around;
