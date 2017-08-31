@@ -113,8 +113,8 @@ export default class GameListComponent extends React.Component {
         hasDetailedGame={hasDetailedGame}
         ref={this._setRef}
         data={list}
-        keyExtractor={this._keyExtractor}
-        getItemLayout={this._getItemLayout}
+        keyExtractor={GameListComponent._keyExtractor}
+        getItemLayout={GameListComponent._getItemLayout}
         renderItem={this._renderItem}
         ListFooterComponent={this._renderFooter}
         onEndReached={this._handleEndReached}
