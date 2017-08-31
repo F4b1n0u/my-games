@@ -1,7 +1,6 @@
-import React from 'react';
 import { connect } from 'react-redux'
 
-import { 
+import {
   getDetailedGameId,
   hasDetailedGame,
 } from '@selectors/game-explorer'
@@ -11,7 +10,7 @@ import {
   hideGameDetails,
 } from '@actions/game-explorer'
 
-import { 
+import {
   getList,
   isPending,
   hasMore,
@@ -24,15 +23,13 @@ import {
 
 import GameCatalogue from '@components/game-catalogue'
 
-const mapStateToProps = state => {
-  return ({
-    list: getList(state.gameCatalogue),
-    hasMore: hasMore(state.gameCatalogue),
-    isPending: isPending(state.gameCatalogue),
-    detailedGameId: getDetailedGameId(state.gameExplorer),
-    hasDetailedGame: hasDetailedGame(state.gameExplorer),
-  })
-}
+const mapStateToProps = state => ({
+  list: getList(state.gameCatalogue),
+  hasMore: hasMore(state.gameCatalogue),
+  isPending: isPending(state.gameCatalogue),
+  detailedGameId: getDetailedGameId(state.gameExplorer),
+  hasDetailedGame: hasDetailedGame(state.gameExplorer),
+})
 
 const mapDispatchToProps = dispatch => ({
   requestMoreGames: () => dispatch(requestMoreGames()),
@@ -41,7 +38,4 @@ const mapDispatchToProps = dispatch => ({
   hideGameDetails: () => dispatch(hideGameDetails()),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(GameCatalogue)
+export default connect(mapStateToProps, mapDispatchToProps)(GameCatalogue)

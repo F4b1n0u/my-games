@@ -1,33 +1,27 @@
-import React from 'react';
-import _ from 'lodash';
-import styled from 'styled-components/native';
+import React from 'react'
+import styled from 'styled-components/native'
 
 import ProgressiveImage from './progressive-image'
-export default class FranchiseFranchiseComponent extends React.Component {
-  render() {
-    const {
-      name,
-      image,
-    } = this.props;
 
-    return (
-      <Franchise>
-        {
-          image ? (
-            <Thumbnail
-              imageSource={{ uri: image.thumb_url }}
-            />
-          ) : 
-          // TODO display a list icon or something
-          null
-        }
-        <Name>
-          {name}
-        </Name>
-      </Franchise>
-    );
-  }
-}
+export default ({
+  name,
+  image,
+}) => (
+  <Franchise>
+    {
+      image ? (
+        <Thumbnail
+          imageSource={{ uri: image.thumb_url }}
+        />
+      ) :
+        // TODO display a list icon or something
+        null
+    }
+    <Name>
+      {name}
+    </Name>
+  </Franchise>
+)
 
 const Franchise = styled.View`
   flex: 1;

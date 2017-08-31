@@ -1,17 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components/native'
-import {
-  Animated,
-  Easing,
-} from 'react-native'
-import {
-  EvilIcons,
-} from '@expo/vector-icons'
 
 import FranchiseComponent from './franchise'
-
-const spinDuration = 3000
 
 export default class FranchiseListComponent extends React.Component {
   constructor(props) {
@@ -23,7 +14,7 @@ export default class FranchiseListComponent extends React.Component {
   _handlePressItem(item) {
     const {
       selectFranchise,
-    } = this.props;
+    } = this.props
 
     selectFranchise(item)
   }
@@ -31,15 +22,14 @@ export default class FranchiseListComponent extends React.Component {
   render() {
     const {
       franchises,
-      status,
     } = this.props
 
-    let element;
+    let element
 
     if (!_.isEmpty(franchises)) {
       element = (
         <FranchiseList>
-          {franchises.map((franchise, index) => (
+          {franchises.map(franchise => (
             <TouchableFranchise
               key={franchise.id}
               onPress={this._handlePressItem.bind(this, franchise)}
@@ -52,10 +42,10 @@ export default class FranchiseListComponent extends React.Component {
         </FranchiseList>
       )
     } else {
-      element = null;
+      element = null
     }
 
-    return element;
+    return element
   }
 }
 
@@ -67,7 +57,7 @@ const FranchiseList = styled.View`
 
 const TouchableFranchise = styled.TouchableOpacity`
   flex: 1;
-  margin-top: ${props => props.key != 0 ? 2: 0}
+  margin-top: ${props => props.key !== 0 ? 2 : 0}
 `
 
 const Franchise = styled(FranchiseComponent)`

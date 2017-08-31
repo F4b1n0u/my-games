@@ -1,18 +1,15 @@
-import 'rxjs';
+import 'rxjs'
 import _ from 'lodash'
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs/Observable'
 
-
 import {
   fetchGamesBySearch,
-  fetchFullGame,
   fetchGamesByBulk,
   extractPagination,
 } from '@services/giant-bomb'
 
 import {
-  REQUEST_FRANCHISES,
   SUBMIT_SEARCH,
 } from '@actions/search-engine'
 import {
@@ -27,6 +24,8 @@ import {
   REQUEST_MORE_GAMES,
   REQUEST_GAME_PARTIAL_COMPLETION,
   REQUEST_GAMES_COMPLETION,
+  RECEIVE_GAMES_SUCCESS,
+  RECEIVE_MORE_GAMES_SUCCESS,
 } from '@actions/game-catalogue'
 import {
   requestGames,
@@ -37,10 +36,19 @@ import {
   requestGamesCompletion,
   receiveGameCompletion,
   receiveGameCompletionFailure,
+  receiveGame,
 } from '@actions/game-catalogue'
-import { 
+import {
   getNextOffset,
 } from '@selectors/game-catalogue'
+
+const receiveGamesEpic = action$ => action$
+  .ofType(RECEIVE_MORE_GAMES_SUCCESS)
+  .flatMap(action => action.games.map(receiveGame))
+
+const receiveMoreGamesEpic = action$ => action$
+  .ofType(RECEIVE_GAMES_SUCCESS)
+  .flatMap(action => action.games.map(receiveGame))
 
 const submitSearchEpic = action$ => action$
   .ofType(SUBMIT_SEARCH)
@@ -54,7 +62,7 @@ const requestGamesToFetchEpic = (action$, store) => action$
   .ofType(REQUEST_GAMES)
   .switchMap(() => {
     const searchEngineState = store.getState().searchEngine
-    const searchText = getSearchText(searchEngineState);
+    const searchText = getSearchText(searchEngineState)
 
     let observable
 
@@ -62,7 +70,7 @@ const requestGamesToFetchEpic = (action$, store) => action$
       observable = fetchGamesBySearch(searchText)
         .map(response => receiveGames(
           response.results,
-          extractPagination(response),
+          extractPagination(response)
         ))
         .catch(error => Observable.of(receiveGamesFailure(error)))
     } else {
@@ -78,7 +86,7 @@ const requestMoreGameEpic = (action$, store) => action$
     const searchEngineState = store.getState().searchEngine
     const gameCatalogueState = store.getState().gameCatalogue
 
-    const searchText = getSearchText(searchEngineState);
+    const searchText = getSearchText(searchEngineState)
     const offset = getNextOffset(gameCatalogueState)
 
     let observable
@@ -89,7 +97,7 @@ const requestMoreGameEpic = (action$, store) => action$
       })
         .map(response => receiveMoreGames(
           response.results,
-          extractPagination(response),
+          extractPagination(response)
         ))
         .catch(error => Observable.of(receiveMoreGamesFailure(error)))
     } else {
@@ -102,7 +110,7 @@ const requestMoreGameEpic = (action$, store) => action$
 const requestGamePartialCompletionEpic = action$ => action$
   .ofType(REQUEST_GAME_PARTIAL_COMPLETION)
   .bufferTime(1000)
-  .switchMap(requests => {
+  .switchMap((requests) => {
     const games = requests.map(request => request.game)
     let observable = Observable.empty()
 
@@ -113,23 +121,22 @@ const requestGamePartialCompletionEpic = action$ => action$
     return observable
   })
 
-const requestGamesCompletionEpic  = action$ => action$
+const requestGamesCompletionEpic = action$ => action$
   .ofType(REQUEST_GAMES_COMPLETION)
   .switchMap(action => fetchGamesByBulk(action.games)
-    .flatMap(response => Observable.of(
-      response.results.map(
-        result => receiveGameCompletion(result)
-      ))
-    )
+    // no need of an observable Oo
     // .takeUntil(REQUEST_FRANCHISES)
+    .flatMap(response => response.results.map(receiveGameCompletion))
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
 export default combineEpics(
+  receiveGamesEpic,
+  receiveMoreGamesEpic,
   submitSearchEpic,
   requestGamesToStopEpic,
   requestGamesToFetchEpic,
   requestGamePartialCompletionEpic,
   requestGamesCompletionEpic,
-  requestMoreGameEpic,
+  requestMoreGameEpic
 )

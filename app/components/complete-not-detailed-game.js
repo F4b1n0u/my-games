@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-	LinearGradient,
+  LinearGradient,
 } from 'expo'
 import styled from 'styled-components/native'
 
@@ -15,7 +15,7 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
     this._renderPlatformList = this._renderPlatformList.bind(this)
   }
 
-  _handlePressHide = () => {
+  _handlePressHide() {
     const {
       showGameDetails,
     } = this.props
@@ -26,26 +26,26 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
   _renderPlatformList() {
     const {
       hasDetailedGame,
-    } = this.props;
-    
+    } = this.props
+
     return (hasDetailedGame) ?
       null
-    : (
-      <PlatformList
-        {...this.props}
-      />
-    )
+      : (
+        <PlatformList
+          {...this.props}
+        />
+      )
   }
 
   render() {
     const {
       name,
       image,
-		} = this.props;
-    
+    } = this.props
+
     return (
       <Game
-        onPress={this._handlePressHide}        
+        onPress={this._handlePressHide}
       >
         <Name>
           {name}
@@ -67,41 +67,41 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
 }
 
 const Game = styled.TouchableOpacity.attrs({
-  activeOpacity: .5
+  activeOpacity: 0.5,
 })`
   flex: 1;
   background-color: transparent;
   border-radius: 2;
   overflow: hidden;
-`;
+`
 
 const Name = styled.Text.attrs({
   numberOfLines: 1,
   ellipsizeMode: 'tail',
 })`
-	position: absolute;
-	top: -14;
-	width: 100%;
-	background-color: transparent;
-	paddingLeft: 2;
-	color: black;
-	textAlign: left;
-	fontSize: 8;
+  position: absolute;
+  top: -14;
+  width: 100%;
+  background-color: transparent;
+  paddingLeft: 2;
+  color: black;
+  textAlign: left;
+  fontSize: 8;
   font-family: 'florentia-extralight';
-`;
+`
 
 const Cover = styled(RatioLessImage).attrs({
 })`
   position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	width: 100%;
-	height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   background-color: transparent;
   overflow: hidden;
-`;
+`
 
 const Overlay = styled(LinearGradient).attrs({
   colors: ['transparent', 'rgba(0,0,0,0.7)'],

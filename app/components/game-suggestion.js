@@ -1,26 +1,19 @@
-import React from 'react';
-import _ from 'lodash';
-import styled from 'styled-components/native';
+import React from 'react'
+import styled from 'styled-components/native'
 
-export default class GameFranchiseComponent extends React.Component {
-  render() {
-    const {
-      name,
-      image,
-    } = this.props;
-
-    return (
-      <Franchise>
-        <Thumbnail
-          source={{uri: image.thumb_url}}
-        />
-        <Name>
-          {name}
-        </Name>
-      </Franchise>
-    );
-  }
-}
+export default ({
+  name,
+  image,
+}) => (
+  <Franchise>
+    <Thumbnail
+      source={{ uri: image.thumb_url }}
+    />
+    <Name>
+      {name}
+    </Name>
+  </Franchise>
+)
 
 const Franchise = styled.View`
   flex: 1;

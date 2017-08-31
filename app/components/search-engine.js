@@ -1,8 +1,9 @@
-import React from 'react';
+import React from 'react'
 import {
   LayoutAnimation,
-} from 'react-native';
-import styled from 'styled-components/native';
+} from 'react-native'
+import styled from 'styled-components/native'
+
 import FranchiseList from './franchise-list'
 
 export default class SearchEngineComponent extends React.Component {
@@ -14,7 +15,22 @@ export default class SearchEngineComponent extends React.Component {
   }
 
   componentWillReceiveProps() {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+  }
+
+  componentDidUpdate() {
+    const {
+      hasLoadingGames,
+    } = this.props
+
+    const {
+      _searchInput,
+    } = this
+
+    // not sure why the press on franchise does not blur the input ...
+    if (_searchInput && _searchInput.root.isFocused() && hasLoadingGames) {
+      _searchInput.root.blur()
+    }
   }
 
   _handleFocus() {
@@ -33,48 +49,35 @@ export default class SearchEngineComponent extends React.Component {
     submitSearch()
   }
 
-  componentDidUpdate() {
-    const {
-      hasLoadingGames,
-    } = this.props
-
-    const {
-      _searchInput
-    } = this
-
-    // not sure why the press on franchise does not blur the input ...
-    if (_searchInput && _searchInput.root.isFocused() && hasLoadingGames) {
-      _searchInput.root.blur()
-    }
-  }
 
   render() {
     const {
       searchText,
       hasDetailedGame,
       updateSearchText,
-    } = this.props;
+    } = this.props
 
     return (!hasDetailedGame) ? (
       <SearchEngine>
         <TextInputWrapper>
           <Search
-            ref={ref => { this._searchInput = ref}}
-            placeholder='type game name here'
-            selectTextOnFocus={true}
+            blurOnSubmit
+            keyboardShouldPersistTaps={false}
+            placeholder="type game name here"
+            ref={(ref) => { this._searchInput = ref }}
+            selectTextOnFocus
             value={searchText}
+
             onChangeText={updateSearchText}
             onFocus={this._handleFocus}
             onSubmitEditing={this._handleSubmit}
-            blurOnSubmit={true}
-            keyboardShouldPersistTaps={false}
           />
         </TextInputWrapper>
         <FranchiseList
           {...this.props}
         />
       </SearchEngine>
-    ) : null;
+    ) : null
   }
 }
 

@@ -1,3 +1,21 @@
 {
-  "extends": "airbnb"
+  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 6 
+  },
+  "rules": {
+      "semi": ["error", "never"],
+      "no-underscore-dangle": "off",
+      "no-confusing-arrow": "off",
+      "react/jsx-filename-extension": "off",
+      "import/no-extraneous-dependencies": "off",
+      "react/prop-types": "warn",
+      "import/prefer-default-export": "warn",
+      "import/extensions": "warn",
+      "import/no-unresolved": "warn",
+      "comma-dangle": "warn"
+  }
 }

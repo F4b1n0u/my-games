@@ -1,6 +1,6 @@
 import 'rxjs'
 import { ajax } from 'rxjs/observable/dom/ajax'
-import qs from "query-string"
+import qs from 'query-string'
 import _ from 'lodash'
 import {
   API_KEY,
@@ -13,7 +13,7 @@ const defaultQueryParams = {
 
 const markGameCompletionLevel = (
   completionLevel,
-  game,
+  game
 ) => _.merge(
   {},
   game,
@@ -36,9 +36,9 @@ export const fetchFranchises = (searchText) => {
     {
       query: `%${searchText}%`,
       resources: [
-        'franchise'
+        'franchise',
       ].join(','),
-      field_list: "",
+      field_list: '',
       limit: 6,
     }
   )
@@ -50,7 +50,7 @@ export const fetchGamesBySearch = (
   searchText,
   params = {
     offset: 0,
-  },
+  }
 ) => {
   const {
     offset,
@@ -61,7 +61,7 @@ export const fetchGamesBySearch = (
     defaultQueryParams,
     {
       filter: `name:%${searchText.replace(' ', '%')}%`,
-      field_list: "id,name,image,deck,platforms",
+      field_list: 'id,name,image,deck,platforms',
       limit: 10,
       offset,
     }
@@ -69,61 +69,62 @@ export const fetchGamesBySearch = (
 
   return ajax
     .getJSON(`https://www.giantbomb.com/api/games/?${qs.stringify(queryParams)}`)
-    .map(response => {
+    .map((response) => {
       response.results = response.results.map(markGameCompletionLevel.bind(null, 2))
       return response
     })
 }
 
-export const fetchFullGame = ({id}) => {
-  const prefix = 3030 // don't ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
+export const fetchFullGame = ({ id }) => {
+  // don't ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
+  const prefix = 3030
   const queryParams = _.merge(
     {},
     defaultQueryParams,
     {
-      field_list: 'id,name,image,images,deck,platforms'
+      field_list: 'id,name,image,images,deck,platforms',
     }
   )
 
   return ajax
     .getJSON(`https://www.giantbomb.com/api/game/${prefix}-${id}/?${qs.stringify(queryParams)}`)
-    .map(response => {
+    .map((response) => {
       response.results = markGameCompletionLevel(3, response.results)
       return response
     })
 }
 
 export const fetchGamesByBulk = (games) => {
-  const prefix = 3030 // don't ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
   const queryParams = _.merge(
     {},
     defaultQueryParams,
     {
       field_list: 'id,name,image,deck,platforms',
-      filter: `id:${games.map(game => game.id).join('|')}`
+      filter: `id:${games.map(game => game.id).join('|')}`,
     }
   )
   return ajax
     .getJSON(`https://www.giantbomb.com/api/games/?${qs.stringify(queryParams)}`)
-    .map(response => {
+    .map((response) => {
       response.results = response.results.map(markGameCompletionLevel.bind(null, 2))
       return response
     })
 }
 
-export const fetchFranchiseCompletion = ({id}) => {
-  const prefix = 3025 // don't ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
+export const fetchFranchiseCompletion = ({ id }) => {
+  // don't ask me why see that with giantBomb xD, looks like the prefix depend of the endpoint
+  const prefix = 3025
   const queryParams = _.merge(
     {},
     defaultQueryParams,
     {
-      field_list: 'games'
+      field_list: 'games',
     }
   )
 
   return ajax
     .getJSON(`https://www.giantbomb.com/api/franchise/${prefix}-${id}/?${qs.stringify(queryParams)}`)
-    .map(response => {
+    .map((response) => {
       response.results.games = response.results.games.map(markGameCompletionLevel.bind(null, 1))
       return response
     })

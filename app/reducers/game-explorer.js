@@ -13,7 +13,7 @@ const initialState = {
 
 function detailedGameId(
   state = initialState.detailedGameId,
-  action,
+  action
 ) {
   switch (action.type) {
     case SHOW_GAME_DETAILS:

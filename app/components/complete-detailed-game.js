@@ -17,10 +17,9 @@ import PlatformList from './platform-list'
 
 const {
   width: viewportWidth,
-  height: viewportHeight,
 } = Dimensions.get('window')
 
-function wp (percentage) {
+function wp(percentage) {
   const value = (percentage * viewportWidth) / 100
   return Math.round(value)
 }
@@ -30,7 +29,7 @@ const slideWidth = viewportWidth - wp(15)
 const itemHorizontalMargin = wp(2)
 
 const sliderWidth = viewportWidth
-const itemWidth = slideWidth + itemHorizontalMargin * 2
+const itemWidth = slideWidth + (itemHorizontalMargin * 2)
 
 export default class CompleteDetailedGameComponent extends React.Component {
   constructor(props) {
@@ -38,7 +37,7 @@ export default class CompleteDetailedGameComponent extends React.Component {
 
     this._handleCollapse = this._handleCollapse.bind(this)
   }
-  
+
   _handleCollapse() {
     const {
       hideGameDetails,
@@ -54,18 +53,21 @@ export default class CompleteDetailedGameComponent extends React.Component {
       image,
       images,
       completionLevel,
-		} = this.props
+    } = this.props
 
     let slideshow
 
     if (completionLevel < 3) {
       slideshow = [image]
     } else {
-      slideshow = images.filter(image => image.tags.match('(Screenshots|Wallpaper)'))
+      slideshow = images.filter(currentImage => currentImage.tags.match('(Screenshots|Wallpaper)'))
     }
-    
+
     if (_.isEmpty(slideshow)) {
-      slideshow = images.filter(image => !image.tags.match('(Fan art|Concept Art)'))
+      slideshow = images.filter(currentImage => !currentImage.tags.match('(Fan art|Concept Art)'))
+    }
+    if (_.isEmpty(slideshow)) {
+      slideshow = [image]
     }
 
     return (
@@ -78,20 +80,18 @@ export default class CompleteDetailedGameComponent extends React.Component {
           ref={(carousel) => { this._carousel = carousel }}
         >
           {
-            slideshow.map((image, index) => {
-              return (
-                <Slide
-                  key={index}
-                >
-                  <ImageContainer>
-                    <Picture
-                      thumbnailSource={{ uri: image.thumb_url }}
-                      imageSource={{ uri: image.super_url }}
-                    />
-                  </ImageContainer>
-                </Slide>
-                )}
-              )
+            slideshow.map(currentImage => (
+              <Slide
+                key={currentImage.thumb_url}
+              >
+                <ImageContainer>
+                  <Picture
+                    thumbnailSource={{ uri: currentImage.thumb_url }}
+                    imageSource={{ uri: currentImage.super_url }}
+                  />
+                </ImageContainer>
+              </Slide>
+            ))
           }
         </SlideShow>
 
@@ -100,7 +100,7 @@ export default class CompleteDetailedGameComponent extends React.Component {
         </Description>
 
         <PlatformList
-          isDetailed={true}
+          isDetailed
           {...this.props}
         />
 
@@ -124,7 +124,7 @@ const Game = styled(BlurView).attrs({
   align-items: center;
   padding-top: 5;
   padding-bottom: 10;
-`;
+`
 
 const Name = styled.Text.attrs({
   numberOfLines: 2,
@@ -157,12 +157,6 @@ const ImageContainer = styled.View`
   padding-horizontal: ${itemHorizontalMargin};
 `
 
-const StyledImage = styled.Image.attrs({
-  resizeMode: 'cover',
-})`
-  flex: 1;
-`;
-
 const Picture = styled(ProgressiveImage)`
   width: ${slideWidth};
   height: ${slideHeight};
@@ -189,7 +183,7 @@ const BackButton = styled.TouchableOpacity`
   padding-horizontal: 5;
   background-color: transparent;
   overflow: hidden;
-`;
+`
 
 const BackIcon = styled(MaterialCommunityIcons).attrs({
   name: 'arrow-compress',

@@ -60,26 +60,21 @@ export default class ProgressiveImage extends Component {
   }
 }
 
- const styles = StyleSheet.create({
-   image: {
-     position: 'absolute',
-     top: 0,
-     bottom: 0,
-     left: 0,
-     right: 0,
-   },
- })
+const styles = StyleSheet.create({
+  image: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+})
 
 ProgressiveImage.propTypes = {
   resizeMode: PropTypes.string,
-  placeHolderColor: PropTypes.string,
-  placeHolderSource: PropTypes.number,
-  imageSource: PropTypes.object.isRequired,
   imageFadeDuration: PropTypes.number,
-  imageBlurRadius: PropTypes.number,
   onLoadThumbnail: PropTypes.func,
   onLoadImage: PropTypes.func,
-  thumbnailSource: PropTypes.object,
   thumbnailFadeDuration: PropTypes.number,
   thumbnailBlurRadius: PropTypes.number,
 }

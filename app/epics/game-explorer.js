@@ -1,5 +1,4 @@
-import 'rxjs';
-import _ from 'lodash'
+import 'rxjs'
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs/Observable'
 
@@ -9,7 +8,6 @@ import {
 
 import {
   SHOW_GAME_DETAILS,
-  HIDE_GAME_DETAILS,
 } from '@actions/game-explorer'
 
 import {
@@ -18,32 +16,30 @@ import {
 import {
   requestGameFullCompletion,
   receiveGameCompletion,
-  receiveGameCompletionFailure
+  receiveGameCompletionFailure,
 } from '@actions/game-catalogue'
 
-const showGameDetailsEpic = (action$, store) => {
-  return action$
-    .ofType(SHOW_GAME_DETAILS)
-    .flatMap(action => {
-      let observable = Observable.empty()
+const showGameDetailsEpic = action$ => action$
+  .ofType(SHOW_GAME_DETAILS)
+  .flatMap((action) => {
+    let observable = Observable.empty()
 
-      if (action.detailedGame.completionLevel < 3) {
-        observable = Observable.of(requestGameFullCompletion(action.detailedGame))
-      }
+    if (action.detailedGame.completionLevel < 3) {
+      observable = Observable.of(requestGameFullCompletion(action.detailedGame))
+    }
 
-      return observable
-    })
-}
+    return observable
+  })
 
-const requestGameFullCompletionEpic  = action$ => action$
+const requestGameFullCompletionEpic = action$ => action$
   .ofType(REQUEST_GAME_FULL_COMPLETION)
   .switchMap(action => fetchFullGame(action.game)
-      .flatMap(response => Observable.of(receiveGameCompletion(response.results)))
-      // .takeUntil(HIDE_GAME_DETAILS)
-      .catch(error => Observable.of(receiveGameCompletionFailure(error)))
+    .flatMap(response => Observable.of(receiveGameCompletion(response.results)))
+    // .takeUntil(HIDE_GAME_DETAILS)
+    .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
 export default combineEpics(
   showGameDetailsEpic,
-  requestGameFullCompletionEpic,
+  requestGameFullCompletionEpic
 )

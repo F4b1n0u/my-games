@@ -6,17 +6,17 @@ import rootEpic from '@epics'
 import rootReducer from '@reducers'
 
 export default function configureStore(initialState) {
-    const epicMiddleware = createEpicMiddleware(rootEpic)
-    const middlewares = [epicMiddleware]
-    const enhancer = composeWithDevTools({})(
-      applyMiddleware(...middlewares)
-    )
-    
-    const store = createStore(
-      rootReducer,
-      initialState,
-      enhancer,
-    )
+  const epicMiddleware = createEpicMiddleware(rootEpic)
+  const middlewares = [epicMiddleware]
+  const enhancer = composeWithDevTools({})(
+    applyMiddleware(...middlewares)
+  )
 
-    return store
+  const store = createStore(
+    rootReducer,
+    initialState,
+    enhancer
+  )
+
+  return store
 }

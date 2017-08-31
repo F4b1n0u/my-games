@@ -1,69 +1,53 @@
-import {
-  combineReducers,
-} from 'redux'
 import _ from 'lodash'
 import {
-  REQUEST_GAME_PARTIAL_COMPLETION,
-  REQUEST_GAME_FULL_COMPLETION,
+  RECEIVE_GAME_SUCCESS,
   RECEIVE_GAME_COMPLETION_SUCCESS,
-  RECEIVE_GAME_COMPLETION_FAILURE,
 } from '@actions/game-catalogue'
+import {
+  MARK_GAME_OWNERSHIP,
+} from '@actions/owned-game-catalogue'
 
-const initialState = {
-  game: {},
-  status: {
-    pending: false,
-    error: null
-  },
-}
+import platformsReducer from '@reducers/platforms'
 
-function game(
-  state = initialState.game,
-  action,
-) {
+const initialState = {}
+
+export default (
+  state = initialState,
+  action
+) => {
+  const nextState = _.merge(
+    {},
+    state
+  )
+
   switch (action.type) {
+    case RECEIVE_GAME_SUCCESS:
+      return action.game
     case RECEIVE_GAME_COMPLETION_SUCCESS:
-      let nextState = state
-
       if (action.completedGame.id === state.id) {
-        nextState = _.merge(
-          {},
-          state,
+        _.merge(
+          nextState,
           action.completedGame,
+          {
+            platforms: platformsReducer(nextState.platforms, action),
+          }
         )
       }
 
       return nextState
+    case MARK_GAME_OWNERSHIP:
+      _.merge(
+        nextState,
+        {
+          isOwned: !_.isEmpty(action.ownedPlatforms),
+        },
+        {
+          platforms: platformsReducer(nextState.platforms, action),
+        }
+      )
+
+      return nextState
     default:
-      return state
+      return nextState
   }
 }
-
-
-function status(
-  state = initialState.status,
-  action,
-) {
-  switch (action.type) {
-    case REQUEST_GAME_PARTIAL_COMPLETION:
-    case REQUEST_GAME_FULL_COMPLETION:
-      return {
-        pending: true,
-        error: null
-      }
-    case RECEIVE_GAME_COMPLETION_SUCCESS:
-      return initialState.status;
-    case RECEIVE_GAME_COMPLETION_FAILURE:
-      return {
-        pending: false,
-        error: action.error
-      }
-    default:
-      return state
-  }
-}
-
-export default combineReducers({
-  game,
-  status,
-})

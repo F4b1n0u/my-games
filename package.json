@@ -2,7 +2,7 @@
   "name": "my-games",
   "version": "0.0.0",
   "description": "Hello Expo!",
-  "author": null,
+  "author": "Fabien Behier",
   "private": true,
   "main": "./app/index.js",
   "dependencies": {
