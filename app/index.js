@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 
 import storeFactory from '@store'
 
-import App from '@components/app'
+import App from '@containers/app'
 
 const initialState = {}
 const store = storeFactory(initialState)

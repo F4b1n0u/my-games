@@ -11,13 +11,19 @@ import {
 
 import {
   SUBMIT_SEARCH,
-} from '@actions/search-engine'
-import {
   stopSearching,
 } from '@actions/search-engine'
 import {
   getSearchText,
 } from '@selectors/search-engine'
+
+import {
+  getOwnedGames,
+} from '@selectors/owned-game-catalogue'
+
+import {
+  END_LOAD_SUCCESS,
+} from '@actions/app'
 
 import {
   REQUEST_GAMES,
@@ -26,8 +32,7 @@ import {
   REQUEST_GAMES_COMPLETION,
   RECEIVE_GAMES_SUCCESS,
   RECEIVE_MORE_GAMES_SUCCESS,
-} from '@actions/game-catalogue'
-import {
+
   requestGames,
   receiveGames,
   receiveGamesFailure,
@@ -50,9 +55,20 @@ const receiveMoreGamesEpic = action$ => action$
   .ofType(RECEIVE_GAMES_SUCCESS)
   .flatMap(action => action.games.map(receiveGame))
 
-const submitSearchEpic = action$ => action$
+const submitSearchEpic = (action$, store) => action$
   .ofType(SUBMIT_SEARCH)
-  .mapTo(requestGames())
+  .flatMap(() => {
+    let observable = Observable.empty()
+
+    const searchEngineState = store.getState().searchEngine
+    const searchText = getSearchText(searchEngineState).trim()
+
+    if (searchText) {
+      observable = Observable.of(requestGames())
+    }
+
+    return observable
+  })
 
 const requestGamesToStopEpic = action$ => action$
   .ofType(REQUEST_GAMES)
@@ -60,21 +76,34 @@ const requestGamesToStopEpic = action$ => action$
 
 const requestGamesToFetchEpic = (action$, store) => action$
   .ofType(REQUEST_GAMES)
-  .switchMap(() => {
-    const searchEngineState = store.getState().searchEngine
-    const searchText = getSearchText(searchEngineState)
-
+  .switchMap((action) => {
     let observable
 
-    if (searchText) {
-      observable = fetchGamesBySearch(searchText)
+    if (action.games) {
+      observable = fetchGamesByBulk(action.games)
+        // .takeUntil(REQUEST_FRANCHISES)
         .map(response => receiveGames(
           response.results,
           extractPagination(response)
         ))
-        .catch(error => Observable.of(receiveGamesFailure(error)))
+        .catch(error => Observable.of(receiveGameCompletionFailure(error)))
     } else {
-      observable = Observable.of(receiveGames([]))
+      const searchEngineState = store.getState().searchEngine
+      const searchText = getSearchText(searchEngineState).trim()
+
+      if (searchText) {
+        observable = fetchGamesBySearch(searchText)
+          .map(response => receiveGames(
+            response.results,
+            extractPagination(response)
+          ))
+          .catch(error => Observable.of(receiveGamesFailure(error)))
+      } else {
+        observable = Observable.of(receiveGames(
+          [],
+          extractPagination()
+        ))
+      }
     }
 
     return observable
@@ -101,7 +130,10 @@ const requestMoreGameEpic = (action$, store) => action$
         ))
         .catch(error => Observable.of(receiveMoreGamesFailure(error)))
     } else {
-      observable = Observable.of(receiveGames([]))
+      observable = Observable.of(
+        [],
+        extractPagination()
+      )
     }
 
     return observable
@@ -126,9 +158,19 @@ const requestGamesCompletionEpic = action$ => action$
   .switchMap(action => fetchGamesByBulk(action.games)
     // no need of an observable Oo
     // .takeUntil(REQUEST_FRANCHISES)
+    // TODO is it really a receiveGameCompletion I need to do here and not a simple receiveGames ??
     .flatMap(response => response.results.map(receiveGameCompletion))
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
+
+const appEndLoadEpic = (action$, store) => action$
+  .ofType(END_LOAD_SUCCESS)
+  .flatMap(() => {
+    const ownedGameCatalogueState = store.getState().ownedGameCatalogue
+    const ownedGames = getOwnedGames(ownedGameCatalogueState)
+
+    return Observable.of(requestGames(ownedGames))
+  })
 
 export default combineEpics(
   receiveGamesEpic,
@@ -138,5 +180,6 @@ export default combineEpics(
   requestGamesToFetchEpic,
   requestGamePartialCompletionEpic,
   requestGamesCompletionEpic,
-  requestMoreGameEpic
+  requestMoreGameEpic,
+  appEndLoadEpic,
 )

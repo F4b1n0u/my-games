@@ -1,43 +1,47 @@
 import React from 'react'
-import {
-  UIManager,
-} from 'react-native'
+import { UIManager } from 'react-native'
 import styled from 'styled-components/native'
-import Expo, {
-  Font
-} from 'expo'
-import _ from 'lodash'
-
+import Expo, { Font } from 'expo'
 import Background from '@components/background'
 import GameExplorer from '@components/game-explorer'
 
-UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
+if (UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true)
+}
 
 export default class AppComponents extends React.Component {
-  state = {
-    isFontLoaded: false,
-  }
-
   async componentDidMount() {
-    await Font.loadAsync({
-      'florentia-extralight': require('../../assets/fonts/florentia.extralight.ttf'),
-      'arista-pro-extralight': require('../../assets/fonts/arista-pro-extralight.ttf'),
-      'let-that-be-enough-regular': require('../../assets/fonts/let-that-be-enough.regular.ttf'),
-    })
+    const {
+      isLoaded,
+      isLoading,
+      startLoad,
+      endLoad,
+    } = this.props
 
-    this.setState({ isFontLoaded: true })
+    if (!isLoaded && !isLoading) {
+      startLoad()
+
+      await Font.loadAsync({
+        'florentia-extralight': require('../../assets/fonts/florentia.extralight.ttf'),
+        'arista-pro-extralight': require('../../assets/fonts/arista-pro-extralight.ttf'),
+        'let-that-be-enough-regular': require('../../assets/fonts/let-that-be-enough.regular.ttf'),
+      })
+  
+      endLoad()
+    }
   }
 
   render() {
     const {
-      isFontLoaded = true,
-    } = this.state
+      isLoaded,
+      isLoading,
+    } = this.props
 
-    return (isFontLoaded) ?
+    return (!isLoading && isLoaded) ?
       (
         <App>
           <Background />
-          <GameExplorer/>
+          <GameExplorer />
         </App>
       ) : (
         <Expo.AppLoading />
