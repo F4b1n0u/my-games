@@ -22,19 +22,26 @@ const markGameCompletionLevel = (
   }
 )
 
-export const extractPagination = response => ({
-  max: response.limit,
-  amount: response.number_of_page_results,
-  total: response.number_of_total_results,
-  offset: response.offset,
+export const extractPagination = ({
+  limit: max = 100,
+  number_of_page_results: amount = 0,
+  number_of_total_results: total = 0,
+  offset = 0,
+}) => ({
+  max,
+  amount,
+  total,
+  offset,
 })
 
 export const fetchFranchises = (searchText) => {
+  const query = `%${_.words(searchText).join('%')}%`
+
   const queryParams = _.merge(
     {},
     defaultQueryParams,
     {
-      query: `%${searchText}%`,
+      query: `${query}`,
       resources: [
         'franchise',
       ].join(','),
@@ -56,11 +63,13 @@ export const fetchGamesBySearch = (
     offset,
   } = params
 
+  const nameFilter = `%${_.words(searchText).join('%')}%`
+
   const queryParams = _.merge(
     {},
     defaultQueryParams,
     {
-      filter: `name:%${searchText.replace(' ', '%')}%`,
+      filter: `name:${nameFilter}`,
       field_list: 'id,name,image,deck,platforms',
       limit: 10,
       offset,
