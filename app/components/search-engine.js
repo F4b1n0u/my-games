@@ -61,6 +61,7 @@ export default class SearchEngineComponent extends React.Component {
       <SearchEngine>
         <TextInputWrapper>
           <Search
+            autoCapitalize="none"
             blurOnSubmit
             keyboardShouldPersistTaps={false}
             placeholder="type game name here"

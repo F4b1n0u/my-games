@@ -11,8 +11,9 @@ export const RECEIVE_MORE_GAMES_SUCCESS = 'my-games/game-catalogue/RECEIVE_MORE_
 export const RECEIVE_MORE_GAMES_FAILURE = 'my-games/game-catalogue/RECEIVE_MORE_GAMES_FAILURE'
 export const RECEIVE_GAME_SUCCESS = 'my-games/game-catalogue/RECEIVE_GAME_SUCCESS'
 
-export const requestGames = () => ({
+export const requestGames = games => ({
   type: REQUEST_GAMES,
+  games,
 })
 
 export const receiveGames = (games, pagination) => ({
