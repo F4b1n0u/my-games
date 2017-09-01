@@ -8,7 +8,7 @@ import rootReducer from '@reducers'
 export default function configureStore(initialState) {
   const epicMiddleware = createEpicMiddleware(rootEpic)
   const middlewares = [epicMiddleware]
-  const enhancer = compose({})(
+  const enhancer = compose(
     applyMiddleware(...middlewares),
     autoRehydrate()
   )
