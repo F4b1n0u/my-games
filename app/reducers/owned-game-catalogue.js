@@ -29,7 +29,7 @@ function ownedGames(
   //   GAME_ID: [OWNED_PLATFORM_ID, OWNED_PLATFORM_ID]
   // }
   switch (action.type) {
-    case TOGGLE_PLATFORM_OWNERSHIP:
+    case TOGGLE_PLATFORM_OWNERSHIP: {
       gameAlreadyOwned = _.find(
         nextState,
         game => game.id === action.game.id
@@ -106,6 +106,7 @@ function ownedGames(
       }
 
       return nextState
+    }
     default:
       return state
   }
