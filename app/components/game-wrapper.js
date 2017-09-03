@@ -11,9 +11,9 @@ import {
 } from 'expo';
 import styled from 'styled-components/native';
 
-import CompleteDetailedGame from './complete-detailed-game'
-import CompleteNotDetailedGame from './complete-not-detailed-game'
-import IncompleteNotDetailedGame from './incomplete-not-detailed-game'
+import CompleteDetailedGame from '@components/complete-detailed-game'
+import CompleteNotDetailedGame from '@components/complete-not-detailed-game'
+import IncompleteNotDetailedGame from '@components/incomplete-not-detailed-game'
 
 const animationDuration = 250;
 

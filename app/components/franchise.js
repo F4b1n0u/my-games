@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
-import ProgressiveImage from './progressive-image'
+import ProgressiveImage from '@components/progressive-image'
 
 export default ({
   name,

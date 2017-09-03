@@ -4,8 +4,8 @@ import {
 } from 'expo'
 import styled from 'styled-components/native'
 
-import RatioLessImage from './ratio-less-image'
-import PlatformList from './platform-list'
+import RatioLessImage from '@components/ratio-less-image'
+import PlatformList from '@components/platform-list'
 
 export default class CompleteNotDetailedGameComponent extends React.Component {
   constructor(props) {

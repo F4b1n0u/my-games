@@ -12,8 +12,8 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons'
 
-import ProgressiveImage from './progressive-image'
-import PlatformList from './platform-list'
+import ProgressiveImage from '@components/progressive-image'
+import PlatformListComponent from '@components/platform-list'
 
 const {
   width: viewportWidth,
@@ -174,6 +174,10 @@ const Description = styled.Text.attrs({
   font-size: 16;
   font-family: 'florentia-extralight';
   background-color: transparent;
+`
+
+const PlatformList = styled(PlatformListComponent)`
+  justify-content: center;
 `
 
 const BackButton = styled.TouchableOpacity`

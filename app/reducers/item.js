@@ -22,7 +22,7 @@ const initialState = {
 }
 function status(
   state = initialState.status,
-  action,
+  action
 ) {
   switch (action.type) {
     case REQUEST_GAME_PARTIAL_COMPLETION:

@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components/native'
 
-import FranchiseComponent from './franchise'
+import FranchiseComponent from '@components/franchise'
 
 export default class FranchiseListComponent extends React.Component {
   constructor(props) {

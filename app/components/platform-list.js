@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
-import Platform from './platform'
+import Platform from '@components/platform'
 
 export default ({
   platforms,
   isDetailed,
+  style,
   togglePlatformOwnership = () => {},
 }) => (
   <PlatformList
+    style={style}
     isDetailed={isDetailed}
   >
     {(platforms || []).map(platform => (
@@ -23,7 +25,6 @@ export default ({
 )
 
 const PlatformList = styled.View`
-  justify-content:  ${props => props.isDetailed ? 'center' : 'flex-start'};
   flex-wrap: wrap;
   width: 100%;
   flex-direction: row;

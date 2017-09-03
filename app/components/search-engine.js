@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import styled from 'styled-components/native'
 
-import FranchiseList from './franchise-list'
+import FranchiseList from '@components/franchise-list'
 
 export default class SearchEngineComponent extends React.Component {
   constructor(props) {
