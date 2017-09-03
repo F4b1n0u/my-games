@@ -17,8 +17,6 @@ const Index = () => (
   </Provider>
 )
 
-Sentry.enableInExpoDevelopment = true
-
 Sentry
   .config('https://577e0a8ab9124013aaa3c43b6209d0b5:9af1ee2a9e234a7a8f4686bfeceffe04@sentry.io/212109')
   .install()
