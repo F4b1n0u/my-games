@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import {
   LinearGradient,
@@ -5,8 +6,9 @@ import {
 import styled from 'styled-components/native'
 
 import RatioLessImage from '@components/ratio-less-image'
-import PlatformList from '@components/platform-list'
+import PlatformComponent from '@components/platform'
 
+const amountPlatformSupported = 14
 export default class CompleteNotDetailedGameComponent extends React.Component {
   constructor(props) {
     super(props)
@@ -26,14 +28,20 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
   _renderPlatformList() {
     const {
       hasDetailedGame,
+      platforms,
     } = this.props
 
     return (hasDetailedGame) ?
       null
       : (
-        <PlatformList
-          {...this.props}
-        />
+        <PlatformList>
+          {(_.slice(platforms, 0, amountPlatformSupported) || []).map(platform => (
+            <Platform
+              key={platform.id}
+              {...platform}
+            />
+          ))}
+        </PlatformList>
       )
   }
 
@@ -89,6 +97,26 @@ const Name = styled.Text.attrs({
   fontSize: 8;
   font-family: 'florentia-extralight';
 `
+
+const PlatformList = styled.View`
+  flex: 1;
+  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const Platform = styled(PlatformComponent)`
+  background-color: transparent;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 30;
+  margin-horizontal: 4;
+  margin-bottom: 0;
+`
+
 
 const Cover = styled(RatioLessImage).attrs({
 })`

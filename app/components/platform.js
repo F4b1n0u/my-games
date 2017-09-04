@@ -2,53 +2,29 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { Ionicons } from '@expo/vector-icons'
 
+// TODO add a displayName for debug purpose to all the pure component
 export default ({
-  id,
   abbreviation,
   isDetailed,
   isOwned,
-  togglePlatformOwnership,
-}) => {
-  const Platform = isDetailed ? PlatformTouchable : PlatformNotTouchable
-
-  return (
-    <Platform
-      key={id}
+  style,
+}) => (
+  <Platform
+    style={style}
+  >
+    <Icon
       isDetailed={isDetailed}
-      onPress={togglePlatformOwnership}
+      isOwned={isOwned}
+    />
+    <Abbreviation
+      isDetailed={isDetailed}
     >
-      <Icon
-        isDetailed={isDetailed}
-        isOwned={isOwned}
-      />
-      <Abbreviation
-        isDetailed={isDetailed}
-      >
-        {abbreviation.toLowerCase()}
-      </Abbreviation>
-    </Platform>
-  )
-}
+      {abbreviation.toUpperCase()}
+    </Abbreviation>
+  </Platform>
+)
 
-const PlatformNotTouchable = styled.View`
-  background-color: transparent;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height:             ${props => props.isDetailed ? '35' : '30'};
-  margin-horizontal:  ${props => props.isDetailed ? '7.5' : '4'};
-  margin-bottom:      ${props => props.isDetailed ? '12.5' : '0'};
-`
-
-const PlatformTouchable = styled.TouchableOpacity`
-  background-color: transparent;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height:             ${props => props.isDetailed ? '35' : '30'};
-  margin-horizontal:  ${props => props.isDetailed ? '7.5' : '4'};
-  margin-bottom:      ${props => props.isDetailed ? '12.5' : '0'};
-`
+const Platform = styled.View``
 
 const Icon = styled(Ionicons).attrs({
   name: 'ios-game-controller-b-outline',
@@ -62,5 +38,5 @@ const Abbreviation = styled.Text`
   background-color: transparent;
   font-family: 'florentia-extralight';
   color:      ${props => props.isDetailed ? '#000000' : '#fafafa'};
-  font-size:  ${props => props.isDetailed ? '20' : '15'};
+  font-size:  ${props => props.isDetailed ? '18' : '15'};
 `
