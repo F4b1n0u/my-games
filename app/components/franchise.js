@@ -3,19 +3,25 @@ import styled from 'styled-components/native'
 
 import ProgressiveImage from '@components/progressive-image'
 
+const logoImage = require('../../assets/images/icon.png')
+
 export default ({
   name,
   image,
 }) => (
   <Franchise>
     {
-      image ? (
-        <Thumbnail
-          imageSource={{ uri: image.thumb_url }}
-        />
-      ) :
-        // TODO display a list icon or something
-        null
+      <Thumbnail
+        imageSource={
+          image ? (
+            {
+              uri: image.thumb_url,
+            }
+          ) : (
+            logoImage
+          )
+        }
+      />
     }
     <Name>
       {name}
