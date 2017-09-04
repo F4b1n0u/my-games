@@ -13,7 +13,7 @@ import {
 } from '@expo/vector-icons'
 
 import ProgressiveImage from '@components/progressive-image'
-import PlatformListComponent from '@components/platform-list'
+import PlatformComponent from '@components/platform'
 
 const {
   width: viewportWidth,
@@ -31,6 +31,7 @@ const itemHorizontalMargin = wp(2)
 const sliderWidth = viewportWidth
 const itemWidth = slideWidth + (itemHorizontalMargin * 2)
 
+const amountPlatformSupported = 14
 export default class CompleteDetailedGameComponent extends React.Component {
   constructor(props) {
     super(props)
@@ -48,11 +49,13 @@ export default class CompleteDetailedGameComponent extends React.Component {
 
   render() {
     const {
-      name,
+      completionLevel,
       deck,
       image,
       images,
-      completionLevel,
+      name,
+      platforms,
+      togglePlatformOwnership,
     } = this.props
 
     let slideshow
@@ -99,10 +102,19 @@ export default class CompleteDetailedGameComponent extends React.Component {
           {deck}
         </Description>
 
-        <PlatformList
-          isDetailed
-          {...this.props}
-        />
+        <PlatformList>
+          {(_.slice(platforms, 0, amountPlatformSupported) || []).map(platform => (
+            <PlatformWrapper
+              key={platform.id}
+              onPress={togglePlatformOwnership.bind(this, platform)}
+            >
+              <Platform
+                isDetailed
+                {...platform}
+              />
+            </PlatformWrapper>
+          ))}
+        </PlatformList>
 
         <BackButton
           onPress={this._handleCollapse}
@@ -165,7 +177,7 @@ const Picture = styled(ProgressiveImage)`
 `
 
 const Description = styled.Text.attrs({
-  numberOfLines: 6,
+  numberOfLines: 8,
   ellipsizeMode: 'tail',
   textAlign: 'justify',
 })`
@@ -176,8 +188,28 @@ const Description = styled.Text.attrs({
   background-color: transparent;
 `
 
-const PlatformList = styled(PlatformListComponent)`
+const PlatformList = styled.View`
+  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-top: 5;
+  margin-bottom: 30;
+  overflow: hidden;
   justify-content: center;
+
+`
+
+const PlatformWrapper = styled.TouchableOpacity``
+
+const Platform = styled(PlatformComponent)`
+  background-color: transparent;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 35;
+  margin-horizontal: 7.5;
+  margin-bottom: 12.5;
 `
 
 const BackButton = styled.TouchableOpacity`
