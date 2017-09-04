@@ -2,12 +2,8 @@ import React from 'react'
 import styled from 'styled-components/native'
 import Carousel from 'react-native-snap-carousel'
 import _ from 'lodash'
-import {
-  Dimensions,
-} from 'react-native'
-import {
-  BlurView,
-} from 'expo'
+import { Dimensions } from 'react-native'
+import { BlurView } from 'expo'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import ProgressiveImage from '@components/progressive-image'
@@ -53,6 +49,7 @@ export default class CompleteDetailedGameComponent extends React.Component {
       images,
       name,
       platforms,
+      isOwned,
       togglePlatformOwnership,
     } = this.props
 
@@ -73,7 +70,9 @@ export default class CompleteDetailedGameComponent extends React.Component {
 
     return (
       <Game>
-        <Name>
+        <Name
+          isOwned={isOwned}
+        >
           {name}
         </Name>
 
@@ -83,12 +82,12 @@ export default class CompleteDetailedGameComponent extends React.Component {
           {
             slideshow.map(currentImage => (
               <Slide
-                key={currentImage.thumb_url}
+                key={currentImage.tiny_url}
               >
                 <ImageContainer>
                   <Picture
-                    thumbnailSource={{ uri: currentImage.thumb_url }}
-                    imageSource={{ uri: currentImage.super_url }}
+                    thumbnailSource={{ uri: currentImage.tiny_url }}
+                    imageSource={{ uri: currentImage.medium_url }}
                   />
                 </ImageContainer>
               </Slide>
@@ -141,7 +140,7 @@ const Name = styled.Text.attrs({
   ellipsizeMode: 'tail',
 })`
   margin-bottom: 15;
-  margin-horizontal: 15;
+  margin-horizontal: ${props => props.isOwned ? 40 : 15};
   font-size: 20;
   text-align: center;
   font-family: 'florentia-extralight';

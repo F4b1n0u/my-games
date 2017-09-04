@@ -6,6 +6,7 @@ import {
   selectFranchise,
   submitSearch,
   stopSearching,
+  clearSearch,
 } from '@actions/search-engine'
 import {
   getSearchText,
@@ -43,6 +44,7 @@ const mapDispatchToProps = dispatch => ({
   stopSearching: () => dispatch(stopSearching()),
   submitSearch: () => dispatch(submitSearch()),
   updateSearchText: searchText => dispatch(updateSearchText(searchText)),
+  clearSearch: () => dispatch(clearSearch()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchEngine)

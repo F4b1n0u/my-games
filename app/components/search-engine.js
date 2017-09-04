@@ -3,6 +3,7 @@ import {
   LayoutAnimation,
 } from 'react-native'
 import styled from 'styled-components/native'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import FranchiseList from '@components/franchise-list'
 
@@ -12,6 +13,7 @@ export default class SearchEngineComponent extends React.Component {
 
     this._handleFocus = this._handleFocus.bind(this)
     this._handleSubmit = this._handleSubmit.bind(this)
+    this._handlePressClearSearch = this._handlePressClearSearch.bind(this)
   }
 
   componentWillReceiveProps() {
@@ -49,6 +51,13 @@ export default class SearchEngineComponent extends React.Component {
     submitSearch()
   }
 
+  _handlePressClearSearch() {
+    const {
+      clearSearch,
+    } = this.props
+
+    clearSearch()
+  }
 
   render() {
     const {
@@ -64,7 +73,7 @@ export default class SearchEngineComponent extends React.Component {
             autoCapitalize="none"
             blurOnSubmit
             keyboardShouldPersistTaps={false}
-            placeholder="type game name here"
+            placeholder="type a game name"
             ref={(ref) => { this._searchInput = ref }}
             selectTextOnFocus
             value={searchText}
@@ -73,6 +82,18 @@ export default class SearchEngineComponent extends React.Component {
             onFocus={this._handleFocus}
             onSubmitEditing={this._handleSubmit}
           />
+          {
+            searchText ? (
+              <ClearSearch
+                onPress={this._handlePressClearSearch}
+              >
+                <ClearSearchIcon />
+              </ClearSearch>
+            ) : (
+              null
+            )
+          }
+
         </TextInputWrapper>
         <FranchiseList
           {...this.props}
@@ -98,6 +119,22 @@ const SearchEngine = styled.View`
   padding-horizontal: 2;
 `
 
+const ClearSearch = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.4,
+})`
+  position: absolute;
+  right: 0;
+  height: 21;
+  width: 21;
+`
+
+const ClearSearchIcon = styled(MaterialIcons).attrs({
+  name: 'delete-forever',
+})`
+  color: #a3a3a3;
+  font-size: 20;
+`
+
 const TextInputWrapper = styled.View`
   flex-direction: row;
   justify-content: center;
@@ -113,4 +150,5 @@ const Search = styled.TextInput.attrs({
   flex: 1;
   font-family: 'florentia-extralight';
   text-align: center;
+  margin-horizontal: 40;
 `

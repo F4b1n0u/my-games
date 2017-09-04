@@ -1,26 +1,25 @@
-import React from 'react';
+import _ from 'lodash'
+import React from 'react'
+import { BlurView } from 'expo'
+import styled from 'styled-components/native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import {
-	Animated,
-	TouchableOpacity,
-	View,
+  Animated,
   Easing,
-  Text,
-} from 'react-native';
-import {
-	LinearGradient,
-} from 'expo';
-import styled from 'styled-components/native';
+} from 'react-native'
+
+import { cacheImages } from '@utils'
 
 import CompleteDetailedGame from '@components/complete-detailed-game'
 import CompleteNotDetailedGame from '@components/complete-not-detailed-game'
 import IncompleteNotDetailedGame from '@components/incomplete-not-detailed-game'
 
-const animationDuration = 250;
+const animationDuration = 250
 
 export default class GameWrapperComponent extends React.Component {
-	state = {
+  state = {
     animationProgression: new Animated.Value(0),
-	}
+  }
 
   static defaultProps = {
     normalMargin: 10,
@@ -29,49 +28,11 @@ export default class GameWrapperComponent extends React.Component {
 
   constructor(props) {
     super(props)
- 
+
     this._toggleDetails = this._toggleDetails.bind(this)
   }
 
-	_toggleDetails() {
-    const {
-			isDetailed,
-    } = this.props;
-    
-    const {
-      animationProgression,
-    } = this.state;
-    
-    const startValue = isDetailed ? 1 : 0
-    const endValue   = isDetailed ? 0 : 1
-
-    animationProgression.setValue(startValue);
-    Animated.timing(
-      animationProgression,
-      {
-        easing: Easing.easeInOut,
-        duration: animationDuration,
-        toValue: endValue,
-      }
-    ).start();
-	}
-
-	componentWillUpdate(nextProps) {
-		const {
-      scrollToMe,
-      isDetailed,
-		} = this.props;
-
-		if (nextProps.isDetailed !== isDetailed) {
-      this._toggleDetails()
-    }
-
-    if (nextProps.isDetailed) {
-      scrollToMe()
-    }
-	}
-
-  componentDidMount() {
+  componentWillMount() {
     const {
       normalHeight,
       detailedHeight,
@@ -88,12 +49,12 @@ export default class GameWrapperComponent extends React.Component {
     const heightAnimProgress = animationProgression.interpolate({
       inputRange: [0, 1],
       outputRange: [normalHeight, detailedHeight],
-    });
+    })
 
     const marginAnimProgress = animationProgression.interpolate({
       inputRange: [0, 1],
       outputRange: [normalMargin, detailedMargin],
-    });
+    })
 
     this.setState({
       heightAnimProgress,
@@ -103,21 +64,86 @@ export default class GameWrapperComponent extends React.Component {
     if (game.completionLevel < 2) {
       requestGamePartialCompletion()
     }
+
+    const {
+      image,
+      images = [],
+    } = game
+
+    let cachedImages = []
+
+    if (image) {
+      cachedImages.push(image)
+    }
+
+    if (images) {
+      cachedImages = _.concat(cachedImages, images)
+    }
+
+    cacheImages(
+      cachedImages.reduce(
+        (acc, currentImage) => {
+          acc.push(currentImage.tiny_url)
+          acc.push(currentImage.medium_url)
+
+          return acc
+        },
+        []
+      )
+    )
   }
 
-	render() {
+  componentWillUpdate(nextProps) {
+    const {
+      scrollToMe,
+      isDetailed,
+    } = this.props;
+
+    if (nextProps.isDetailed !== isDetailed) {
+      this._toggleDetails()
+    }
+
+    if (nextProps.isDetailed) {
+      scrollToMe()
+    }
+  }
+
+  _toggleDetails() {
+    const {
+      isDetailed,
+    } = this.props
+
+    const {
+      animationProgression,
+    } = this.state
+
+    const startValue = isDetailed ? 1 : 0
+    const endValue = isDetailed ? 0 : 1
+
+    animationProgression.setValue(startValue)
+    Animated.timing(
+      animationProgression,
+      {
+        easing: Easing.easeInOut,
+        duration: animationDuration,
+        toValue: endValue,
+      }
+    ).start()
+  }
+
+  render() {
     const {
       game,
       isDetailed,
       showGameDetails,
       hideGameDetails,
       togglePlatformOwnership,
-    } = this.props;
+    } = this.props
 
-		const {
+    const {
       heightAnimProgress,
       marginAnimProgress,
-		} = this.state
+    } = this.state
 
     return (
       <Animated.View
@@ -148,16 +174,52 @@ export default class GameWrapperComponent extends React.Component {
               )
             )
           }
+          {
+            game.isOwned ? (
+              <OwnershipMarkerWrapper>
+                <OwnershipMarker />
+                <OwnershipMarkerCheck />
+              </OwnershipMarkerWrapper>
+            ) : (
+              null
+            )
+          }
         </GameWrapper>
       </Animated.View>
-		);
-	}
+    )
+  }
 }
 
 const GameWrapper = styled.View`
   flex: 1;
   margin-bottom: 10;
   border-color: #e3e3e3;
-	border-width: 1;
+  border-width: 1;
   border-radius: 5;
+`
+
+const OwnershipMarkerWrapper = styled.View`
+  position: absolute;
+  top: -10;
+  right: 0;
+  height: 40;
+  width: 40;
+`
+
+const OwnershipMarkerCheck = styled(MaterialCommunityIcons).attrs({
+  name: 'check'
+})`
+  position: absolute;
+  top: 7;
+  right: 11;
+  font-size: 20;
+  color: #ffffff;
+`
+
+
+const OwnershipMarker = styled(MaterialCommunityIcons).attrs({
+  name: 'bookmark'
+})`
+  font-size: 40;
+  color: #eb2b36;
 `
