@@ -8,9 +8,7 @@ import {
 import {
   BlurView,
 } from 'expo'
-import {
-  MaterialCommunityIcons,
-} from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import ProgressiveImage from '@components/progressive-image'
 import PlatformComponent from '@components/platform'

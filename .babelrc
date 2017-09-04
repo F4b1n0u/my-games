@@ -18,7 +18,8 @@
         "@reducers":    "./app/reducers",
         "@selectors":   "./app/selectors",
         "@services":    "./app/services",
-        "@store":       "./app/store"
+        "@store":       "./app/store",
+        "@utils":       "./app/utils"
       }
     }]
   ]
