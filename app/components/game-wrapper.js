@@ -216,7 +216,6 @@ const OwnershipMarkerCheck = styled(MaterialCommunityIcons).attrs({
   color: #ffffff;
 `
 
-
 const OwnershipMarker = styled(MaterialCommunityIcons).attrs({
   name: 'bookmark'
 })`

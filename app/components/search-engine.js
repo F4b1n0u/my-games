@@ -73,7 +73,7 @@ export default class SearchEngineComponent extends React.Component {
             autoCapitalize="none"
             blurOnSubmit
             keyboardShouldPersistTaps={false}
-            placeholder="type a game name"
+            placeholder="type a name"
             ref={(ref) => { this._searchInput = ref }}
             selectTextOnFocus
             value={searchText}
@@ -106,7 +106,7 @@ export default class SearchEngineComponent extends React.Component {
 const SearchEngine = styled.View`
   position: absolute;
   top: 25;
-  width: 80%;
+  width: 70%;
   flex-direction:column;
   justify-content: center;
   align-items: center;

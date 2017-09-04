@@ -65,19 +65,20 @@ export default class GameListComponent extends React.Component {
   }) {
     const {
       detailedGameId,
+      hasDetailedGame,
       hideGameDetails,
-      requestGamePartialCompletion,
       showGameDetails,
+      requestGamePartialCompletion,
       togglePlatformOwnership,
     } = this.props
 
     return (
       <Game
-        {...item}
         detailedHeight={detailedHeight}
-        hasDetailedGame={!!detailedGameId}
+        hasDetailedGame={hasDetailedGame}
         isDetailed={detailedGameId === item.game.id}
         normalHeight={normalHeight}
+        {...item}
 
         hideGameDetails={hideGameDetails}
         requestGamePartialCompletion={requestGamePartialCompletion.bind(this, item.game)}

@@ -17,6 +17,7 @@ import {
   START_LOAD,
   END_LOAD_SUCCESS,
   END_LOAD_FAILURE,
+  TOGGLE_SETTINGS_DISPLAY,
 } from '@actions/app'
 
 const initialState = {
@@ -25,6 +26,7 @@ const initialState = {
   status: {
     isLoading: false,
   },
+  isSettingsVisible: false,
 }
 
 function isLoaded(
@@ -63,7 +65,20 @@ function status(
   }
 }
 
+function isSettingsVisible(
+  state = initialState.isSettingsVisible,
+  action
+) {
+  switch (action.type) {
+    case TOGGLE_SETTINGS_DISPLAY:
+      return !state
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   isLoaded,
   status,
+  isSettingsVisible,
 })
