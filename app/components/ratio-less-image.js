@@ -8,11 +8,10 @@ export default ({
 }) => (
   <RatioLessImage>
     <BackgroundImage
-      imageSource={{ uri: image.thumb_url }}
+      imageSource={{ uri: image.tiny_url }}
     />
     <Image
-      thumbnailSource={{ uri: image.thumb_url }}
-      imageSource={{ uri: image.super_url }}
+      imageSource={{ uri: image.medium_url }}
     />
     {children}
   </RatioLessImage>

@@ -83,7 +83,7 @@ ProgressiveImage.defaultProps = {
   resizeMode: 'cover',
   thumbnailFadeDuration: 250,
   imageFadeDuration: 250,
-  thumbnailBlurRadius: 5,
+  thumbnailBlurRadius: 1,
   onLoadThumbnail: Function.prototype,
   onLoadImage: Function.prototype,
 }
