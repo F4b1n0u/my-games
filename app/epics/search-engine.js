@@ -2,8 +2,8 @@ import 'rxjs'
 import { combineEpics } from 'redux-observable'
 import { Observable } from 'rxjs/Observable'
 import { getSearchText } from '@selectors/search-engine'
-import { fetchFranchises } from '@services/giant-bomb'
 import {
+  fetchFranchises,
   fetchFranchiseCompletion,
   extractPagination,
 } from '@services/giant-bomb'
@@ -17,8 +17,8 @@ import {
   SELECT_FRANCHISE,
   REQUEST_FRANCHISE_COMPLETION,
   STOP_SEARCHING,
-} from '@actions/search-engine'
-import {
+  CLEAR_SEARCH,
+
   requestFranchises,
   receiveFranchises,
   receiveFranchisesFailure,
@@ -27,8 +27,12 @@ import {
   receiveFranchiseCompletionFailure,
 } from '@actions/search-engine'
 import {
+  requestGames,
   receiveGames,
 } from '@actions/game-catalogue'
+import {
+  getOwnedGames,
+} from '@selectors/owned-game-catalogue'
 
 const updateSearchTextEpic = action$ => action$
   .ofType(UPDATE_SEARCHTEXT)
@@ -93,10 +97,20 @@ const requestFranchiseCompletionEpic = action$ => action$
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error)))
   )
 
+const clearSearchEpic = (action$, store) => action$
+  .ofType(CLEAR_SEARCH)
+  .flatMap(() => {
+    const ownedGameCatalogueState = store.getState().ownedGameCatalogue
+    const ownedGames = getOwnedGames(ownedGameCatalogueState)
+
+    return Observable.of(requestGames(ownedGames))
+  })
+
 export default combineEpics(
   updateSearchTextEpic,
   requestFranchisesEpic,
   selectFranchiseToStopEpic,
   selectFranchiseTofetchEpic,
-  requestFranchiseCompletionEpic
+  requestFranchiseCompletionEpic,
+  clearSearchEpic
 )

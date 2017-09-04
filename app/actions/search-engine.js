@@ -9,6 +9,7 @@ export const REQUEST_FRANCHISE_COMPLETION = 'my-games/search-engine/REQUEST_FRAN
 export const RECEIVE_FRANCHISE_COMPLETION_SUCCESS = 'my-games/search-engine/RECEIVE_FRANCHISE_COMPLETION_SUCCESS'
 export const RECEIVE_FRANCHISE_COMPLETION_FAILURE = 'my-games/search-engine/RECEIVE_FRANCHISE_COMPLETION_FAILURE'
 export const STOP_SEARCHING = 'my-games/search-engine/STOP_SEARCHING'
+export const CLEAR_SEARCH = 'my-games/search-engine/CLEAR_SEARCH'
 
 export const startSearching = () => ({
   type: START_SEARCHING,
@@ -59,4 +60,8 @@ export const submitSearch = () => ({
 
 export const stopSearching = () => ({
   type: STOP_SEARCHING,
+})
+
+export const clearSearch = () => ({
+  type: CLEAR_SEARCH,
 })

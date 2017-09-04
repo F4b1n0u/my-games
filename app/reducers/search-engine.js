@@ -8,6 +8,7 @@ import {
   RECEIVE_FRANCHISES_FAILURE,
   SELECT_FRANCHISE,
   STOP_SEARCHING,
+  CLEAR_SEARCH,
 } from '@actions/search-engine'
 import {
   RECEIVE_GAMES_SUCCESS,
@@ -35,6 +36,8 @@ function searchText(
       return action.searchText
     case SELECT_FRANCHISE:
       return action.selectedFranchise.name
+    case CLEAR_SEARCH:
+      return initialState.searchText
     default:
       return state
   }
