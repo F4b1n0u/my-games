@@ -75,7 +75,7 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
 }
 
 const Game = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.5,
+  activeOpacity: 0.8,
 })`
   flex: 1;
   background-color: transparent;

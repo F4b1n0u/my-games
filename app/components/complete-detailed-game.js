@@ -198,7 +198,9 @@ const PlatformList = styled.View`
 
 `
 
-const PlatformWrapper = styled.TouchableOpacity``
+const PlatformWrapper = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8,
+})``
 
 const Platform = styled(PlatformComponent)`
   background-color: transparent;
