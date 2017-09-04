@@ -1,6 +1,7 @@
-import Expo, {
+import Expo from 'expo'
+import {
   Image,
-} from 'expo'
+} from 'react-native'
 
 export const cacheImages = images => images.map(
   (image) => {

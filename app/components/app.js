@@ -2,6 +2,11 @@ import React from 'react'
 import { UIManager } from 'react-native'
 import styled from 'styled-components/native'
 import Expo, { Font } from 'expo'
+import {
+  Ionicons ,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons'
 
 import Background from '@components/background'
 import GameExplorer from '@components/game-explorer'
@@ -31,6 +36,9 @@ export default class AppComponents extends React.Component {
       ]);
 
       const fontAssets = cacheFonts([
+        Ionicons.font,
+        MaterialCommunityIcons.font,
+        MaterialIcons.font,
         {
           'florentia-extralight': require('../../assets/fonts/florentia.extralight.ttf'),
           'arista-pro-extralight': require('../../assets/fonts/arista-pro-extralight.ttf'),
