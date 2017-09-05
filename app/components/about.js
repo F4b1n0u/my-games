@@ -59,4 +59,3 @@ const GiantBombLogo = styled(ProgressiveImage).attrs({
   height: ${verticalScale(150)};
   width: ${scale(300)};
 `
-
