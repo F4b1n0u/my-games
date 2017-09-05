@@ -26,28 +26,18 @@ export default class GameListComponent extends React.Component {
     }
   }
 
-  constructor(props) {
-    super(props)
-
-    this._scrollToGame = this._scrollToGame.bind(this)
-    this._renderItem = this._renderItem.bind(this)
-    this._renderFooter = this._renderFooter.bind(this)
-    this._handleEndReached = this._handleEndReached.bind(this)
-    this._setRef = this._setRef.bind(this)
-  }
-
-  _setRef(ref) {
+  _setRef = (ref) => {
     this.flatListRef = ref
   }
 
-  _scrollToGame(index) {
+  _scrollToGame = (index) => {
     this.flatListRef.root.scrollToIndex({
       animated: true,
       index: `${index}`,
     })
   }
 
-  _handleEndReached() {
+  _handleEndReached = () => {
     const {
       requestMoreGames,
       hasMore,
@@ -59,10 +49,10 @@ export default class GameListComponent extends React.Component {
     }
   }
 
-  _renderItem({
+  _renderItem = ({
     item,
     index,
-  }) {
+  }) => {
     const {
       detailedGameId,
       hasDetailedGame,
@@ -89,7 +79,7 @@ export default class GameListComponent extends React.Component {
     )
   }
 
-  _renderFooter() {
+  _renderFooter = () => {
     const {
       isPending,
     } = this.props

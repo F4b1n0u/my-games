@@ -1,17 +1,6 @@
-
-
-// await Font.loadAsync({
-//   'florentia-extralight': require('../../assets/fonts/florentia.extralight.ttf'),
-//   'arista-pro-extralight': require('../../assets/fonts/arista-pro-extralight.ttf'),
-//   'let-that-be-enough-regular': require('../../assets/fonts/let-that-be-enough.regular.ttf'),
-// })
-
-
 import {
   combineReducers,
 } from 'redux'
-
-// import _ from 'lodash'
 
 import {
   START_LOAD,

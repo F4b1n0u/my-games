@@ -27,13 +27,7 @@ const itemWidth = slideWidth + (itemHorizontalMargin * 2)
 
 const amountPlatformSupported = 14
 export default class CompleteDetailedGameComponent extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this._handleCollapse = this._handleCollapse.bind(this)
-  }
-
-  _handleCollapse() {
+  _handleCollapse = () => {
     const {
       hideGameDetails,
     } = this.props

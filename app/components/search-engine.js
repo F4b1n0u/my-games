@@ -8,14 +8,6 @@ import { MaterialIcons } from '@expo/vector-icons'
 import FranchiseList from '@components/franchise-list'
 
 export default class SearchEngineComponent extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this._handleFocus = this._handleFocus.bind(this)
-    this._handleSubmit = this._handleSubmit.bind(this)
-    this._handlePressClearSearch = this._handlePressClearSearch.bind(this)
-  }
-
   componentWillReceiveProps() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   }
@@ -35,7 +27,7 @@ export default class SearchEngineComponent extends React.Component {
     }
   }
 
-  _handleFocus() {
+  _handleFocus = () => {
     const {
       startSearching,
     } = this.props
@@ -43,7 +35,7 @@ export default class SearchEngineComponent extends React.Component {
     startSearching()
   }
 
-  _handleSubmit() {
+  _handleSubmit = () => {
     const {
       submitSearch,
     } = this.props
@@ -51,7 +43,7 @@ export default class SearchEngineComponent extends React.Component {
     submitSearch()
   }
 
-  _handlePressClearSearch() {
+  _handlePressClearSearch = () => {
     const {
       clearSearch,
     } = this.props

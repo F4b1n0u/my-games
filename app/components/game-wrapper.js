@@ -26,12 +26,6 @@ export default class GameWrapperComponent extends React.Component {
     detailedMargin : 5,
   };
 
-  constructor(props) {
-    super(props)
-
-    this._toggleDetails = this._toggleDetails.bind(this)
-  }
-
   componentWillMount() {
     const {
       normalHeight,
@@ -108,7 +102,7 @@ export default class GameWrapperComponent extends React.Component {
     }
   }
 
-  _toggleDetails() {
+  _toggleDetails = () => {
     const {
       isDetailed,
     } = this.props

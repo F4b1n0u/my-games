@@ -5,13 +5,7 @@ import styled from 'styled-components/native'
 import FranchiseComponent from '@components/franchise'
 
 export default class FranchiseListComponent extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this._handlePressItem = this._handlePressItem.bind(this)
-  }
-
-  _handlePressItem(item) {
+  _handlePressItem = (item) => {
     const {
       selectFranchise,
     } = this.props

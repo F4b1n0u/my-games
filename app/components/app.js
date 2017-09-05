@@ -26,8 +26,6 @@ export default class AppComponents extends React.Component {
   
   constructor(props) {
     super(props)
-    
-    this._loadAssetsAsync = this._loadAssetsAsync.bind(this)
   }
   
   
@@ -35,7 +33,7 @@ export default class AppComponents extends React.Component {
     this._loadAssetsAsync()
   }
   
-  async _loadAssetsAsync() {
+  _loadAssetsAsync = async () => {
     const {
       isLoaded,
       isLoading,

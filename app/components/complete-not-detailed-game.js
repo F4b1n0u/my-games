@@ -10,14 +10,7 @@ import PlatformComponent from '@components/platform'
 
 const amountPlatformSupported = 14
 export default class CompleteNotDetailedGameComponent extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this._handlePressHide = this._handlePressHide.bind(this)
-    this._renderPlatformList = this._renderPlatformList.bind(this)
-  }
-
-  _handlePressHide() {
+  _handlePressHide = () => {
     const {
       showGameDetails,
     } = this.props
@@ -25,7 +18,7 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
     showGameDetails()
   }
 
-  _renderPlatformList() {
+  _renderPlatformList = () => {
     const {
       hasDetailedGame,
       platforms,
