@@ -11,7 +11,7 @@ import {
 
 import Background from '@components/background'
 import GameExplorer from '@components/game-explorer'
-import SettingsComponent from '@components/settings'
+import AboutComponent from '@components/about'
 
 import {
   cacheImages,
@@ -23,6 +23,18 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
 }
 
 export default class AppComponents extends React.Component {
+  
+  constructor(props) {
+    super(props)
+    
+    this._loadAssetsAsync = this._loadAssetsAsync.bind(this)
+  }
+  
+  
+  componentWillMount() {
+    this._loadAssetsAsync()
+  }
+  
   async _loadAssetsAsync() {
     const {
       isLoaded,
@@ -38,7 +50,7 @@ export default class AppComponents extends React.Component {
         require('../../assets/images/all-games-wallpaper.png'),
         require('../../assets/images/giantbomb-logo.png'),
         require('../../assets/images/icon.png'),
-      ]);
+      ])
 
       const fontAssets = cacheFonts([
         Ionicons.font,
@@ -50,35 +62,24 @@ export default class AppComponents extends React.Component {
           'arista-pro-extralight': require('../../assets/fonts/arista-pro-extralight.ttf'),
           'let-that-be-enough-regular': require('../../assets/fonts/let-that-be-enough.regular.ttf'),
         }
-      ]);
+      ])
 
       await Promise.all([
         ...imageAssets,
         ...fontAssets,
-      ]);
+      ])
 
       endLoad()
     }
-  }
-
-  constructor(props) {
-    super(props)
-
-    this._loadAssetsAsync = this._loadAssetsAsync.bind(this)
-  }
-
-
-  componentWillMount() {
-    this._loadAssetsAsync()
   }
 
   render() {
     const {
       isLoaded,
       isLoading,
-      isSettingsVisible,
+      isAboutVisible,
       hasDetailedGame,
-      toggleSettingsDisplay,
+      toggleAboutDisplay,
     } = this.props
 
     return (!isLoading && isLoaded) ?
@@ -91,17 +92,17 @@ export default class AppComponents extends React.Component {
             hasDetailedGame ? (
               null
             ) : (
-              <SettingsIconWrapper
-                onPress={toggleSettingsDisplay}
+              <AboutIconWrapper
+                onPress={toggleAboutDisplay}
               >
-                <SettingsIcon />
-              </SettingsIconWrapper>
+                <AboutIcon />
+              </AboutIconWrapper>
             )
           }
 
           {
-            isSettingsVisible ? (
-              <Settings />
+            isAboutVisible ? (
+              <About />
             ) : (
               null
             )
@@ -118,22 +119,14 @@ const App = styled.View`
   flex-direction: row;
 `
 
-// const SettingsOverlay = styled.TouchableWithoutFeedback`
-//   position: absolute;
-//   top: 0;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-// `
-
-const Settings = styled(SettingsComponent)`
+const About = styled(AboutComponent)`
   position: absolute;
   top: 60;
   left: 20;
   right: 20;
 `
 
-const SettingsIconWrapper = styled.TouchableOpacity.attrs({
+const AboutIconWrapper = styled.TouchableOpacity.attrs({
   activeOpacity: 0.4,
 })`
   position: absolute;
@@ -142,8 +135,8 @@ const SettingsIconWrapper = styled.TouchableOpacity.attrs({
   background-color: transparent;
 `
 
-const SettingsIcon = styled(Octicons).attrs({
-  name: 'settings'
+const AboutIcon = styled(Octicons).attrs({
+  name: 'info'
 })`
   font-size: 25;
   color: #a3a3a3;

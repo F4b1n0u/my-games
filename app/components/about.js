@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { MaterialIcons } from '@expo/vector-icons'
 
 import ProgressiveImage from '@components/progressive-image'
 
@@ -22,9 +21,7 @@ export default ({
     <Paragraph>
       {'powerded by:'}
     </Paragraph>
-    <GiantBombLogo
-      imageSource={require('../../assets/images/giantbomb-logo.png')}
-    />
+    <GiantBombLogo />
   </Settings>
 )
 
@@ -72,6 +69,7 @@ const Paragraph = styled.Text`
 `
 
 const GiantBombLogo = styled(ProgressiveImage).attrs({
+  imageSource: require('../../assets/images/giantbomb-logo.png'),
   resizeMode: 'contain',
   height: undefined,
   width: undefined,
@@ -80,25 +78,3 @@ const GiantBombLogo = styled(ProgressiveImage).attrs({
   width: 300;
 `
 
-const Setting = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.8,
-})`
-  width: 100%;
-  height: 30;
-  flex-direction: row;
-  justify-content: space-between;
-  align-content: center;
-`
-
-const Warning = styled(MaterialIcons).attrs({
-  name: 'warning',
-})`
-  font-size: 20;
-  color: #ffcc00;
-  background-color: transparent;
-`
-
-const ResetDatabase = styled.Text`
-font-size: 15;
-background-color: transparent;
-`

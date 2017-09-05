@@ -5,7 +5,7 @@ import App from '@components/app'
 import {
   isLoading,
   isLoaded,
-  isSettingsVisible,
+  isAboutVisible,
 } from '@selectors/app'
 import {
   hasDetailedGame,
@@ -14,7 +14,7 @@ import {
 import {
   startLoad,
   endLoad,
-  toggleSettingsDisplay,
+  toggleAboutDisplay,
 } from '@actions/app'
 
 const mapStateToProps = (state) => {
@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
   return {
     isLoading: isLoading(app),
     isLoaded: isLoaded(app),
-    isSettingsVisible: isSettingsVisible(app),
+    isAboutVisible: isAboutVisible(app),
     hasDetailedGame: hasDetailedGame(gameExplorer),
   }
 }
@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   startLoad: () => dispatch(startLoad()),
   endLoad: () => dispatch(endLoad()),
-  toggleSettingsDisplay: () => dispatch(toggleSettingsDisplay()),
+  toggleAboutDisplay: () => dispatch(toggleAboutDisplay()),
 })
 
 export default connect(
