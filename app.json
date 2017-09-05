@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "my-games",
-    "description": "An empty new project",
+    "name": "My Games",
+    "description": "A simple application to keep track of your video game collection",
     "slug": "my-games",
     "privacy": "public",
     "sdkVersion": "19.0.0",
@@ -9,6 +9,13 @@
     "orientation": "portrait",
     "primaryColor": "#fafafa",
     "icon": "./assets/icons/app-icon.png",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fbdevltd.my-games"
+    },
+    "android": {
+      "package": "com.fbdevltd.my-games"
+    },
     "loading": {
       "icon": "./assets/icons/loading-icon.png",
       "hideExponentText": false
@@ -16,18 +23,11 @@
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]
     },
-    "ios": {
-      "supportsTablet": true
-    },
     "hooks": {
       "postPublish": [
         {
           "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "FBDev",
-            "project": "my-games",
-            "authToken": "a650672890d711e7accc4201c0a8d039"
-          }
+          "config": {}
         }
       ]
     }
