@@ -8,6 +8,7 @@ export default class ProgressiveImage extends Component {
     this.state = {
       imageOpacity: new Animated.Value(0),
       thumbnailOpacity: new Animated.Value(0),
+      isLoaded: false,
     }
   }
 
@@ -23,8 +24,12 @@ export default class ProgressiveImage extends Component {
     Animated.timing(this.state.imageOpacity, {
       toValue: 1,
       duration: this.props.imageFadeDuration,
-    }).start()
-    this.props.onLoadImage()
+    }).start(() => this.setState(
+      {
+        isLoaded: true
+      },
+      this.props.onLoadImage
+    ))
   }
 
   render() {
@@ -36,7 +41,7 @@ export default class ProgressiveImage extends Component {
           source={this.props.placeHolderSource}
         />
         {
-          this.props.thumbnailSource ? (
+          this.props.thumbnailSource && !this.state.isLoaded ? (
             <Animated.Image
               resizeMode={this.props.resizeMode}
               style={[styles.image, { opacity: this.state.thumbnailOpacity }, this.props.style]}
