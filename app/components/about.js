@@ -15,10 +15,10 @@ export default ({
       {'About'}
     </Title>
     <Paragraph>
-      {'This app is design and developed by Fabien BEHIER'}
+      {'This app is design and developed by:\n\nFabien BEHIER\n'}
     </Paragraph>
     <Paragraph>
-      {'the source are available on github at \nhttps://github.com/F4b1n0u/my-games'}
+      {'the source are available on github at\nhttps://github.com/F4b1n0u/my-games'}
     </Paragraph>
     <Paragraph>
       {'powerded by:'}
@@ -45,8 +45,9 @@ const Title = styled.Text`
 `
 
 const Paragraph = styled.Text`
-  margin-vertical: ${scale(10)};
+  margin-top: ${scale(10)};
   text-align: center;
+  font-size: ${scale(14)}
 `
 
 const GiantBombLogo = styled(ProgressiveImage).attrs({
