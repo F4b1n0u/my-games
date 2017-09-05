@@ -70,6 +70,7 @@ function franchisesStatus(
         error: null,
       }
     case RECEIVE_FRANCHISES_SUCCESS:
+    case STOP_SEARCHING:
       return initialState.franchisesStatus
     case RECEIVE_FRANCHISES_FAILURE:
       return {
