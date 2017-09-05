@@ -9,6 +9,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import ProgressiveImage from '@components/progressive-image'
 import PlatformComponent from '@components/platform'
 
+import { scale } from '@utils/dimension'
+
 const {
   width: viewportWidth,
   height: viewportHeight,
@@ -136,7 +138,7 @@ const Name = styled.Text.attrs({
 })`
   margin-bottom: 15;
   margin-horizontal: ${props => props.isOwned ? 40 : 15};
-  font-size: 20;
+  font-size: ${scale(20)};
   text-align: center;
   font-family: 'florentia-extralight';
 `
@@ -177,7 +179,7 @@ const Description = styled.Text.attrs({
 })`
   margin-vertical: 10;
   margin-horizontal: ${itemHorizontalMargin};
-  font-size: 16;
+  font-size: ${scale(16)};
   font-family: 'florentia-extralight';
   background-color: transparent;
 `
@@ -220,6 +222,6 @@ const BackButton = styled.TouchableOpacity`
 const BackIcon = styled(MaterialCommunityIcons).attrs({
   name: 'arrow-compress',
 })`
-  font-size: 35;
+  font-size: ${scale(35)};
   color: #a3a3a3;
 `

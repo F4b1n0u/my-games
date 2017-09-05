@@ -3,6 +3,8 @@ import styled from 'styled-components/native'
 
 import ProgressiveImage from '@components/progressive-image'
 
+import { scale } from '@utils/dimension'
+
 const logoImage = require('../../assets/images/icon.png')
 
 export default ({
@@ -39,10 +41,10 @@ const Franchise = styled.View`
 const Thumbnail = styled(ProgressiveImage).attrs({
   resizeMode: 'contain',
 })`
-  height: 35;
-  width: 35;
-  margin-right: 5;
-  border-radius: 2;
+  height: ${scale(35)};
+  width: ${scale(35)};
+  margin-right: ${scale(5)};
+  border-radius: ${scale(2)};
 `
 
 const Name = styled.Text.attrs({
@@ -50,7 +52,7 @@ const Name = styled.Text.attrs({
   ellipsizeMode: 'tail',
 })`
   flex: 1;
-  font-size: 16;
+  font-size: ${scale(16)};
   text-align: left;
   font-family: 'florentia-extralight';
 `

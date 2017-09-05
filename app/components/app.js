@@ -13,10 +13,8 @@ import Background from '@components/background'
 import GameExplorer from '@components/game-explorer'
 import AboutComponent from '@components/about'
 
-import {
-  cacheImages,
-  cacheFonts,
-} from '@utils'
+import { cacheImages, cacheFonts } from '@utils'
+import { scale } from '@utils/dimension'
 
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -136,6 +134,6 @@ const AboutIconWrapper = styled.TouchableOpacity.attrs({
 const AboutIcon = styled(Octicons).attrs({
   name: 'info'
 })`
-  font-size: 25;
+  font-size: ${scale(25)};
   color: #a3a3a3;
 `

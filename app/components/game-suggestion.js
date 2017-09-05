@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
+import { scale } from '@utils/dimension'
+
 export default ({
   name,
   image,
@@ -34,7 +36,7 @@ const Name = styled.Text.attrs({
   ellipsizeMode: 'tail',
 })`
   flex: 1;
-  font-size: 12;
+  font-size: ${scale(12)};
   text-align: left;
   font-family: 'florentia-extralight';
 `

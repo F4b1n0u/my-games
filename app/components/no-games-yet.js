@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
+import { scale } from '@utils/dimension'
+
 const arrows = require('../../assets/images/arrows.png')
 
 export default () => (
@@ -28,7 +30,7 @@ const Arrows = styled.Image.attrs({
 `
 
 const Instructions = styled.Text`
-  font-size: 30;
+  font-size: ${scale(30)};
   text-align: center;
   font-family: 'florentia-extralight';
 `

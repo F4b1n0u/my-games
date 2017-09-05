@@ -8,11 +8,12 @@ import {
   Easing,
 } from 'react-native'
 
-import { cacheImages } from '@utils'
-
 import CompleteDetailedGame from '@components/complete-detailed-game'
 import CompleteNotDetailedGame from '@components/complete-not-detailed-game'
 import IncompleteNotDetailedGame from '@components/incomplete-not-detailed-game'
+
+import { cacheImages } from '@utils'
+import { scale } from '@utils/dimension'
 
 const animationDuration = 250
 
@@ -206,13 +207,13 @@ const OwnershipMarkerCheck = styled(MaterialCommunityIcons).attrs({
   position: absolute;
   top: 7;
   right: 11;
-  font-size: 20;
+  font-size: ${scale(20)};
   color: #ffffff;
 `
 
 const OwnershipMarker = styled(MaterialCommunityIcons).attrs({
   name: 'bookmark'
 })`
-  font-size: 40;
+  font-size: ${scale(40)};
   color: #eb2b36;
 `
