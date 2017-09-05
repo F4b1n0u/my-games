@@ -44,7 +44,8 @@ const Thumbnail = styled(ProgressiveImage).attrs({
   height: ${scale(35)};
   width: ${scale(35)};
   margin-right: ${scale(5)};
-  border-radius: ${scale(2)};
+  border-radius: 2;
+  overflow: hidden;
 `
 
 const Name = styled.Text.attrs({

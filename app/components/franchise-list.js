@@ -52,7 +52,7 @@ const FranchiseList = styled.View`
   width: 100%;
   justify-content: flex-start;
   flex-direction: column;
-  margin-top: ${scale(10)};
+  margin-top: ${scale(5)};
 `
 
 const FranchiseTitle = styled.Text`
