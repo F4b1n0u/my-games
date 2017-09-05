@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 import Carousel from 'react-native-snap-carousel'
 import _ from 'lodash'
-import { Dimensions } from 'react-native'
+import { Dimensions, PixelRatio } from 'react-native'
 import { BlurView } from 'expo'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
@@ -11,6 +11,7 @@ import PlatformComponent from '@components/platform'
 
 const {
   width: viewportWidth,
+  height: viewportHeight,
 } = Dimensions.get('window')
 
 function wp(percentage) {
@@ -18,7 +19,7 @@ function wp(percentage) {
   return Math.round(value)
 }
 
-const slideHeight = 200
+const slideHeight = viewportHeight / 2.5
 const slideWidth = viewportWidth - wp(15)
 const itemHorizontalMargin = wp(2)
 
@@ -160,7 +161,9 @@ const ImageContainer = styled.View`
   padding-horizontal: ${itemHorizontalMargin};
 `
 
-const Picture = styled(ProgressiveImage)`
+const Picture = styled(ProgressiveImage).attrs({
+  resizeMode: 'cover',
+})`
   width: ${slideWidth};
   height: ${slideHeight};
   borderRadius: 5;
