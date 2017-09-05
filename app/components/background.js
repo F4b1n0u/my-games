@@ -10,12 +10,12 @@ import { scale, verticalScale } from '@utils/dimension'
 // TODO realign this value tot he new wallpaper
 const backgroundPos = {
   start: {
-    x: scale(-1131),
-    y: verticalScale(-890),
+    x: -1131,
+    y: -890,
   },
   end: {
-    x: scale(-400),
-    y: verticalScale(-305),
+    x: -400,
+    y: -305,
   },
 }
 
