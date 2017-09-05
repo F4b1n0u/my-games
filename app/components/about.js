@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 
 import ProgressiveImage from '@components/progressive-image'
 
-import { scale } from '@utils/dimension'
+import { scale, verticalScale } from '@utils/dimension'
 
 export default ({
   style,
@@ -34,18 +34,18 @@ const Settings = styled.View`
   justify-content: flex-start;
   align-items: center;
   background-color: #e3e3e3;
-  padding-vertical: 5;
-  padding-horizontal: 5;
+  padding-vertical: ${scale(5)};
+  padding-horizontal: ${scale(5)};
 `
 
 const Title = styled.Text`
   font-size: ${scale(20)};
   background-color: transparent;
-  margin-bottom: 10;
+  margin-bottom: ${scale(10)};
 `
 
 const Paragraph = styled.Text`
-  margin-vertical: 10;
+  margin-vertical: ${scale(10)};
   text-align: center;
 `
 
@@ -55,7 +55,7 @@ const GiantBombLogo = styled(ProgressiveImage).attrs({
   height: undefined,
   width: undefined,
 })`
-  height: 150;
-  width: 300;
+  height: ${verticalScale(150)};
+  width: ${scale(300)};
 `
 

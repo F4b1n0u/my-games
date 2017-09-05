@@ -8,6 +8,8 @@ import styled from 'styled-components/native'
 import RatioLessImage from '@components/ratio-less-image'
 import PlatformComponent from '@components/platform'
 
+import { scale } from '@utils/dimension'
+
 const amountPlatformSupported = 14
 export default class CompleteNotDetailedGameComponent extends React.Component {
   _handlePressHide = () => {
@@ -48,9 +50,6 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
       <Game
         onPress={this._handlePressHide}
       >
-        <Name>
-          {name}
-        </Name>
         {
           image ? (
             <Cover
@@ -76,21 +75,6 @@ const Game = styled.TouchableOpacity.attrs({
   overflow: hidden;
 `
 
-const Name = styled.Text.attrs({
-  numberOfLines: 1,
-  ellipsizeMode: 'tail',
-})`
-  position: absolute;
-  top: -14;
-  width: 100%;
-  background-color: transparent;
-  paddingLeft: 2;
-  color: black;
-  textAlign: left;
-  fontSize: 8;
-  font-family: 'florentia-extralight';
-`
-
 const PlatformList = styled.View`
   flex: 1;
   flex-wrap: wrap;
@@ -105,8 +89,8 @@ const Platform = styled(PlatformComponent)`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 30;
-  margin-horizontal: 4;
+  height: ${scale(30)};
+  margin-horizontal: ${scale(4)};
   margin-bottom: 0;
 `
 
@@ -135,6 +119,6 @@ const Overlay = styled(LinearGradient).attrs({
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  padding-vertical: 5;
-  padding-horizontal: 5;
+  padding-vertical: ${scale(5)};
+  padding-horizontal: ${scale(5)};
 `

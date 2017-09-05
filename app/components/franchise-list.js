@@ -52,20 +52,20 @@ const FranchiseList = styled.View`
   width: 100%;
   justify-content: flex-start;
   flex-direction: column;
-  margin-top: 10;
+  margin-top: ${scale(10)};
 `
 
 const FranchiseTitle = styled.Text`
   font-size: ${scale(10)};
-  margin-left: 10;
+  margin-left: ${scale(10)};
 `
 
 const TouchableFranchise = styled.TouchableOpacity`
   flex: 1;
-  margin-top: ${props => props.key !== 0 ? 2 : 0}
+  margin-top: ${props => props.key !== 0 ? scale(2) : 0}
 `
 
 const Franchise = styled(FranchiseComponent)`
   flex: 1;
-  height: 20;
+  height: ${scale(20)};
 `

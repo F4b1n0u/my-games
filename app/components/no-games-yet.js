@@ -26,7 +26,7 @@ const Arrows = styled.Image.attrs({
   source: arrows,
   resizeMode: 'contain',
 })`
-  height: 150;
+  height: ${scale(150)};
 `
 
 const Instructions = styled.Text`

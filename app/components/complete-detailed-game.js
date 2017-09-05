@@ -136,8 +136,8 @@ const Name = styled.Text.attrs({
   numberOfLines: 2,
   ellipsizeMode: 'tail',
 })`
-  margin-bottom: 15;
-  margin-horizontal: ${props => props.isOwned ? 40 : 15};
+  margin-bottom: ${scale(15)};
+  margin-horizontal: ${props => props.isOwned ? scale(40) : scale(15)};
   font-size: ${scale(20)};
   text-align: center;
   font-family: 'florentia-extralight';
@@ -177,7 +177,7 @@ const Description = styled.Text.attrs({
   ellipsizeMode: 'tail',
   textAlign: 'justify',
 })`
-  margin-vertical: 10;
+  margin-vertical: ${scale(10)};
   margin-horizontal: ${itemHorizontalMargin};
   font-size: ${scale(16)};
   font-family: 'florentia-extralight';
@@ -189,8 +189,8 @@ const PlatformList = styled.View`
   width: 100%;
   flex-direction: row;
   align-items: flex-start;
-  padding-top: 5;
-  margin-bottom: 30;
+  padding-top: ${scale(5)};
+  margin-bottom: ${scale(30)};
   overflow: hidden;
   justify-content: center;
 
@@ -205,16 +205,16 @@ const Platform = styled(PlatformComponent)`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 35;
-  margin-horizontal: 7.5;
-  margin-bottom: 12.5;
+  height: ${scale(35)};
+  margin-horizontal: ${scale(7.5)};
+  margin-bottom: ${scale(12.5)};
 `
 
 const BackButton = styled.TouchableOpacity`
   position: absolute;
   left: 0;
   bottom: 0;
-  padding-horizontal: 5;
+  padding-horizontal: ${scale(5)};
   background-color: transparent;
   overflow: hidden;
 `

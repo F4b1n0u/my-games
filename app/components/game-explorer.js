@@ -4,6 +4,8 @@ import styled from 'styled-components/native'
 import SearchEngineContainer from '@containers/search-engine'
 import GameCatalogueContainer from '@containers/game-catalogue'
 
+import { scale } from '@utils/dimension'
+
 export default props => (
   <GameExplorer>
     <GameList
@@ -17,7 +19,7 @@ export default props => (
 
 const GameExplorer = styled.View`
   flex: 1;
-  padding-top: 20;
+  padding-top: ${scale(20)};
   padding-horizontal: 0;
   flex-direction: column-reverse;
   justify-content: flex-start;

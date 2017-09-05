@@ -14,7 +14,7 @@ import GameExplorer from '@components/game-explorer'
 import AboutComponent from '@components/about'
 
 import { cacheImages, cacheFonts } from '@utils'
-import { scale } from '@utils/dimension'
+import { scale, verticalScale } from '@utils/dimension'
 
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -117,9 +117,9 @@ const App = styled.View`
 
 const About = styled(AboutComponent)`
   position: absolute;
-  top: 60;
-  left: 20;
-  right: 20;
+  top: ${verticalScale(60)};
+  left: ${scale(20)};
+  right: ${scale(20)};
 `
 
 const AboutIconWrapper = styled.TouchableOpacity.attrs({
@@ -127,7 +127,7 @@ const AboutIconWrapper = styled.TouchableOpacity.attrs({
 })`
   position: absolute;
   top: 27;
-  left: 13;
+  left: ${scale(13)};
   background-color: transparent;
 `
 

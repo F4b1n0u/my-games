@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
+import { scale } from '@utils/dimension'
+
 export default ({
   name,
 }) => (
@@ -16,19 +18,17 @@ const Game = styled.View`
   background-color: transparent;
   border-radius: 5;
   overflow: hidden;
+  justify-content: center;
+  align-items: center;
 `
 
 const Name = styled.Text.attrs({
   numberOfLines: 1,
   ellipsizeMode: 'tail',
 })`
-  position: absolute;
-  top: -14;
-  width: 100%;
   background-color: transparent;
-  paddingLeft: 2;
   color: black;
-  textAlign: left;
-  fontSize: 8;
+  textAlign: center;
+  fontSize: ${scale(8)};
   font-family: 'florentia-extralight';
 `

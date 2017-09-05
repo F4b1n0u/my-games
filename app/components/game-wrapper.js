@@ -23,8 +23,8 @@ export default class GameWrapperComponent extends React.Component {
   }
 
   static defaultProps = {
-    normalMargin: 10,
-    detailedMargin : 5,
+    normalMargin: scale(10),
+    detailedMargin : scale(5),
   };
 
   componentWillMount() {
@@ -187,7 +187,7 @@ export default class GameWrapperComponent extends React.Component {
 
 const GameWrapper = styled.View`
   flex: 1;
-  margin-bottom: 10;
+  margin-bottom: ${scale(10)};
   border-color: #e3e3e3;
   border-width: 1;
   border-radius: 5;
@@ -195,18 +195,18 @@ const GameWrapper = styled.View`
 
 const OwnershipMarkerWrapper = styled.View`
   position: absolute;
-  top: -10;
+  top: ${scale(-10)};
   right: 0;
-  height: 40;
-  width: 40;
+  height: ${scale(40)};
+  width: ${scale(40)};
 `
 
 const OwnershipMarkerCheck = styled(MaterialCommunityIcons).attrs({
   name: 'check'
 })`
   position: absolute;
-  top: 7;
-  right: 11;
+  top: ${scale(7)};
+  right: ${scale(11)};
   font-size: ${scale(20)};
   color: #ffffff;
 `
