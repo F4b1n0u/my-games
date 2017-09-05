@@ -11,7 +11,7 @@ import {
 import {
   getSearchText,
   getFranchises,
-  getFranchisesStatus,
+  isFranchisesPending,
 } from '@selectors/search-engine'
 import {
   isPending as isCataloguePending,
@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
     hasDetailedGame: hasDetailedGame(gameExplorer),
     hasLoadingGames: isCataloguePending(gameCatalogue),
     searchText: getSearchText(searchEngine),
-    status: getFranchisesStatus(searchEngine),
+    isFranchisesPending: isFranchisesPending(searchEngine),
   })
 }
 

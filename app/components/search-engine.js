@@ -64,11 +64,19 @@ export default class SearchEngineComponent extends React.Component {
       searchText,
       hasDetailedGame,
       updateSearchText,
+      isFranchisesPending,
     } = this.props
 
     return (!hasDetailedGame) ? (
       <SearchEngine>
         <TextInputWrapper>
+          {
+            isFranchisesPending ? (
+              <Spinner />
+            ) : (
+              null
+            )
+          }
           <Search
             autoCapitalize="none"
             blurOnSubmit
@@ -151,4 +159,14 @@ const Search = styled.TextInput.attrs({
   font-family: 'florentia-extralight';
   text-align: center;
   margin-horizontal: 40;
+`
+
+const Spinner = styled.ActivityIndicator.attrs({
+  animating: true,
+  size: 'small',
+})`
+  position: absolute;
+  left: 0;
+  height: 21;
+  width: 21;
 `

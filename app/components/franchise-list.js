@@ -29,6 +29,9 @@ export default class FranchiseListComponent extends React.Component {
     if (!_.isEmpty(franchises)) {
       element = (
         <FranchiseList>
+          <FranchiseTitle>
+            {'Franchises'}
+          </FranchiseTitle>
           {franchises.map(franchise => (
             <TouchableFranchise
               key={franchise.id}
@@ -53,6 +56,11 @@ const FranchiseList = styled.View`
   width: 100%;
   justify-content: flex-start;
   flex-direction: column;
+  margin-top: 10;
+`
+
+const FranchiseTitle = styled.Text`
+  margin-left: 10;
 `
 
 const TouchableFranchise = styled.TouchableOpacity`
