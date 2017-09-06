@@ -98,7 +98,9 @@ export default class AppComponents extends React.Component {
 
           {
             isAboutVisible ? (
-              <About />
+              <About
+                toggleAboutDisplay={toggleAboutDisplay}
+              />
             ) : (
               null
             )
@@ -115,15 +117,7 @@ const App = styled.View`
   flex-direction: row;
 `
 
-const About = styled(AboutComponent)`
-  position: absolute;
-  top: ${verticalScale(60)};
-  left: ${scale(20)};
-  right: ${scale(20)};
-  border-radius: 5;
-  padding-vertical: ${scale(5)};
-  padding-horizontal: ${scale(5)};
-`
+const About = styled(AboutComponent)``
 
 const AboutIconWrapper = styled.TouchableOpacity.attrs({
   activeOpacity: 0.4,

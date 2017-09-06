@@ -7,31 +7,50 @@ import { scale, verticalScale } from '@utils/dimension'
 
 export default ({
   style,
+  toggleAboutDisplay,
 }) => (
-  <About
-    style={style}
+  <Overlay
+    onPress={toggleAboutDisplay}
   >
-    <Title>
-      {'About'}
-    </Title>
-    <Paragraph>
-      {'This app is designed and developed by:\n\nFabien BEHIER\n'}
-    </Paragraph>
-    <Paragraph>
-      {'the source code is available on github at:\nhttps://github.com/F4b1n0u/my-games'}
-    </Paragraph>
-    <Paragraph>
-      {'the data source is powerded by:'}
-    </Paragraph>
-    <GiantBombLogo />
-    <Paragraph>
-      {'hoping you will like it\n(*^_^*)'}
-    </Paragraph>
-  </About>
+    <About
+      style={style}
+    >
+      <Title>
+        {'About'}
+      </Title>
+      <Paragraph>
+        {'This app is designed and developed by:\n\nFabien BEHIER\n'}
+      </Paragraph>
+      <Paragraph>
+        {'the source code is available on github at:\nhttps://github.com/F4b1n0u/my-games'}
+      </Paragraph>
+      <Paragraph>
+        {'the data source is powerded by:'}
+      </Paragraph>
+      <GiantBombLogo />
+      <Paragraph>
+        {'hoping you will like it\n(*^_^*)'}
+      </Paragraph>
+    </About>
+  </Overlay>
 )
 
+const Overlay = styled.TouchableOpacity.attrs({
+  activeOpacity: 1,
+})`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  justify-content: center;
+  align-items: center;
+`
+
 const About = styled.View`
-  flex: 1;
   overflow: hidden;
   flex-direction: column;
   justify-content: flex-start;
@@ -40,6 +59,8 @@ const About = styled.View`
   border-width: 1;
   border-radius: 5;
   background-color: #fafafaf0;
+  padding-vertical: ${scale(5)};
+  padding-horizontal: ${scale(5)};
   padding-bottom: ${scale(20)};
 `
 
