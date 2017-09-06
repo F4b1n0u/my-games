@@ -4,18 +4,23 @@ import styled from 'styled-components/native'
 import SearchEngineContainer from '@containers/search-engine'
 import GameCatalogueComponent from '@components/game-catalogue'
 import NoGamesYetComponent from '@components/no-games-yet'
+import NoResultsComponent from '@components/no-results'
 
 import { scale } from '@utils/dimension'
 
 export default props => (
   <GameExplorer>
     {
-      (props.hasGamesToDisplay || props.hasOwnedGame) ? (
+      (props.hasGamesToDisplay || props.hasOwnedGame || props.isGamePending) ? (
         <GameCatalogue
           {...props}
         />
       ) : (
-        <NoGamesYet />
+        (props.isCurrentSearchSubmitted) ? (
+          <NoResults />
+        ) : (
+          <NoGamesYet />
+        )
       )
     }
 
@@ -41,6 +46,10 @@ const GameCatalogue = styled(GameCatalogueComponent)`
 `
 
 const NoGamesYet = styled(NoGamesYetComponent)`
+  top: ${scale(-50)};
+`
+
+const NoResults = styled(NoResultsComponent)`
   top: ${scale(-50)};
 `
 

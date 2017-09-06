@@ -12,8 +12,8 @@ import {
 
 import {
   getList,
-  isPending,
-  hasMore,
+  isPending as isGamePending,
+  hasMore as hasMoreGame,
   hasGames,
 } from '@selectors/game-catalogue'
 
@@ -30,6 +30,10 @@ import {
   togglePlatformOwnership,
 } from '@actions/owned-game-catalogue'
 
+import {
+  isCurrentSearchSubmitted,
+} from '@selectors/search-engine'
+
 import GameExplorer from '@components/game-explorer'
 
 const mapStateToProps = (state) => {
@@ -37,16 +41,18 @@ const mapStateToProps = (state) => {
     gameCatalogue,
     gameExplorer,
     ownedGameCatalogue,
+    searchEngine,
   } = state
 
   return {
     list: getList(gameCatalogue),
-    hasMore: hasMore(gameCatalogue),
-    isPending: isPending(gameCatalogue),
+    hasMoreGame: hasMoreGame(gameCatalogue),
+    isGamePending: isGamePending(gameCatalogue),
     hasGamesToDisplay: hasGames(gameCatalogue),
     detailedGameId: getDetailedGameId(gameExplorer),
     hasDetailedGame: hasDetailedGame(gameExplorer),
     hasOwnedGame: hasOwnedGame(ownedGameCatalogue),
+    isCurrentSearchSubmitted: isCurrentSearchSubmitted(searchEngine)
   }
 }
 

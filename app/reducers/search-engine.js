@@ -9,6 +9,7 @@ import {
   SELECT_FRANCHISE,
   STOP_SEARCHING,
   CLEAR_SEARCH,
+  SUBMIT_SEARCH,
 } from '@actions/search-engine'
 import {
   RECEIVE_GAMES_SUCCESS,
@@ -16,6 +17,7 @@ import {
 
 const initialState = {
   searchText: '',
+  isCurrentSearchSubmitted: false,
   franchises: [],
   franchisesStatus: {
     pending: false,
@@ -82,8 +84,24 @@ function franchisesStatus(
   }
 }
 
+function isCurrentSearchSubmitted(
+  state = initialState.isCurrentSearchSubmitted,
+  action
+) {
+  switch (action.type) {
+    case SUBMIT_SEARCH:
+      return true
+    case UPDATE_SEARCHTEXT:
+    case CLEAR_SEARCH:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   searchText,
+  isCurrentSearchSubmitted,
   franchises,
   franchisesStatus,
 })

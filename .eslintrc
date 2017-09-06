@@ -17,6 +17,7 @@
       "import/extensions": "warn",
       "import/no-unresolved": "warn",
       "comma-dangle": "warn",
-      "react/jsx-no-bind": "warn"
+      "react/jsx-no-bind": "warn",
+      "no-nested-ternary": "warn"
   }
 }

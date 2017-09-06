@@ -40,11 +40,11 @@ export default class GameCatalogueComponent extends React.Component {
   _handleEndReached = () => {
     const {
       requestMoreGames,
-      hasMore,
-      isPending,
+      hasMoreGame,
+      isGamePending,
     } = this.props
 
-    if (hasMore && !isPending) {
+    if (hasMoreGame && !isGamePending) {
       requestMoreGames()
     }
   }
@@ -81,10 +81,10 @@ export default class GameCatalogueComponent extends React.Component {
 
   _renderFooter = () => {
     const {
-      isPending,
+      isGamePending,
     } = this.props
 
-    return (isPending) ? (
+    return (isGamePending) ? (
       <Footer>
         <Spinner />
       </Footer>
