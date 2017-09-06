@@ -81,11 +81,11 @@ const requestGamesToFetchEpic = (action$, store) => action$
 
     if (action.games) {
       observable = fetchGamesByBulk(action.games)
-        // .takeUntil(REQUEST_FRANCHISES)
         .map(response => receiveGames(
           response.results,
           extractPagination(response)
         ))
+        // .takeUntil(action$.ofType(REQUEST_FRANCHISES))
         .catch(error => Observable.of(receiveGameCompletionFailure(error)))
     } else {
       const searchEngineState = store.getState().searchEngine
@@ -157,9 +157,10 @@ const requestGamesCompletionEpic = action$ => action$
   .ofType(REQUEST_GAMES_COMPLETION)
   .switchMap(action => fetchGamesByBulk(action.games)
     // no need of an observable Oo
-    // .takeUntil(REQUEST_FRANCHISES)
+    
     // TODO is it really a receiveGameCompletion I need to do here and not a simple receiveGames ??
     .flatMap(response => response.results.map(receiveGameCompletion))
+    // .takeUntil(action$.ofType(REQUEST_FRANCHISES))
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 

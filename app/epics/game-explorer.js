@@ -7,13 +7,13 @@ import {
 } from '@services/giant-bomb'
 
 import {
+  HIDE_GAME_DETAILS,
   SHOW_GAME_DETAILS,
 } from '@actions/game-explorer'
 
 import {
   REQUEST_GAME_FULL_COMPLETION,
-} from '@actions/game-catalogue'
-import {
+
   requestGameFullCompletion,
   receiveGameCompletion,
   receiveGameCompletionFailure,
@@ -34,8 +34,8 @@ const showGameDetailsEpic = action$ => action$
 const requestGameFullCompletionEpic = action$ => action$
   .ofType(REQUEST_GAME_FULL_COMPLETION)
   .switchMap(action => fetchFullGame(action.game)
-    .flatMap(response => Observable.of(receiveGameCompletion(response.results)))
-    // .takeUntil(HIDE_GAME_DETAILS)
+    .map(response => receiveGameCompletion(response.results))
+    .takeUntil(action$.ofType(HIDE_GAME_DETAILS))
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
