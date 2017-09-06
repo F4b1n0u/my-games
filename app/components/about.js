@@ -5,6 +5,10 @@ import ProgressiveImage from '@components/progressive-image'
 
 import { scale, verticalScale } from '@utils/dimension'
 
+
+import {
+  version,
+} from '../../package.json'
 export default ({
   style,
   toggleAboutDisplay,
@@ -31,6 +35,9 @@ export default ({
       <Paragraph>
         {'hoping you will like it\n(*^_^*)'}
       </Paragraph>
+      <Version>
+        {`version: ${version}`}
+      </Version>
     </About>
   </Overlay>
 )
@@ -84,4 +91,11 @@ const GiantBombLogo = styled(ProgressiveImage).attrs({
 })`
   height: ${verticalScale(150)};
   width: ${scale(300)};
+`
+
+
+const Version = styled.Text`
+  margin-top: ${scale(10)};
+  text-align: center;
+  font-size: ${scale(10)}
 `
