@@ -9,9 +9,8 @@ export default ({style}) => (
   <NoResult
     style={style}
   >
-    <Arrows />
     <Instructions>
-      {'No result ?!\ntry something else'}
+      {'(｡•́︿•̀｡)\nNo result ?!\n\nmaybe try something else ?!'}
     </Instructions>
   </NoResult>
 )
@@ -21,13 +20,6 @@ const NoResult = styled.View`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-`
-
-const Arrows = styled.Image.attrs({
-  source: arrows,
-  resizeMode: 'contain',
-})`
-  height: ${scale(150)};
 `
 
 const Instructions = styled.Text`

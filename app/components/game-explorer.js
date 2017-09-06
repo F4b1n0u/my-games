@@ -11,7 +11,7 @@ import { scale } from '@utils/dimension'
 export default props => (
   <GameExplorer>
     {
-      (props.hasGamesToDisplay || props.hasOwnedGame || props.isGamePending) ? (
+      (props.hasGamesToDisplay || props.isGamePending) ? (
         <GameCatalogue
           {...props}
         />
@@ -50,7 +50,7 @@ const NoGamesYet = styled(NoGamesYetComponent)`
 `
 
 const NoResults = styled(NoResultsComponent)`
-  top: ${scale(-50)};
+  top: ${scale(-100)};
 `
 
 const SearchEngine = styled(SearchEngineContainer)`
