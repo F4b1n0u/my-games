@@ -15,6 +15,25 @@ export default class FranchiseListComponent extends React.Component {
     selectFranchise(item)
   }
 
+  _renderFranchiseLabel = () => {
+    const {
+      franchises
+    } = this.props
+
+    let label = 'no franchise found'
+
+    if (!_.isEmpty(franchises)) {
+      // TODO when the i18n will be implemented, deal with the plurality in a better way
+      if (franchises.length < 2) {
+        label = '1 franchise found'
+      } else {
+        label = `${franchises.length} franchises found`
+      }
+    }
+
+    return label
+  }
+
   render() {
     const {
       franchises,
@@ -25,8 +44,8 @@ export default class FranchiseListComponent extends React.Component {
     if (!_.isEmpty(franchises)) {
       element = (
         <FranchiseList>
-          <FranchiseTitle>
-            {'Franchises'}
+          <FranchiseTitle> 
+            {this._renderFranchiseLabel()}
           </FranchiseTitle>
           {franchises.map(franchise => (
             <TouchableFranchise
