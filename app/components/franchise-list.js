@@ -75,7 +75,7 @@ const FranchiseList = styled.View`
 `
 
 const FranchiseTitle = styled.Text`
-  font-size: ${scale(10)};
+  font-size: ${scale(13)};
   margin-left: ${scale(10)};
 `
 

@@ -41,8 +41,8 @@ const Franchise = styled.View`
 const Thumbnail = styled(ProgressiveImage).attrs({
   resizeMode: 'contain',
 })`
-  height: ${scale(35)};
-  width: ${scale(35)};
+  height: ${scale(40)};
+  width: ${scale(40)};
   margin-right: ${scale(5)};
   border-radius: 2;
   overflow: hidden;
@@ -53,7 +53,7 @@ const Name = styled.Text.attrs({
   ellipsizeMode: 'tail',
 })`
   flex: 1;
-  font-size: ${scale(16)};
+  font-size: ${scale(18)};
   text-align: left;
   font-family: 'florentia-extralight';
 `
