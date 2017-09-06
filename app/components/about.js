@@ -36,7 +36,10 @@ const About = styled.View`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: #333333;
+  border-color: #333333;
+  border-width: 1;
+  border-radius: 5;
+  background-color: #fafafaf0;
 `
 
 const Title = styled.Text`
