@@ -23,12 +23,13 @@ const Game = styled.View`
 `
 
 const Name = styled.Text.attrs({
-  numberOfLines: 1,
+  numberOfLines: 3,
   ellipsizeMode: 'tail',
 })`
   background-color: transparent;
-  color: black;
+  color: #333333;
   textAlign: center;
-  fontSize: ${scale(8)};
+  fontSize: ${scale(20)};
+  width: 100%;
   font-family: 'florentia-extralight';
 `

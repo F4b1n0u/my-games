@@ -50,6 +50,11 @@ export default class CompleteNotDetailedGameComponent extends React.Component {
       <Game
         onPress={this._handlePressHide}
       >
+        <NameWrapper>
+          <Name>
+            {name}
+          </Name>
+        </NameWrapper>
         {
           image ? (
             <Cover
@@ -74,6 +79,32 @@ const Game = styled.TouchableOpacity.attrs({
   border-radius: 2;
   overflow: hidden;
 `
+
+const NameWrapper = styled.View`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  justify-content: center;
+  align-items: center;
+`
+
+const Name = styled.Text.attrs({
+  numberOfLines: 3,
+  ellipsizeMode: 'tail',
+  })`
+    background-color: transparent;
+    color: #333333;
+    textAlign: center;
+    fontSize: ${scale(20)};
+    width: 100%;
+    font-family: 'florentia-extralight';
+  `
+  
 
 const PlatformList = styled.View`
   flex: 1;
