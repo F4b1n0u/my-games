@@ -3,11 +3,11 @@ import { ajax } from 'rxjs/observable/dom/ajax'
 import qs from 'query-string'
 import _ from 'lodash'
 import {
-  API_KEY,
+  GIANTBOMB_API_KEY,
 } from 'react-native-dotenv'
 
 const defaultQueryParams = {
-  api_key: API_KEY,
+  api_key: GIANTBOMB_API_KEY,
   format: 'json',
 }
 
