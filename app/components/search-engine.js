@@ -7,7 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 import FranchiseList from '@components/franchise-list'
 
-import { scale } from '@utils/dimension'
+import { scale, verticalScale } from '@utils/dimension'
 export default class SearchEngineComponent extends React.Component {
   componentWillReceiveProps() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
@@ -117,15 +117,15 @@ const ClearSearch = styled.TouchableOpacity.attrs({
   position: absolute;
   top: ${scale(1)};
   right: ${scale(1)};
-  height: ${scale(28)};
-  width: ${scale(28)};
+  height: ${verticalScale(28)};
+  width: ${verticalScale(28)};
 `
 
 const ClearSearchIcon = styled(MaterialIcons).attrs({
   name: 'delete-forever',
 })`
   color: #333333;
-  font-size: ${scale(28)};
+  font-size: ${verticalScale(28)};
 `
 
 const TextInputWrapper = styled.View`
@@ -144,7 +144,7 @@ const Search = styled.TextInput.attrs({
   font-family: 'florentia-extralight';
   text-align: center;
   margin-horizontal: ${scale(30)};
-  font-size: ${scale(24)};
+  font-size: ${verticalScale(24)};
 `
 
 const Spinner = styled.ActivityIndicator.attrs({

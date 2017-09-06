@@ -6,7 +6,7 @@ import GameCatalogueComponent from '@components/game-catalogue'
 import NoGamesYetComponent from '@components/no-games-yet'
 import NoResultsComponent from '@components/no-results'
 
-import { scale } from '@utils/dimension'
+import { scale, verticalScale } from '@utils/dimension'
 
 export default props => (
   <GameExplorer>
@@ -46,11 +46,11 @@ const GameCatalogue = styled(GameCatalogueComponent)`
 `
 
 const NoGamesYet = styled(NoGamesYetComponent)`
-  top: ${scale(-50)};
+  top: ${verticalScale(-50)};
 `
 
 const NoResults = styled(NoResultsComponent)`
-  top: ${scale(-100)};
+  top: ${verticalScale(-100)};
 `
 
 const SearchEngine = styled(SearchEngineContainer)`

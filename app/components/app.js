@@ -123,7 +123,7 @@ const AboutIconWrapper = styled.TouchableOpacity.attrs({
   activeOpacity: 0.4,
 })`
   position: absolute;
-  top: ${scale(30)};
+  top: 27;
   left: ${scale(13)};
   background-color: transparent;
 `
@@ -131,6 +131,6 @@ const AboutIconWrapper = styled.TouchableOpacity.attrs({
 const AboutIcon = styled(Octicons).attrs({
   name: 'info'
 })`
-  font-size: ${scale(32)};
+  font-size: ${verticalScale(32)};
   color: #333333;
 `
