@@ -4,12 +4,12 @@ import React from 'react'
 import Sentry from 'sentry-expo'
 import { Provider } from 'react-redux'
 
-import storeFactory from '@store'
+import storeConfigure from '@store'
 
 import App from '@containers/app'
 
 const initialState = {}
-const store = storeFactory(initialState)
+const store = storeConfigure(initialState)
 
 const Index = () => (
   <Provider store={store}>

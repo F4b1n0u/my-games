@@ -1,13 +1,13 @@
 import { persistStore } from 'redux-persist'
 import { AsyncStorage } from 'react-native'
 
-import devStoreFactory from '@store/store-factory.dev'
-import prodStoreFactory from '@store/store-factory.prod'
+import devStoreConfigure from '@store/store-configure.dev'
+import prodStoreConfigure from '@store/store-configure.prod'
 
 export default (initialState) => {
   const store = (process.env.NODE_ENV === 'production') ?
-    prodStoreFactory(initialState) :
-    devStoreFactory(initialState)
+    prodStoreConfigure(initialState) :
+    devStoreConfigure(initialState)
 
   persistStore(
     store,
