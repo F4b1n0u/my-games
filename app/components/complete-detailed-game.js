@@ -169,7 +169,7 @@ const Picture = styled(ProgressiveImage).attrs({
   width: ${slideWidth};
   height: ${slideHeight};
   borderRadius: 5;
-  background-color: #e3e3e3a0;
+  background-color: #333333a0;
 `
 
 const Description = styled.Text.attrs({
@@ -223,5 +223,5 @@ const BackIcon = styled(MaterialCommunityIcons).attrs({
   name: 'arrow-compress',
 })`
   font-size: ${scale(35)};
-  color: #a3a3a3;
+  color: #333333;
 `

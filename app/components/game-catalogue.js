@@ -13,7 +13,7 @@ const normalHeight = height / 2.3
 // should depend of the ratio of the screen, the idea is to allow the user to have it in full screen
 const detailedHeight = height - 50
 
-export default class GameListComponent extends React.Component {
+export default class GameCatalogueComponent extends React.Component {
   static _keyExtractor(item) {
     return item.game.id
   }
@@ -101,12 +101,12 @@ export default class GameListComponent extends React.Component {
     const hasDetailedGame = !!detailedGameId
 
     return (
-      <GameList
+      <GameCatalogue
         hasDetailedGame={hasDetailedGame}
         ref={this._setRef}
         data={list}
-        keyExtractor={GameListComponent._keyExtractor}
-        getItemLayout={GameListComponent._getItemLayout}
+        keyExtractor={GameCatalogueComponent._keyExtractor}
+        getItemLayout={GameCatalogueComponent._getItemLayout}
         renderItem={this._renderItem}
         ListFooterComponent={this._renderFooter}
         onEndReached={this._handleEndReached}
@@ -117,7 +117,7 @@ export default class GameListComponent extends React.Component {
   }
 }
 
-const GameList = styled.FlatList`
+const GameCatalogue = styled.FlatList`
   flex: 1;
   margin-top: ${props => props.hasDetailedGame ? 10 : 50};
   background-color: transparent;
@@ -126,7 +126,7 @@ const GameList = styled.FlatList`
 // TODO extract the style from the wrapper because it have sense only in the list context
 const Game = styled(GameWrapper)`
   margin-bottom: 10;
-  border-color: #e3e3e3;
+  border-color: #333333;
   border-width: 1;
   border-radius: 5;
 `

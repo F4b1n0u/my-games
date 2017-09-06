@@ -123,7 +123,7 @@ const ClearSearch = styled.TouchableOpacity.attrs({
 const ClearSearchIcon = styled(MaterialIcons).attrs({
   name: 'delete-forever',
 })`
-  color: #a3a3a3;
+  color: #333333;
   font-size: ${scale(20)};
 `
 

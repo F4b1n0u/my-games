@@ -5,12 +5,13 @@ import { scale } from '@utils/dimension'
 
 const arrows = require('../../assets/images/arrows.png')
 
-export default () => (
-  <NoResult>
+export default ({style}) => (
+  <NoResult
+    style={style}
+  >
     <Arrows />
     <Instructions>
-      No game yet ?! :)
-      Start your search !!!
+      {'No games yet ?!\nStart your search !!!\nʕ⊙ᴥ⊙ʔ'}
     </Instructions>
   </NoResult>
 )

@@ -188,7 +188,7 @@ export default class GameWrapperComponent extends React.Component {
 const GameWrapper = styled.View`
   flex: 1;
   margin-bottom: ${scale(10)};
-  border-color: #e3e3e3;
+  border-color: #333333;
   border-width: 1;
   border-radius: 5;
 `

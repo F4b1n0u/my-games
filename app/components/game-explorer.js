@@ -2,13 +2,23 @@ import React from 'react'
 import styled from 'styled-components/native'
 
 import SearchEngineContainer from '@containers/search-engine'
-import GameCatalogueContainer from '@containers/game-catalogue'
+import GameCatalogueComponent from '@components/game-catalogue'
+import NoGamesYetComponent from '@components/no-games-yet'
 
 import { scale } from '@utils/dimension'
 
-export default () => (
+export default props => (
   <GameExplorer>
-    <GameCatalogue />
+    {
+      (props.hasGamesToDisplay || props.hasOwnedGame) ? (
+        <GameCatalogue
+          {...props}
+        />
+      ) : (
+        <NoGamesYet />
+      )
+    }
+
     <SearchEngine />
   </GameExplorer>
 )
@@ -23,11 +33,15 @@ const GameExplorer = styled.View`
   background-color: transparent;
 `
 
-const GameCatalogue = styled(GameCatalogueContainer)`
+const GameCatalogue = styled(GameCatalogueComponent)`
   flex: 1;
   overflow: visible;
   bottom: 0;
   width: 100%;
+`
+
+const NoGamesYet = styled(NoGamesYetComponent)`
+  top: ${scale(-50)};
 `
 
 const SearchEngine = styled(SearchEngineContainer)`
@@ -37,8 +51,8 @@ const SearchEngine = styled(SearchEngineContainer)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-color: #e3e3e3;
-  border-width: 2;
+  border-color: #333333;
+  border-width: 1;
   border-radius: 5;
   background-color: #fafafaf0;
   overflow: hidden;

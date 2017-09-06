@@ -10,7 +10,7 @@ import {
 } from '@expo/vector-icons'
 
 import Background from '@components/background'
-import GameExplorer from '@components/game-explorer'
+import GameExplorer from '@containers/game-explorer'
 import AboutComponent from '@components/about'
 
 import { cacheImages, cacheFonts } from '@utils'
@@ -137,5 +137,5 @@ const AboutIcon = styled(Octicons).attrs({
   name: 'info'
 })`
   font-size: ${scale(25)};
-  color: #a3a3a3;
+  color: #333333;
 `
