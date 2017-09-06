@@ -24,6 +24,9 @@ export default ({
       {'powerded by:'}
     </Paragraph>
     <GiantBombLogo />
+    <Paragraph>
+      {'hoping you will like it\n(*^_^*)'}
+    </Paragraph>
   </About>
 )
 
@@ -33,7 +36,7 @@ const About = styled.View`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: #e3e3e3;
+  background-color: #333333;
 `
 
 const Title = styled.Text`
