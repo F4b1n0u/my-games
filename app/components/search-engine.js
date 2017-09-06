@@ -115,16 +115,17 @@ const ClearSearch = styled.TouchableOpacity.attrs({
   activeOpacity: 0.4,
 })`
   position: absolute;
-  right: 0;
-  height: ${scale(21)};
-  width: ${scale(21)};
+  top: ${scale(1)};
+  right: ${scale(1)};
+  height: ${scale(28)};
+  width: ${scale(28)};
 `
 
 const ClearSearchIcon = styled(MaterialIcons).attrs({
   name: 'delete-forever',
 })`
   color: #333333;
-  font-size: ${scale(20)};
+  font-size: ${scale(28)};
 `
 
 const TextInputWrapper = styled.View`
@@ -142,8 +143,8 @@ const Search = styled.TextInput.attrs({
   flex: 1;
   font-family: 'florentia-extralight';
   text-align: center;
-  margin-horizontal: 40;
-  font-size: ${scale(18)};
+  margin-horizontal: ${scale(30)};
+  font-size: ${scale(24)};
 `
 
 const Spinner = styled.ActivityIndicator.attrs({
