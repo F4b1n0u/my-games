@@ -119,6 +119,9 @@ const About = styled(AboutComponent)`
   top: ${verticalScale(60)};
   left: ${scale(20)};
   right: ${scale(20)};
+  border-radius: 5;
+  padding-vertical: ${scale(5)};
+  padding-horizontal: ${scale(5)};
 `
 
 const AboutIconWrapper = styled.TouchableOpacity.attrs({

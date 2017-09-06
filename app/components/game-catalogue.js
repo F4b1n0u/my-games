@@ -95,6 +95,7 @@ export default class GameListComponent extends React.Component {
     const {
       list,
       detailedGameId,
+      style
     } = this.props
 
     const hasDetailedGame = !!detailedGameId
@@ -110,6 +111,7 @@ export default class GameListComponent extends React.Component {
         ListFooterComponent={this._renderFooter}
         onEndReached={this._handleEndReached}
         scrollEnabled={!hasDetailedGame}
+        style={style}
       />
     )
   }
@@ -117,11 +119,8 @@ export default class GameListComponent extends React.Component {
 
 const GameList = styled.FlatList`
   flex: 1;
-  background-color: transparent;
-  overflow: visible;
   margin-top: ${props => props.hasDetailedGame ? 10 : 50};
-  bottom: 0;
-  width: 100%;
+  background-color: transparent;
 `
 
 // TODO extract the style from the wrapper because it have sense only in the list context

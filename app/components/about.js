@@ -8,7 +8,7 @@ import { scale, verticalScale } from '@utils/dimension'
 export default ({
   style,
 }) => (
-  <Settings
+  <About
     style={style}
   >
     <Title>
@@ -24,18 +24,16 @@ export default ({
       {'powerded by:'}
     </Paragraph>
     <GiantBombLogo />
-  </Settings>
+  </About>
 )
 
-const Settings = styled.View`
-  border-radius: 5;
+const About = styled.View`
+  flex: 1;
   overflow: hidden;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   background-color: #e3e3e3;
-  padding-vertical: ${scale(5)};
-  padding-horizontal: ${scale(5)};
 `
 
 const Title = styled.Text`

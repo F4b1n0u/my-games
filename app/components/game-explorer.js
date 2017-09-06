@@ -6,14 +6,10 @@ import GameCatalogueContainer from '@containers/game-catalogue'
 
 import { scale } from '@utils/dimension'
 
-export default props => (
+export default () => (
   <GameExplorer>
-    <GameList
-      {...props}
-    />
-    <SearchEngine
-      {...props}
-    />
+    <GameCatalogue />
+    <SearchEngine />
   </GameExplorer>
 )
 
@@ -27,9 +23,25 @@ const GameExplorer = styled.View`
   background-color: transparent;
 `
 
-const SearchEngine = styled(SearchEngineContainer)`
-  position: absolute;
+const GameCatalogue = styled(GameCatalogueContainer)`
+  flex: 1;
+  overflow: visible;
+  bottom: 0;
+  width: 100%;
 `
 
-const GameList = styled(GameCatalogueContainer)`
+const SearchEngine = styled(SearchEngineContainer)`
+  position: absolute;
+  top: 25;
+  width: 70%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-color: #e3e3e3;
+  border-width: 2;
+  border-radius: 5;
+  background-color: #fafafaf0;
+  overflow: hidden;
+  padding-vertical: 2;
+  padding-horizontal: 2;
 `

@@ -58,10 +58,13 @@ export default class SearchEngineComponent extends React.Component {
       hasDetailedGame,
       updateSearchText,
       isFranchisesPending,
+      style,
     } = this.props
 
     return (!hasDetailedGame) ? (
-      <SearchEngine>
+      <SearchEngine
+        style={style}
+      >
         <TextInputWrapper>
           {
             isFranchisesPending ? (
@@ -105,19 +108,7 @@ export default class SearchEngineComponent extends React.Component {
 }
 
 const SearchEngine = styled.View`
-  position: absolute;
-  top: 25;
-  width: 70%;
-  flex-direction:column;
-  justify-content: center;
-  align-items: center;
-  border-color: #e3e3e3;
-  border-width: 2;
-  border-radius: 5;
-  background-color: #fafafaf0;
-  overflow: hidden;
-  padding-vertical: 2;
-  padding-horizontal: 2;
+  flex: 1;
 `
 
 const ClearSearch = styled.TouchableOpacity.attrs({
