@@ -43,6 +43,7 @@ export default class AppComponents extends React.Component {
 
       const imageAssets = cacheImages([
         require('../../assets/images/all-games-wallpaper.png'),
+        require('../../assets/images/arrows.png'),
         require('../../assets/images/giantbomb-logo.png'),
         require('../../assets/images/icon.png'),
       ])
