@@ -15,13 +15,13 @@ export default ({
       {'About'}
     </Title>
     <Paragraph>
-      {'This app is design and developed by:\n\nFabien BEHIER\n'}
+      {'This app is designed and developed by:\n\nFabien BEHIER\n'}
     </Paragraph>
     <Paragraph>
-      {'the source are available on github at\nhttps://github.com/F4b1n0u/my-games'}
+      {'the source code is available on github at:\nhttps://github.com/F4b1n0u/my-games'}
     </Paragraph>
     <Paragraph>
-      {'powerded by:'}
+      {'the data source is powerded by:'}
     </Paragraph>
     <GiantBombLogo />
     <Paragraph>
@@ -40,6 +40,7 @@ const About = styled.View`
   border-width: 1;
   border-radius: 5;
   background-color: #fafafaf0;
+  padding-bottom: ${scale(20)};
 `
 
 const Title = styled.Text`
