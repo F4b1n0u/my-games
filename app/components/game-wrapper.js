@@ -169,17 +169,17 @@ export default class GameWrapperComponent extends React.Component {
               )
             )
           }
-          {
-            game.isOwned ? (
-              <OwnershipMarkerWrapper>
-                <OwnershipMarker />
-                <OwnershipMarkerCheck />
-              </OwnershipMarkerWrapper>
-            ) : (
-              null
-            )
-          }
         </GameWrapper>
+        {
+          game.isOwned ? (
+            <OwnershipMarkerWrapper>
+              <OwnershipMarker />
+              <OwnershipMarkerCheck />
+            </OwnershipMarkerWrapper>
+          ) : (
+            null
+          )
+        }
       </Animated.View>
     )
   }
@@ -191,7 +191,7 @@ const GameWrapper = styled.View`
   border-color: #333333;
   border-width: 1;
   border-radius: 5;
-  overflow: hidden
+  overflow: hidden;
 `
 
 const OwnershipMarkerWrapper = styled.View`
