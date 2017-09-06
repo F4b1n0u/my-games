@@ -191,6 +191,7 @@ const GameWrapper = styled.View`
   border-color: #333333;
   border-width: 1;
   border-radius: 5;
+  overflow: hidden
 `
 
 const OwnershipMarkerWrapper = styled.View`
