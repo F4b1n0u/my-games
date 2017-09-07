@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components/native'
 import Carousel from 'react-native-snap-carousel'
 import _ from 'lodash'
-import { Dimensions, PixelRatio } from 'react-native'
-import { BlurView } from 'expo'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Dimensions } from 'react-native'
+import { BlurView, WebBrowser } from 'expo'
+import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
 
 import ProgressiveImage from '@components/progressive-image'
 import PlatformComponent from '@components/platform'
@@ -30,12 +30,20 @@ const itemWidth = slideWidth + (itemHorizontalMargin * 2)
 
 const amountPlatformSupported = 14
 export default class CompleteDetailedGameComponent extends React.Component {
-  _handleCollapse = () => {
+  _handleBack = () => {
     const {
       hideGameDetails,
     } = this.props
 
     hideGameDetails()
+  }
+
+  _handleSeeMore = () => {
+    const {
+      site_detail_url: siteDetailUrl,
+    } = this.props
+
+    WebBrowser.openBrowserAsync(siteDetailUrl);
   }
 
   render() {
@@ -110,11 +118,16 @@ export default class CompleteDetailedGameComponent extends React.Component {
           ))}
         </PlatformList>
 
-        <BackButton
-          onPress={this._handleCollapse}
+        <Back
+          onPress={this._handleBack}
         >
           <BackIcon />
-        </BackButton>
+        </Back>
+        <SeeMore
+          onPress={this._handleSeeMore}
+        >
+          <SeeMoreIcon />
+        </SeeMore>
       </Game>
     )
   }
@@ -210,7 +223,7 @@ const Platform = styled(PlatformComponent)`
   margin-bottom: ${scale(12.5)};
 `
 
-const BackButton = styled.TouchableOpacity`
+const Back = styled.TouchableOpacity`
   position: absolute;
   left: 0;
   bottom: 0;
@@ -221,6 +234,22 @@ const BackButton = styled.TouchableOpacity`
 
 const BackIcon = styled(MaterialCommunityIcons).attrs({
   name: 'arrow-compress',
+})`
+  font-size: ${scale(35)};
+  color: #333333;
+`
+
+const SeeMore = styled.TouchableOpacity`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-horizontal: ${scale(5)};
+  background-color: transparent;
+  overflow: hidden;
+`
+
+const SeeMoreIcon = styled(Octicons).attrs({
+  name: 'link-external',
 })`
   font-size: ${scale(35)};
   color: #333333;

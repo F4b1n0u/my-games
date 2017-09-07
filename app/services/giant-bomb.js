@@ -91,7 +91,7 @@ export const fetchFullGame = ({ id }) => {
     {},
     defaultQueryParams,
     {
-      field_list: 'id,name,image,images,deck,platforms',
+      field_list: 'id,name,image,images,deck,platforms,site_detail_url',
     }
   )
 
