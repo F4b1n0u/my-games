@@ -56,7 +56,8 @@ const NoResults = styled(NoResultsComponent)`
 const SearchEngine = styled(SearchEngineContainer)`
   position: absolute;
   top: 25;
-  width: 70%;
+  right: ${scale(50)};
+  left: ${scale(50)};
   flex-direction: column;
   justify-content: center;
   align-items: center;
