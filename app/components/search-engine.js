@@ -1,7 +1,6 @@
 import React from 'react'
-import {
-  LayoutAnimation,
-} from 'react-native'
+import { LayoutAnimation } from 'react-native'
+import { LinearGradient } from 'expo'
 import styled from 'styled-components/native'
 import { MaterialIcons } from '@expo/vector-icons'
 
@@ -62,47 +61,49 @@ export default class SearchEngineComponent extends React.Component {
     } = this.props
 
     return (!hasDetailedGame) ? (
-      <SearchEngine
-        style={style}
-      >
-        <TextInputWrapper>
-          {
-            isFranchisesPending ? (
-              <Spinner />
-            ) : (
-              null
-            )
-          }
-          <Search
-            autoCapitalize="none"
-            blurOnSubmit
-            keyboardShouldPersistTaps={false}
-            placeholder="type a name"
-            ref={(ref) => { this._searchInput = ref }}
-            selectTextOnFocus
-            value={searchText}
+      <Mask>
+        <SearchEngine
+          style={style}
+        >
+          <TextInputWrapper>
+            {
+              isFranchisesPending ? (
+                <Spinner />
+              ) : (
+                null
+              )
+            }
+            <Search
+              autoCapitalize="none"
+              blurOnSubmit
+              keyboardShouldPersistTaps={false}
+              placeholder="type a name"
+              ref={(ref) => { this._searchInput = ref }}
+              selectTextOnFocus
+              value={searchText}
 
-            onChangeText={updateSearchText}
-            onFocus={this._handleFocus}
-            onSubmitEditing={this._handleSubmit}
+              onChangeText={updateSearchText}
+              onFocus={this._handleFocus}
+              onSubmitEditing={this._handleSubmit}
+            />
+            {
+              searchText ? (
+                <ClearSearch
+                  onPress={this._handlePressClearSearch}
+                >
+                  <ClearSearchIcon />
+                </ClearSearch>
+              ) : (
+                null
+              )
+            }
+
+          </TextInputWrapper>
+          <FranchiseList
+            {...this.props}
           />
-          {
-            searchText ? (
-              <ClearSearch
-                onPress={this._handlePressClearSearch}
-              >
-                <ClearSearchIcon />
-              </ClearSearch>
-            ) : (
-              null
-            )
-          }
-
-        </TextInputWrapper>
-        <FranchiseList
-          {...this.props}
-        />
-      </SearchEngine>
+        </SearchEngine>
+      </Mask>
     ) : null
   }
 }
@@ -155,4 +156,13 @@ const Spinner = styled.ActivityIndicator.attrs({
   left: 0;
   height: 21;
   width: 21;
+`
+
+const Mask = styled(LinearGradient).attrs({
+  colors: ['#fafafad0', '#fafafaa0', '#fafafa00'],
+})`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: ${verticalScale(70)};
 `

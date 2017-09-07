@@ -1,8 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
-import {
-  LinearGradient,
-} from 'expo'
+import { LinearGradient } from 'expo'
 import styled from 'styled-components/native'
 
 import RatioLessImage from '@components/ratio-less-image'

@@ -11,7 +11,7 @@ export default ({style}) => (
   >
     <Arrows />
     <Instructions>
-      {'No games yet ?!\nStart your search !!!\nʕ⊙ᴥ⊙ʔ'}
+      {'No games yet ?!\nStart searching !!!\nʕ⊙ᴥ⊙ʔ'}
     </Instructions>
   </NoResult>
 )
