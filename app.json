@@ -5,7 +5,7 @@
     "slug": "my-games",
     "privacy": "public",
     "sdkVersion": "19.0.0",
-    "version": "1.1.12",
+    "version": "1.1.13",
     "orientation": "portrait",
     "primaryColor": "#fafafa",
     "icon": "./assets/icons/app-icon.png",
