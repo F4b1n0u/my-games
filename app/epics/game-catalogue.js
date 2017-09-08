@@ -164,6 +164,9 @@ const requestGamesCompletionEpic = action$ => action$
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
+// TODO maybe a proper action like DISPLAY_OWNED_GAMES, could be better
+// because this action could be reused coule of times
+// clear search, search for en empty string, etc
 const appEndLoadEpic = (action$, store) => action$
   .ofType(END_LOAD_SUCCESS)
   .flatMap(() => {

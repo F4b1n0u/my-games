@@ -15,7 +15,7 @@ const detailedHeight = height - 50
 
 export default class GameCatalogueComponent extends React.Component {
   static _keyExtractor(item) {
-    return item.game.id
+    return item.id
   }
 
   static _getItemLayout(data, index) {
@@ -50,7 +50,7 @@ export default class GameCatalogueComponent extends React.Component {
   }
 
   _renderItem = ({
-    item,
+    item: game,
     index,
   }) => {
     const {
@@ -66,15 +66,15 @@ export default class GameCatalogueComponent extends React.Component {
       <Game
         detailedHeight={detailedHeight}
         hasDetailedGame={hasDetailedGame}
-        isDetailed={detailedGameId === item.game.id}
+        isDetailed={detailedGameId === game.id}
         normalHeight={normalHeight}
-        {...item}
+        {...game}
 
         hideGameDetails={hideGameDetails}
-        requestGamePartialCompletion={requestGamePartialCompletion.bind(this, item.game)}
+        requestGamePartialCompletion={requestGamePartialCompletion.bind(this, game)}
         scrollToMe={this._scrollToGame.bind(this, index)}
-        showGameDetails={showGameDetails.bind(this, item.game)}
-        togglePlatformOwnership={togglePlatformOwnership.bind(this, item.game)}
+        showGameDetails={showGameDetails.bind(this, game)}
+        togglePlatformOwnership={togglePlatformOwnership.bind(this, game)}
       />
     )
   }
@@ -93,7 +93,7 @@ export default class GameCatalogueComponent extends React.Component {
 
   render() {
     const {
-      list,
+      games,
       detailedGameId,
       style
     } = this.props
@@ -104,7 +104,7 @@ export default class GameCatalogueComponent extends React.Component {
       <GameCatalogue
         hasDetailedGame={hasDetailedGame}
         ref={this._setRef}
-        data={list}
+        data={games}
         keyExtractor={GameCatalogueComponent._keyExtractor}
         getItemLayout={GameCatalogueComponent._getItemLayout}
         renderItem={this._renderItem}

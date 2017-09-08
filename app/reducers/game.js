@@ -1,12 +1,9 @@
 import _ from 'lodash'
+
 import {
   RECEIVE_GAME_SUCCESS,
   RECEIVE_GAME_COMPLETION_SUCCESS,
 } from '@actions/game-catalogue'
-import {
-  MARK_GAME_OWNERSHIP,
-} from '@actions/owned-game-catalogue'
-
 import platformsReducer from '@reducers/platforms'
 
 const initialState = {}
@@ -33,18 +30,6 @@ export default (
           }
         )
       }
-
-      return nextState
-    case MARK_GAME_OWNERSHIP:
-      _.merge(
-        nextState,
-        {
-          isOwned: !_.isEmpty(action.ownedPlatforms),
-        },
-        {
-          platforms: platformsReducer(nextState.platforms, action),
-        }
-      )
 
       return nextState
     default:

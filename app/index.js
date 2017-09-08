@@ -10,7 +10,12 @@ import storeConfigure from '@store'
 import App from '@containers/app'
 
 const initialState = {}
-const store = storeConfigure(initialState)
+const {
+  store,
+  // persistedStore,
+} = storeConfigure(initialState)
+
+// persistedStore.purge()
 
 const Index = () => (
   <Provider store={store}>

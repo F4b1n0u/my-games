@@ -1,14 +1,6 @@
 
 import _ from 'lodash'
-import {
-  combineReducers,
-} from 'redux'
-import {
-  RECEIVE_GAME_COMPLETION_SUCCESS,
-} from '@actions/game-catalogue'
-import {
-  MARK_GAME_OWNERSHIP,
-} from '@actions/owned-game-catalogue'
+import { RECEIVE_GAME_COMPLETION_SUCCESS } from '@actions/game-catalogue'
 
 const initialState = []
 
@@ -56,48 +48,6 @@ export default (
       }
 
       return nextState
-    case MARK_GAME_OWNERSHIP:
-      if (!_.isEmpty(action.ownedPlatforms)) {
-        // need to mark at least one platform as owned
-        if (_.isEmpty(state)) {
-          // no platforms yet (completion level < 2)
-          nextState = _.concat(nextState, action.ownedPlatforms)
-        } else {
-          // platforms already here (completion level > 1)
-          nextState = state.map(platform => _.merge(
-            {},
-            platform,
-            {
-              isOwned: !!_.find(action.ownedPlatforms, ownedPlatform => ownedPlatform.id === platform.id),
-            }
-          ))
-        }
-      } else {
-        // need to mark all the platforms as NOT owned
-        nextState = nextState.map(platform => _.merge(
-          {},
-          platform,
-          {
-            isOwned: false,
-          }
-        ))
-      }
-
-      return nextState
-
-    //   let nextState = [...state]
-
-    //   const {
-    //     onwedPlatforms,
-    //   } = action
-
-    //   if (_.isEmpty(state)) {
-    //     nextState = action.onwedPlatforms || []
-    //   }
-
-    //   return nextState
-
-
     default:
       return state
   }

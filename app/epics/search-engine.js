@@ -97,6 +97,7 @@ const requestFranchiseCompletionEpic = action$ => action$
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error)))
   )
 
+// TODO check when we stop to search, if the search is empty then we display owned games
 const clearSearchEpic = (action$, store) => action$
   .ofType(CLEAR_SEARCH)
   .flatMap(() => {

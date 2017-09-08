@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { persistStore } from 'redux-persist'
 import { AsyncStorage } from 'react-native'
 
@@ -9,7 +10,7 @@ export default (initialState) => {
     prodStoreConfigure(initialState) :
     devStoreConfigure(initialState)
 
-  persistStore(
+  const persistedStore = persistStore(
     store,
     {
       storage: AsyncStorage,
@@ -17,5 +18,8 @@ export default (initialState) => {
     }
   )
 
-  return store
+  return {
+    store,
+    persistedStore
+  }
 }

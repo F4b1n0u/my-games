@@ -34,7 +34,9 @@ export default class GameWrapperComponent extends React.Component {
       normalMargin,
       detailedMargin,
       requestGamePartialCompletion,
-      game,
+      completionLevel,
+      image,
+      images = [],
     } = this.props
 
     const {
@@ -56,14 +58,9 @@ export default class GameWrapperComponent extends React.Component {
       marginAnimProgress,
     })
 
-    if (game.completionLevel < 2) {
+    if (completionLevel < 2) {
       requestGamePartialCompletion()
     }
-
-    const {
-      image,
-      images = [],
-    } = game
 
     let cachedImages = []
 
@@ -128,7 +125,8 @@ export default class GameWrapperComponent extends React.Component {
 
   render() {
     const {
-      game,
+      isOwned,
+      completionLevel,
       isDetailed,
       showGameDetails,
       hideGameDetails,
@@ -150,28 +148,25 @@ export default class GameWrapperComponent extends React.Component {
       >
         <GameWrapper>
           {
-            (game.completionLevel < 2) ? (
+            (completionLevel < 2) ? (
               <IncompleteNotDetailedGame
-                {...game}
+                {...this.props}
               />
             ) : (
               (!isDetailed) ? (
                 <CompleteNotDetailedGame
-                  {...game}
-                  showGameDetails={showGameDetails}
+                  {...this.props}
                 />
               ) : (
                 <CompleteDetailedGame
-                  {...game}
-                  hideGameDetails={hideGameDetails}
-                  togglePlatformOwnership={togglePlatformOwnership}
+                  {...this.props}
                 />
               )
             )
           }
         </GameWrapper>
         {
-          game.isOwned ? (
+          isOwned ? (
             <OwnershipMarkerWrapper>
               <OwnershipMarker />
               <OwnershipMarkerCheck />

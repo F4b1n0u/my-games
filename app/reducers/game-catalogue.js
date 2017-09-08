@@ -1,7 +1,5 @@
-import {
-  combineReducers,
-} from 'redux'
 import _ from 'lodash'
+import { combineReducers } from 'redux'
 
 import {
   RECEIVE_GAME_COMPLETION_SUCCESS,
@@ -12,9 +10,6 @@ import {
   REQUEST_GAMES,
   REQUEST_MORE_GAMES,
 } from '@actions/game-catalogue'
-import {
-  MARK_GAME_OWNERSHIP,
-} from '@actions/owned-game-catalogue'
 import {
   SELECT_FRANCHISE,
   RECEIVE_FRANCHISE_COMPLETION_FAILURE,
@@ -61,16 +56,6 @@ function list(
       )
     case RECEIVE_GAME_COMPLETION_SUCCESS:
       itemPosition = _.findIndex(state, item => item.game.id === action.completedGame.id)
-      if (itemPosition >= 0) {
-        nextState[itemPosition] = itemReducer(
-          state[itemPosition],
-          action
-        )
-      }
-
-      return nextState
-    case MARK_GAME_OWNERSHIP:
-      itemPosition = _.findIndex(state, item => item.game.id === action.game.id)
       if (itemPosition >= 0) {
         nextState[itemPosition] = itemReducer(
           state[itemPosition],

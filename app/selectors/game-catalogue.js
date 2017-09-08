@@ -1,6 +1,14 @@
 import _ from 'lodash'
 
-export const getList = state => state.list
+export const getGames = state => state.list.map(
+  item => _.merge(
+    {},
+    item.game,
+    {
+      platforms: []
+    }
+  )
+)
 
 export const isPending = state => state.status.pending
 
