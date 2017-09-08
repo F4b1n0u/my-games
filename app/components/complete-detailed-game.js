@@ -56,6 +56,7 @@ export default class CompleteDetailedGameComponent extends React.Component {
       platforms,
       isOwned,
       togglePlatformOwnership,
+      site_detail_url: siteDetailUrl,
     } = this.props
 
     let slideshow
@@ -123,11 +124,17 @@ export default class CompleteDetailedGameComponent extends React.Component {
         >
           <BackIcon />
         </Back>
-        <SeeMore
-          onPress={this._handleSeeMore}
-        >
-          <SeeMoreIcon />
-        </SeeMore>
+        {
+          siteDetailUrl ? (
+            <SeeMore
+              onPress={this._handleSeeMore}
+            >
+              <SeeMoreIcon />
+            </SeeMore>
+          ) : (
+            null
+          )
+        }
       </Game>
     )
   }
