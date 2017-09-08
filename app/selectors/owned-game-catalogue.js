@@ -1,15 +1,23 @@
 import _ from 'lodash'
+import { createSelector } from 'reselect'
 
 import { getGames } from '@selectors/game-catalogue'
 
-export const getOwnedGames = state => Object.keys(state.ownedGameCatalogue.games).map(id => ({ id }))
+export const getOwnedGameList = state => state.ownedGameCatalogue.games
 
-export const getOwnedPlatformIds = (state, game) => state.ownedGameCatalogue.games[game.id] || []
+export const getOwnedGameIds = state => Object.keys(getOwnedGameList(state))
+
+export const getOwnedGames = createSelector(
+  [getOwnedGameIds],
+  ownedGameIds => ownedGameIds.map(id => ({ id }))
+)
+
+export const getOwnedPlatformIds = (ownedGamesList, game) => ownedGamesList[game.id] || []
 
 export const hasOwnedGame = state => !_.isEmpty(state.ownedGameCatalogue.games)
 
-export const isPlatformOwned = (state, game, platform) => {
-  const ownedPlatformIds = getOwnedPlatformIds(state, game)
+export const isPlatformOwned = (ownedGamesList, game, platform) => {
+  const ownedPlatformIds = getOwnedPlatformIds(ownedGamesList, game)
   const platformIds = [platform.id]
   const commonPlatformIds = _.intersection(
     ownedPlatformIds,
@@ -19,10 +27,10 @@ export const isPlatformOwned = (state, game, platform) => {
   return !_.isEmpty(commonPlatformIds)
 }
 
-export const isGameOwned = (state, game) => game.platforms.some(isPlatformOwned.bind(null, state, game))
+export const isGameOwned = (ownedGamesList, game) => game.platforms.some(isPlatformOwned.bind(null, ownedGamesList, game))
 
-export const getMarkedPlatform = (state, game, platform) => {
-  const ownedPlatformIds = getOwnedPlatformIds(state, game)
+export const getMarkedPlatform = (ownedGamesList, game, platform) => {
+  const ownedPlatformIds = getOwnedPlatformIds(ownedGamesList, game)
 
   const isOwned = ownedPlatformIds.includes(platform.id)
   return _.merge(
@@ -34,17 +42,20 @@ export const getMarkedPlatform = (state, game, platform) => {
   )
 }
 
-export const getMarkedGame = (state, game) => {
+export const getMarkedGame = (ownedGamesList, game) => {
   const markedGame = _.merge(
     {},
     game,
     {
-      isOwned: isGameOwned(state, game),
-      platforms: game.platforms.map(getMarkedPlatform.bind(null, state, game))
+      isOwned: isGameOwned(ownedGamesList, game),
+      platforms: game.platforms.map(getMarkedPlatform.bind(null, ownedGamesList, game))
     }
   )
 
   return markedGame
 }
 
-export const getMarkedGames = state => getGames(state).map(getMarkedGame.bind(null, state))
+export const getMarkedGames = createSelector(
+  [getGames, getOwnedGameList],
+  (games, ownedGamesList) => games.map(getMarkedGame.bind(null, ownedGamesList))
+)
