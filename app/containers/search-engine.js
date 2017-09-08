@@ -22,21 +22,13 @@ import {
 
 import SearchEngine from '@components/search-engine'
 
-const mapStateToProps = (state) => {
-  const {
-    gameCatalogue,
-    gameExplorer,
-    searchEngine,
-  } = state
-
-  return ({
-    franchises: getFranchises(searchEngine),
-    hasDetailedGame: hasDetailedGame(gameExplorer),
-    hasLoadingGames: isCataloguePending(gameCatalogue),
-    searchText: getSearchText(searchEngine),
-    isFranchisesPending: isFranchisesPending(searchEngine),
-  })
-}
+const mapStateToProps = state => ({
+  franchises: getFranchises(state),
+  hasDetailedGame: hasDetailedGame(state),
+  hasLoadingGames: isCataloguePending(state),
+  searchText: getSearchText(state),
+  isFranchisesPending: isFranchisesPending(state),
+})
 
 const mapDispatchToProps = dispatch => ({
   selectFranchise: franchise => dispatch(selectFranchise(franchise)),

@@ -13,13 +13,12 @@ const submitSearchEpic = (action$, store) => action$
   .flatMap(() => {
     let observable = Observable.empty()
 
-    const searchEngineState = store.getState().searchEngine
-    const searchText = getSearchText(searchEngineState).trim()
+    const state = store.getState()
+
+    const searchText = getSearchText(state).trim()
 
     if (!searchText) {
-      const ownedGameCatalogueState = store.getState().ownedGameCatalogue
-      const ownedGames = getOwnedGames(ownedGameCatalogueState)
-      
+      const ownedGames = getOwnedGames(state)
       observable = Observable.of(requestGames(ownedGames))
     }
 

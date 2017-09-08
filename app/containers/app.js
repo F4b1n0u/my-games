@@ -17,19 +17,12 @@ import {
   toggleAboutDisplay,
 } from '@actions/app'
 
-const mapStateToProps = (state) => {
-  const {
-    app,
-    gameExplorer,
-  } = state
-
-  return {
-    isLoading: isLoading(app),
-    isLoaded: isLoaded(app),
-    isAboutVisible: isAboutVisible(app),
-    hasDetailedGame: hasDetailedGame(gameExplorer),
-  }
-}
+const mapStateToProps = state => ({
+  isLoading: isLoading(state),
+  isLoaded: isLoaded(state),
+  isAboutVisible: isAboutVisible(state),
+  hasDetailedGame: hasDetailedGame(state),
+})
 
 const mapDispatchToProps = dispatch => ({
   startLoad: () => dispatch(startLoad()),

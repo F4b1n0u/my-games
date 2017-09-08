@@ -53,11 +53,9 @@ const updateSearchTextEpic = action$ => action$
 const requestFranchisesEpic = (action$, store) => action$
   .ofType(REQUEST_FRANCHISES)
   .switchMap(() => {
-    const searchEngineState = store.getState().searchEngine
-    const gameCatalogueState = store.getState().gameCatalogue
-
-    const searchText = getSearchText(searchEngineState)
-    const isPending = isCataloguePending(gameCatalogueState)
+    const state = store.getState()
+    const searchText = getSearchText(state)
+    const isPending = isCataloguePending(state)
 
     let observable = Observable.empty()
 
@@ -101,8 +99,7 @@ const requestFranchiseCompletionEpic = action$ => action$
 const clearSearchEpic = (action$, store) => action$
   .ofType(CLEAR_SEARCH)
   .flatMap(() => {
-    const ownedGameCatalogueState = store.getState().ownedGameCatalogue
-    const ownedGames = getOwnedGames(ownedGameCatalogueState)
+    const ownedGames = getOwnedGames(store.getState())
 
     return Observable.of(requestGames(ownedGames))
   })

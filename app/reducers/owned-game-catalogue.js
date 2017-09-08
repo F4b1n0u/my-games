@@ -6,11 +6,11 @@ import {
 } from '@actions/owned-game-catalogue'
 
 const initialState = {
-  ownedGames: {},
+  games: {},
 }
 
-function ownedGames(
-  state = initialState.ownedGames,
+function games(
+  state = initialState.games,
   action
 ) {
   const nextState = _.merge(
@@ -51,5 +51,5 @@ function ownedGames(
 }
 
 export default combineReducers({
-  ownedGames,
+  games,
 })

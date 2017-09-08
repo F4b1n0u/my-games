@@ -1,10 +1,12 @@
 import _ from 'lodash'
 
-export const getOwnedGames = state => Object.keys(state.ownedGames).map(id => ({ id }))
+import { getGames } from '@selectors/game-catalogue'
 
-export const getOwnedPlatformIds = (state, game) => state.ownedGames[game.id] || []
+export const getOwnedGames = state => Object.keys(state.ownedGameCatalogue.games).map(id => ({ id }))
 
-export const hasOwnedGame = state => !_.isEmpty(state.ownedGames)
+export const getOwnedPlatformIds = (state, game) => state.ownedGameCatalogue.games[game.id] || []
+
+export const hasOwnedGame = state => !_.isEmpty(state.ownedGameCatalogue.games)
 
 export const isPlatformOwned = (state, game, platform) => {
   const ownedPlatformIds = getOwnedPlatformIds(state, game)
@@ -45,4 +47,4 @@ export const getMarkedGame = (state, game) => {
   return markedGame
 }
 
-export const getMarkedGames = (state, games) => games.map(getMarkedGame.bind(null, state))
+export const getMarkedGames = state => getGames(state).map(getMarkedGame.bind(null, state))

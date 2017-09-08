@@ -60,8 +60,7 @@ const submitSearchEpic = (action$, store) => action$
   .flatMap(() => {
     let observable = Observable.empty()
 
-    const searchEngineState = store.getState().searchEngine
-    const searchText = getSearchText(searchEngineState).trim()
+    const searchText = getSearchText(store.getState()).trim()
 
     if (searchText) {
       observable = Observable.of(requestGames())
@@ -88,8 +87,7 @@ const requestGamesToFetchEpic = (action$, store) => action$
         // .takeUntil(action$.ofType(REQUEST_FRANCHISES))
         .catch(error => Observable.of(receiveGameCompletionFailure(error)))
     } else {
-      const searchEngineState = store.getState().searchEngine
-      const searchText = getSearchText(searchEngineState).trim()
+      const searchText = getSearchText(store.getState()).trim()
 
       if (searchText) {
         observable = fetchGamesBySearch(searchText)
@@ -112,11 +110,9 @@ const requestGamesToFetchEpic = (action$, store) => action$
 const requestMoreGameEpic = (action$, store) => action$
   .ofType(REQUEST_MORE_GAMES)
   .switchMap(() => {
-    const searchEngineState = store.getState().searchEngine
-    const gameCatalogueState = store.getState().gameCatalogue
-
-    const searchText = getSearchText(searchEngineState)
-    const offset = getNextOffset(gameCatalogueState)
+    const state = store.getState();
+    const searchText = getSearchText(state)
+    const offset = getNextOffset(state)
 
     let observable
 
@@ -170,8 +166,7 @@ const requestGamesCompletionEpic = action$ => action$
 const appEndLoadEpic = (action$, store) => action$
   .ofType(END_LOAD_SUCCESS)
   .flatMap(() => {
-    const ownedGameCatalogueState = store.getState().ownedGameCatalogue
-    const ownedGames = getOwnedGames(ownedGameCatalogueState)
+    const ownedGames = getOwnedGames(store.getState())
 
     return Observable.of(requestGames(ownedGames))
   })
