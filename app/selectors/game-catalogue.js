@@ -1,26 +1,23 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 
-export const getList = state => state.list
+export const getList = state => state.gameCatalogue.list
 
 export const getGames = createSelector(
   [getList],
-  (list) => {
-    console.log('getGames ......')
-    return list.map(
-      item => _.merge(
-        {},
-        item.game,
-        {
-          platforms: []
-        }
-      )
+  list => list.map(
+    item => _.merge(
+      {},
+      item.game,
+      {
+        platforms: []
+      }
     )
-  }
+  )
 )
 
 
-export const isPending = state => state.status.pending
+export const isPending = state => state.gameCatalogue.status.pending
 
 export const getError = state => state.gameCatalogue.status.error
 
