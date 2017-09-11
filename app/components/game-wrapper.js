@@ -123,6 +123,29 @@ export default class GameWrapperComponent extends React.Component {
     ).start()
   }
 
+  shouldComponentUpdate({
+    isOwned: nextIsOwned,
+    completionLevel: nextCompletionLevel,
+    isDetailed: nextIsDetailed,
+    platforms: nextPlatforms = [],
+  }) {
+    const {
+      isOwned: currentIsOwned,
+      completionLevel: currentCompletionLevel,
+      isDetailed: currentIsDetailed,
+      platforms: currentPlatforms = [],
+    } = this.props
+    
+    const platformsOwnershipChanged = !_.isEmpty(_.differenceWith(currentPlatforms, nextPlatforms, _.isEqual))
+
+    return (
+      currentIsOwned !== nextIsOwned ||
+      currentCompletionLevel !== nextCompletionLevel ||
+      currentIsDetailed !== nextIsDetailed ||
+      platformsOwnershipChanged
+    )
+  }
+
   render() {
     const {
       isOwned,
