@@ -9,12 +9,12 @@ import {
   Octicons,
 } from '@expo/vector-icons'
 
-import Background from '@components/background'
-import GameExplorer from '@containers/game-explorer'
-import AboutComponent from '@components/about'
+import Background from '#components/background'
+import GameExplorer from '#containers/game-explorer'
+import AboutComponent from '#components/about'
 
-import { cacheImages, cacheFonts } from '@utils'
-import { scale, verticalScale } from '@utils/dimension'
+import { cacheImages, cacheFonts } from '#utils'
+import { scale, verticalScale } from '#utils/dimension'
 
 if (UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true)

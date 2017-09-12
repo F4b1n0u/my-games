@@ -6,10 +6,10 @@ import { Dimensions } from 'react-native'
 import { BlurView, WebBrowser } from 'expo'
 import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
 
-import ProgressiveImage from '@components/progressive-image'
-import PlatformComponent from '@components/platform'
+import ProgressiveImage from '#components/progressive-image'
+import PlatformComponent from '#components/platform'
 
-import { scale } from '@utils/dimension'
+import { scale } from '#utils/dimension'
 
 const {
   width: viewportWidth,

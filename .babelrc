@@ -11,15 +11,14 @@
   "plugins": [
     ["module-resolver", {
       "alias": {
-        "@actions":     "./app/actions",
-        "@components":  "./app/components",
-        "@containers":  "./app/containers",
-        "@epics":       "./app/epics",
-        "@reducers":    "./app/reducers",
-        "@selectors":   "./app/selectors",
-        "@services":    "./app/services",
-        "@store":       "./app/store",
-        "@utils":       "./app/utils"
+        "#actions":     "./app/actions",
+        "#components":  "./app/components",
+        "#containers":  "./app/containers",
+        "#modules":     "./app/modules",
+        "#selectors":   "./app/selectors",
+        "#services":    "./app/services",
+        "#store":       "./app/store",
+        "#utils":       "./app/utils"
       }
     }]
   ]

@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
-import ProgressiveImage from '@components/progressive-image'
+import ProgressiveImage from '#components/progressive-image'
 
-import { scale } from '@utils/dimension'
+import { scale } from '#utils/dimension'
 
 const logoImage = require('../../assets/images/icon.png')
 

@@ -1,23 +1,28 @@
 import { combineReducers } from 'redux'
+import { combineEpics } from 'redux-observable'
 
-import {
+import gameReducer, {
+  RECEIVE_GAME_COMPLETION_SUCCESS,
   REQUEST_GAME_PARTIAL_COMPLETION,
   REQUEST_GAME_FULL_COMPLETION,
-  RECEIVE_GAME_COMPLETION_SUCCESS,
   RECEIVE_GAME_COMPLETION_FAILURE,
-} from '@actions/game-catalogue'
-import game from '@reducers/game'
 
+  epic as gameEpic,
+} from '#modules/game-catalogue/item/game'
+
+// State
 const initialState = {
   status: {
     pending: false,
     error: null
   },
 }
-function status(
-  state = initialState.status,
-  action
-) {
+
+// Actions
+
+
+// Reducers
+function statusReducer(state = initialState.status, action) {
   switch (action.type) {
     case REQUEST_GAME_PARTIAL_COMPLETION:
     case REQUEST_GAME_FULL_COMPLETION:
@@ -38,6 +43,14 @@ function status(
 }
 
 export default combineReducers({
-  game,
-  status,
+  game: gameReducer,
+  status: statusReducer,
 })
+
+// Action Creators
+
+
+// Epics
+export const epic = combineEpics(
+  gameEpic
+)

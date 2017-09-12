@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { Ionicons } from '@expo/vector-icons'
 
-import { scale } from '@utils/dimension'
+import { scale } from '#utils/dimension'
 
 // TODO add a displayName for debug purpose to all the pure component
 export default ({

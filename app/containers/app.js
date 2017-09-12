@@ -1,21 +1,21 @@
 import { connect } from 'react-redux'
 
-import App from '@components/app'
+import App from '#components/app'
 
 import {
   isLoading,
   isLoaded,
   isAboutVisible,
-} from '@selectors/app'
+} from '#selectors/app'
 import {
   hasDetailedGame,
-} from '@selectors/game-explorer'
+} from '#selectors/game-explorer'
 
 import {
   startLoad,
   endLoad,
   toggleAboutDisplay,
-} from '@actions/app'
+} from '#modules/app'
 
 const mapStateToProps = state => ({
   isLoading: isLoading(state),

@@ -5,9 +5,9 @@ import Sentry from 'sentry-expo'
 import { Provider } from 'react-redux'
 import { SENTRY_URI } from 'react-native-dotenv'
 
-import storeConfigure from '@store'
+import storeConfigure from '#store'
 
-import App from '@containers/app'
+import App from '#containers/app'
 
 const initialState = {}
 const {

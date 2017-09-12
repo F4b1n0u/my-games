@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
-import { scale } from '@utils/dimension'
+import { scale } from '#utils/dimension'
 
 export default ({
   name,

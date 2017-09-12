@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
-import ProgressiveImage from '@components/progressive-image'
+import ProgressiveImage from '#components/progressive-image'
 
-import { scale, verticalScale } from '@utils/dimension'
+import { scale, verticalScale } from '#utils/dimension'
 
 
 import {

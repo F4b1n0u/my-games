@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
-import SearchEngineContainer from '@containers/search-engine'
-import GameCatalogueComponent from '@components/game-catalogue'
-import NoGamesYetComponent from '@components/no-games-yet'
-import NoResultsComponent from '@components/no-results'
+import SearchEngineContainer from '#containers/search-engine'
+import GameCatalogueComponent from '#components/game-catalogue'
+import NoGamesYetComponent from '#components/no-games-yet'
+import NoResultsComponent from '#components/no-results'
 
-import { scale, verticalScale } from '@utils/dimension'
+import { scale, verticalScale } from '#utils/dimension'
 
 export default props => (
   <GameExplorer>

@@ -4,9 +4,9 @@ import { LinearGradient } from 'expo'
 import styled from 'styled-components/native'
 import { MaterialIcons } from '@expo/vector-icons'
 
-import FranchiseList from '@components/franchise-list'
+import FranchiseList from '#components/franchise-list'
 
-import { scale, verticalScale } from '@utils/dimension'
+import { scale, verticalScale } from '#utils/dimension'
 export default class SearchEngineComponent extends React.Component {
   componentWillReceiveProps() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)

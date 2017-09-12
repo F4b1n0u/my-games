@@ -1,9 +1,16 @@
-
+import 'rxjs'
 import _ from 'lodash'
-import { RECEIVE_GAME_COMPLETION_SUCCESS } from '@actions/game-catalogue'
 
+import { RECEIVE_GAME_COMPLETION_SUCCESS } from '#modules/game-catalogue'
+
+// State
 const initialState = []
 
+
+// Actions
+
+
+// Reducers
 export default (
   state = initialState,
   action
@@ -52,3 +59,10 @@ export default (
       return state
   }
 }
+
+
+// Action Creators
+
+
+// Epics
+

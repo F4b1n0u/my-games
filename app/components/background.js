@@ -5,7 +5,7 @@ import {
   StyleSheet,
 } from 'react-native'
 
-import { scale, verticalScale } from '@utils/dimension'
+import { scale, verticalScale } from '#utils/dimension'
 
 // TODO realign this value tot he new wallpaper
 const backgroundPos = {

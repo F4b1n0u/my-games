@@ -7,20 +7,20 @@ import {
   submitSearch,
   stopSearching,
   clearSearch,
-} from '@actions/search-engine'
+} from '#modules/search-engine'
 import {
   getSearchText,
   getFranchises,
   isFranchisesPending,
-} from '@selectors/search-engine'
+} from '#selectors/search-engine'
 import {
   isPending as isCataloguePending,
-} from '@selectors/game-catalogue'
+} from '#selectors/game-catalogue'
 import {
   hasDetailedGame,
-} from '@selectors/game-explorer'
+} from '#selectors/game-explorer'
 
-import SearchEngine from '@components/search-engine'
+import SearchEngine from '#components/search-engine'
 
 const mapStateToProps = state => ({
   franchises: getFranchises(state),

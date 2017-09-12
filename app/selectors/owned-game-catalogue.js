@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 
-import { getGames } from '@selectors/game-catalogue'
+import { getGames } from '#selectors/game-catalogue'
 
 export const getOwnedGameList = state => state.ownedGameCatalogue.games
 

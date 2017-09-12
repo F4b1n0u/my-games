@@ -8,12 +8,12 @@ import {
   Easing,
 } from 'react-native'
 
-import CompleteDetailedGame from '@components/complete-detailed-game'
-import CompleteNotDetailedGame from '@components/complete-not-detailed-game'
-import IncompleteNotDetailedGame from '@components/incomplete-not-detailed-game'
+import CompleteDetailedGame from '#components/complete-detailed-game'
+import CompleteNotDetailedGame from '#components/complete-not-detailed-game'
+import IncompleteNotDetailedGame from '#components/incomplete-not-detailed-game'
 
-import { cacheImages } from '@utils'
-import { scale } from '@utils/dimension'
+import { cacheImages } from '#utils'
+import { scale } from '#utils/dimension'
 
 const animationDuration = 250
 

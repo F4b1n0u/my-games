@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import {
   Dimensions,
 } from 'react-native'
-import GameWrapper from '@components/game-wrapper'
+import GameWrapper from '#components/game-wrapper'
 
 const {
   height,

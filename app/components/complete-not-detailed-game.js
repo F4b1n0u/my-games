@@ -3,10 +3,10 @@ import React from 'react'
 import { LinearGradient } from 'expo'
 import styled from 'styled-components/native'
 
-import RatioLessImage from '@components/ratio-less-image'
-import PlatformComponent from '@components/platform'
+import RatioLessImage from '#components/ratio-less-image'
+import PlatformComponent from '#components/platform'
 
-import { scale } from '@utils/dimension'
+import { scale } from '#utils/dimension'
 
 const amountPlatformSupported = 14
 export default class CompleteNotDetailedGameComponent extends React.Component {
