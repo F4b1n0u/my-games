@@ -1,7 +1,7 @@
+import _ from 'lodash'
 import React from 'react'
 import styled from 'styled-components/native'
 import Carousel from 'react-native-snap-carousel'
-import _ from 'lodash'
 import { Dimensions } from 'react-native'
 import { BlurView, WebBrowser } from 'expo'
 import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
@@ -157,7 +157,7 @@ const Name = styled.Text.attrs({
   ellipsizeMode: 'tail',
 })`
   margin-bottom: ${scale(15)};
-  margin-horizontal: ${props => props.isOwned ? scale(40) : scale(15)};
+  margin-horizontal: ${scale(40)};
   font-size: ${scale(20)};
   text-align: center;
   font-family: 'florentia-extralight';
