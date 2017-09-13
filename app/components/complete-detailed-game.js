@@ -220,7 +220,10 @@ const PlatformWrapper = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8,
 })``
 
-const Platform = styled(PlatformComponent)`
+const Platform = styled(PlatformComponent).attrs({
+  iconFontSize: 40,
+  textFontSize: 20,
+})`
   background-color: transparent;
   flex-direction: column;
   justify-content: space-around;

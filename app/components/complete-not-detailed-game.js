@@ -6,7 +6,7 @@ import styled from 'styled-components/native'
 import RatioLessImage from '#components/ratio-less-image'
 import PlatformComponent from '#components/platform'
 
-import { scale } from '#utils/dimension'
+import { scale, verticalScale } from '#utils/dimension'
 
 const amountPlatformSupported = 14
 export default class CompleteNotDetailedGameComponent extends React.Component {
@@ -110,10 +110,14 @@ const PlatformList = styled.View`
   width: 100%;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
+  margin-bottom: ${verticalScale(5)};
 `
 
-const Platform = styled(PlatformComponent)`
+const Platform = styled(PlatformComponent).attrs({
+  iconFontSize: 25,
+  textFontSize: 17,
+})`
   background-color: transparent;
   flex-direction: column;
   justify-content: space-around;
