@@ -164,5 +164,5 @@ const Mask = styled(LinearGradient).attrs({
   position: absolute;
   top: 0;
   width: 100%;
-  height: ${verticalScale(70)};
+  height: ${verticalScale(50)};
 `

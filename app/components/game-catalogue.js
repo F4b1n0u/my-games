@@ -4,15 +4,14 @@ import { Dimensions, PixelRatio } from 'react-native'
 
 import GameWrapper from '#components/game-wrapper'
 
-import { verticalScale } from '#utils/dimension'
+import { scale, verticalScale } from '#utils/dimension'
 
 const {
   height,
 } = Dimensions.get('window')
 
 const normalHeight = PixelRatio.roundToNearestPixel(height / 2.3)
-// should depend of the ratio of the screen, the idea is to allow the user to have it in full screen
-const detailedHeight = height - verticalScale(26)
+const detailedHeight = height // minus height of the status bar + pixel a marge
 
 export default class GameCatalogueComponent extends React.Component {
   static _keyExtractor(item) {
@@ -120,16 +119,15 @@ export default class GameCatalogueComponent extends React.Component {
 
 const GameCatalogue = styled.FlatList`
   flex: 1;
-  margin-top: ${props => props.hasDetailedGame ? 10 : 50};
   background-color: transparent;
 `
 
 // TODO extract the style from the wrapper because it have sense only in the list context
 const Game = styled(GameWrapper)`
-  margin-bottom: 10;
   border-color: #333333;
   border-width: 1;
   border-radius: 5;
+  margin-bottom: ${verticalScale(10)};
 `
 
 const Footer = styled.View`

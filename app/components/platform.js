@@ -10,6 +10,8 @@ export default ({
   isDetailed,
   isOwned,
   style,
+  iconFontSize,
+  textFontSize,
 }) => (
   <Platform
     style={style}
@@ -17,9 +19,11 @@ export default ({
     <Icon
       isDetailed={isDetailed}
       isOwned={isOwned}
+      iconFontSize={iconFontSize}
     />
     <Abbreviation
       isDetailed={isDetailed}
+      textFontSize={textFontSize}
     >
       {abbreviation.toUpperCase()}
     </Abbreviation>
@@ -32,13 +36,16 @@ const Icon = styled(Ionicons).attrs({
   name: 'ios-game-controller-b-outline',
 })`
   opacity:    ${props => props.isOwned ? '1' : '0.5'};
-  font-size:  ${props => props.isDetailed ? `${scale(40)}` : `${scale(20)}`};
+  font-size:  ${props => {
+    console.log(props)
+    return scale(props.iconFontSize)
+  }};
   color:      ${props => props.isDetailed ? '#000000' : '#fafafa'};
 `
 
 const Abbreviation = styled.Text`
   background-color: transparent;
   font-family: 'florentia-extralight';
+  font-size:  ${props => scale(props.textFontSize)};
   color:      ${props => props.isDetailed ? '#000000' : '#fafafa'};
-  font-size:  ${props => props.isDetailed ? `${scale(18)}` : `${scale(15)}`};
 `

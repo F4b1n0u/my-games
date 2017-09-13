@@ -30,7 +30,6 @@ export default props => (
 
 const GameExplorer = styled.View`
   flex: 1;
-  padding-top: ${scale(20)};
   padding-horizontal: 0;
   flex-direction: column-reverse;
   justify-content: flex-start;
@@ -43,6 +42,7 @@ const GameCatalogue = styled(GameCatalogueComponent)`
   overflow: visible;
   bottom: 0;
   width: 100%;
+  margin-top: ${props => props.hasDetailedGame ? verticalScale(5) : verticalScale(50)};
 `
 
 const NoGamesYet = styled(NoGamesYetComponent)`
@@ -55,7 +55,7 @@ const NoResults = styled(NoResultsComponent)`
 
 const SearchEngine = styled(SearchEngineContainer)`
   position: absolute;
-  top: 25;
+  top: ${verticalScale(10)};
   right: ${scale(50)};
   left: ${scale(50)};
   flex-direction: column;

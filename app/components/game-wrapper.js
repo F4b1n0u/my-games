@@ -13,7 +13,7 @@ import CompleteNotDetailedGame from '#components/complete-not-detailed-game'
 import IncompleteNotDetailedGame from '#components/incomplete-not-detailed-game'
 
 import { cacheImages } from '#utils'
-import { scale } from '#utils/dimension'
+import { scale, verticalScale } from '#utils/dimension'
 
 const animationDuration = 250
 
@@ -24,7 +24,7 @@ export default class GameWrapperComponent extends React.Component {
 
   static defaultProps = {
     normalMargin: scale(10),
-    detailedMargin : scale(5),
+    detailedMargin : scale(2),
   };
 
   componentWillMount() {
@@ -148,9 +148,11 @@ export default class GameWrapperComponent extends React.Component {
 
   render() {
     const {
-      isOwned,
       completionLevel,
+      hasDetailedGame,
       isDetailed,
+      isOwned,
+      style,
       showGameDetails,
       hideGameDetails,
       togglePlatformOwnership,
@@ -169,7 +171,9 @@ export default class GameWrapperComponent extends React.Component {
           marginRight: marginAnimProgress,
         }}
       >
-        <GameWrapper>
+        <GameWrapper
+          style={style}
+        >
           {
             (completionLevel < 2) ? (
               <IncompleteNotDetailedGame
@@ -189,7 +193,8 @@ export default class GameWrapperComponent extends React.Component {
           }
         </GameWrapper>
         {
-          isOwned ? (
+          isOwned
+           ? (
             <OwnershipMarkerWrapper>
               <OwnershipMarker />
               <OwnershipMarkerCheck />
@@ -205,7 +210,6 @@ export default class GameWrapperComponent extends React.Component {
 
 const GameWrapper = styled.View`
   flex: 1;
-  margin-bottom: ${scale(10)};
   border-color: #333333;
   border-width: 1;
   border-radius: 5;
@@ -214,7 +218,7 @@ const GameWrapper = styled.View`
 
 const OwnershipMarkerWrapper = styled.View`
   position: absolute;
-  top: ${scale(-10)};
+  top: ${verticalScale(-8)};
   right: 0;
   height: ${scale(40)};
   width: ${scale(40)};
