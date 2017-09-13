@@ -22,7 +22,7 @@ const initialState = {
 
 
 // Actions
-export const TOGGLE_PLATFORM_OWNERSHIP = 'my-games/owned-game-catalogue/TOGGLE_PLATFORM_OWNERSHIP'
+export const TOGGLE_PLATFORM_OWNERSHIP = `my-games/${STATE_KEY}/TOGGLE_PLATFORM_OWNERSHIP`
 
 
 // Reducers

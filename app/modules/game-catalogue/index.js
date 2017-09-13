@@ -60,13 +60,13 @@ const initialState = {
 
 
 // Actions
-export const REQUEST_GAMES = 'my-games/game-catalogue/REQUEST_GAMES'
-export const RECEIVE_GAMES_SUCCESS = 'my-games/game-catalogue/RECEIVE_GAMES_SUCCESS'
-export const RECEIVE_GAMES_FAILURE = 'my-games/game-catalogue/RECEIVE_GAMES_FAILURE'
-export const REQUEST_GAMES_COMPLETION = 'my-games/game-catalogue/REQUEST_GAMES_COMPLETION'
-export const REQUEST_MORE_GAMES = 'my-games/game-catalogue/REQUEST_MORE_GAMES'
-export const RECEIVE_MORE_GAMES_SUCCESS = 'my-games/game-catalogue/RECEIVE_MORE_GAMES_SUCCESS'
-export const RECEIVE_MORE_GAMES_FAILURE = 'my-games/game-catalogue/RECEIVE_MORE_GAMES_FAILURE'
+export const REQUEST_GAMES = `my-games/${STATE_KEY}/REQUEST_GAMES`
+export const RECEIVE_GAMES_SUCCESS = `my-games/${STATE_KEY}/RECEIVE_GAMES_SUCCESS`
+export const RECEIVE_GAMES_FAILURE = `my-games/${STATE_KEY}/RECEIVE_GAMES_FAILURE`
+export const REQUEST_GAMES_COMPLETION = `my-games/${STATE_KEY}/REQUEST_GAMES_COMPLETION`
+export const REQUEST_MORE_GAMES = `my-games/${STATE_KEY}/REQUEST_MORE_GAMES`
+export const RECEIVE_MORE_GAMES_SUCCESS = `my-games/${STATE_KEY}/RECEIVE_MORE_GAMES_SUCCESS`
+export const RECEIVE_MORE_GAMES_FAILURE = `my-games/${STATE_KEY}/RECEIVE_MORE_GAMES_FAILURE`
 
 
 // Reducers

@@ -27,8 +27,8 @@ const initialState = {
 
 
 // Actions
-export const SHOW_GAME_DETAILS = 'my-games/game-explorer/SHOW_GAME_DETAILS'
-export const HIDE_GAME_DETAILS = 'my-games/game-explorer/HIDE_GAME_DETAILS'
+export const SHOW_GAME_DETAILS = `my-games/${STATE_KEY}/SHOW_GAME_DETAILS`
+export const HIDE_GAME_DETAILS = `my-games/${STATE_KEY}/HIDE_GAME_DETAILS`
 
 
 // Reducers

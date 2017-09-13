@@ -36,18 +36,18 @@ const initialState = {
 }
 
 // Actions
-export const START_SEARCHING = 'my-games/search-engine/START_SEARCHING'
-export const UPDATE_SEARCHTEXT = 'my-games/search-engine/UPDATE_SEARCHTEXT'
-export const REQUEST_FRANCHISES = 'my-games/search-engine/REQUEST_FRANCHISES'
-export const RECEIVE_FRANCHISES_SUCCESS = 'my-games/search-engine/RECEIVE_FRANCHISES_SUCCESS'
-export const RECEIVE_FRANCHISES_FAILURE = 'my-games/search-engine/RECEIVE_FRANCHISES_FAILURE'
-export const SELECT_FRANCHISE = 'my-games/search-engine/SELECT_FRANCHISE'
-export const SUBMIT_SEARCH = 'my-games/search-engine/SUBMIT_SEARCH'
-export const REQUEST_FRANCHISE_COMPLETION = 'my-games/search-engine/REQUEST_FRANCHISE_COMPLETION'
-export const RECEIVE_FRANCHISE_COMPLETION_SUCCESS = 'my-games/search-engine/RECEIVE_FRANCHISE_COMPLETION_SUCCESS'
-export const RECEIVE_FRANCHISE_COMPLETION_FAILURE = 'my-games/search-engine/RECEIVE_FRANCHISE_COMPLETION_FAILURE'
-export const STOP_SEARCHING = 'my-games/search-engine/STOP_SEARCHING'
-export const CLEAR_SEARCH = 'my-games/search-engine/CLEAR_SEARCH'
+export const START_SEARCHING = `my-games/${STATE_KEY}/START_SEARCHING`
+export const UPDATE_SEARCHTEXT = `my-games/${STATE_KEY}/UPDATE_SEARCHTEXT`
+export const REQUEST_FRANCHISES = `my-games/${STATE_KEY}/REQUEST_FRANCHISES`
+export const RECEIVE_FRANCHISES_SUCCESS = `my-games/${STATE_KEY}/RECEIVE_FRANCHISES_SUCCESS`
+export const RECEIVE_FRANCHISES_FAILURE = `my-games/${STATE_KEY}/RECEIVE_FRANCHISES_FAILURE`
+export const SELECT_FRANCHISE = `my-games/${STATE_KEY}/SELECT_FRANCHISE`
+export const SUBMIT_SEARCH = `my-games/${STATE_KEY}/SUBMIT_SEARCH`
+export const REQUEST_FRANCHISE_COMPLETION = `my-games/${STATE_KEY}/REQUEST_FRANCHISE_COMPLETION`
+export const RECEIVE_FRANCHISE_COMPLETION_SUCCESS = `my-games/${STATE_KEY}/RECEIVE_FRANCHISE_COMPLETION_SUCCESS`
+export const RECEIVE_FRANCHISE_COMPLETION_FAILURE = `my-games/${STATE_KEY}/RECEIVE_FRANCHISE_COMPLETION_FAILURE`
+export const STOP_SEARCHING = `my-games/${STATE_KEY}/STOP_SEARCHING`
+export const CLEAR_SEARCH = `my-games/${STATE_KEY}/CLEAR_SEARCH`
 
 // Reducers
 function searchTextReducer(

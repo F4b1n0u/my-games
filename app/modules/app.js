@@ -35,11 +35,11 @@ const initialState = {
 
 
 // Actions
-export const START_LOAD = 'my-games/app/START_LOAD'
-export const END_LOAD_SUCCESS = 'my-games/app/END_LOAD_SUCCESS'
-export const END_LOAD_FAILURE = 'my-games/app/END_LOAD_FAILURE'
-export const TOGGLE_ABOUT_DISPLAY = 'my-games/app/TOGGLE_ABOUT_DISPLAY'
-export const DISPLAY_GENERIC_ERROR = 'my-games/app/DISPLAY_GENERIC_ERROR'
+export const START_LOAD = `my-games/${STATE_KEY}/START_LOAD`
+export const END_LOAD_SUCCESS = `my-games/${STATE_KEY}/END_LOAD_SUCCESS`
+export const END_LOAD_FAILURE = `my-games/${STATE_KEY}/END_LOAD_FAILURE`
+export const TOGGLE_ABOUT_DISPLAY = `my-games/${STATE_KEY}/TOGGLE_ABOUT_DISPLAY`
+export const DISPLAY_GENERIC_ERROR = `my-games/${STATE_KEY}/DISPLAY_GENERIC_ERROR`
 
 
 // Reducers
