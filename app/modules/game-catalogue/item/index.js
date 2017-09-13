@@ -10,6 +10,11 @@ import gameReducer, {
   epic as gameEpic,
 } from '#modules/game-catalogue/item/game'
 
+
+// state key
+export const STATE_KEY = 'item'
+
+
 // State
 const initialState = {
   status: {
@@ -17,6 +22,7 @@ const initialState = {
     error: null
   },
 }
+
 
 // Actions
 
@@ -46,6 +52,7 @@ export default combineReducers({
   game: gameReducer,
   status: statusReducer,
 })
+
 
 // Action Creators
 

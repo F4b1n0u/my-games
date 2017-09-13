@@ -3,11 +3,19 @@ import _ from 'lodash'
 import { Observable } from 'rxjs/Observable'
 import { combineEpics } from 'redux-observable'
 
-import platformsReducer from '#modules/game-catalogue/item/game/platforms'
+import platformsReducer, {
+  STATE_KEY as PLATFORMS_KEY,
+} from '#modules/game-catalogue/item/game/platforms'
 import { requestGamesCompletion } from '#modules/game-catalogue'
+
+
+// state key
+export const STATE_KEY = 'game'
+
 
 // State
 const initialState = {}
+
 
 // Actions
 export const RECEIVE_GAME_SUCCESS = 'my-games/game-catalogue/RECEIVE_GAME_SUCCESS'
@@ -15,6 +23,7 @@ export const REQUEST_GAME_PARTIAL_COMPLETION = 'my-games/game-catalogue/REQUEST_
 export const REQUEST_GAME_FULL_COMPLETION = 'my-games/game-catalogue/REQUEST_GAME_FULL_COMPLETION'
 export const RECEIVE_GAME_COMPLETION_SUCCESS = 'my-games/game-catalogue/RECEIVE_GAME_COMPLETION_SUCCESS'
 export const RECEIVE_GAME_COMPLETION_FAILURE = 'my-games/game-catalogue/RECEIVE_GAME_COMPLETION_FAILURE'
+
 
 // Reducers
 export default (state = initialState, action) => {
@@ -32,7 +41,7 @@ export default (state = initialState, action) => {
           nextState,
           action.completedGame,
           {
-            platforms: platformsReducer(nextState.platforms, action),
+            [PLATFORMS_KEY]: platformsReducer(nextState.platforms, action),
           }
         )
       }
@@ -64,6 +73,7 @@ export const receiveGame = game => ({
   type: RECEIVE_GAME_SUCCESS,
   game,
 })
+
 
 // Epics
 const requestGamePartialCompletionEpic = action$ => action$

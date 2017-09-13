@@ -16,6 +16,10 @@ import {
 } from '#modules/game-catalogue/item/game'
 
 
+// state key
+export const STATE_KEY = 'gameExplorer'
+
+
 // State
 const initialState = {
   detailedGameId: null,

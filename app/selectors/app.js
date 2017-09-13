@@ -1,3 +1,5 @@
-export const isLoading = state => state.app.status.isLoading
-export const isLoaded = state => state.app.isLoaded
-export const isAboutVisible = state => state.app.isAboutVisible
+import { STATE_KEY as APP_KEY } from '#modules/app'
+
+export const isLoading = state => state[APP_KEY].status.isLoading
+export const isLoaded = state => state[APP_KEY].isLoaded
+export const isAboutVisible = state => state[APP_KEY].isAboutVisible

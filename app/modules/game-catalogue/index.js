@@ -28,12 +28,16 @@ import {
   receiveGameCompletionFailure,
 } from '#modules/game-catalogue/item/game'
 
-import { getSearchText } from '#selectors/search-engine'
-import { getNextOffset } from '#selectors/game-catalogue'
-
 import itemReducer, {
   epic as itemEpic
 } from '#modules/game-catalogue/item'
+
+import { getSearchText } from '#selectors/search-engine'
+import { getNextOffset } from '#selectors/game-catalogue'
+
+// state key
+export const STATE_KEY = 'gameCatalogue'
+
 
 // State
 const initialState = {
@@ -54,6 +58,7 @@ const initialState = {
   },
 }
 
+
 // Actions
 export const REQUEST_GAMES = 'my-games/game-catalogue/REQUEST_GAMES'
 export const RECEIVE_GAMES_SUCCESS = 'my-games/game-catalogue/RECEIVE_GAMES_SUCCESS'
@@ -63,7 +68,9 @@ export const REQUEST_MORE_GAMES = 'my-games/game-catalogue/REQUEST_MORE_GAMES'
 export const RECEIVE_MORE_GAMES_SUCCESS = 'my-games/game-catalogue/RECEIVE_MORE_GAMES_SUCCESS'
 export const RECEIVE_MORE_GAMES_FAILURE = 'my-games/game-catalogue/RECEIVE_MORE_GAMES_FAILURE'
 
+
 // Reducers
+// TODO split this reducer in dedicated modules, to finish the duck pattern 
 function listReducer(state = initialState.list, action) {
   const nextState = _.merge(
     [],
@@ -99,7 +106,7 @@ function listReducer(state = initialState.list, action) {
       return state
   }
 }
-
+// TODO split this reducer in dedicated modules, to finish the duck pattern 
 function statusReducer(state = initialState.status, action) {
   switch (action.type) {
     case REQUEST_GAMES:
@@ -121,7 +128,7 @@ function statusReducer(state = initialState.status, action) {
       return state
   }
 }
-
+// TODO split this reducer in dedicated modules, to finish the duck pattern 
 function paginationReducer(state = initialState.pagination, action) {
   switch (action.type) {
     case RECEIVE_GAMES_SUCCESS:
@@ -133,49 +140,45 @@ function paginationReducer(state = initialState.pagination, action) {
       return state
   }
 }
-
+// TODO once split, use the STATE_KEY instead
 export default combineReducers({
   list: listReducer,
   status: statusReducer,
   pagination: paginationReducer,
 })
 
+
 // Action Creators
 export const requestGames = games => ({
   type: REQUEST_GAMES,
   games,
 })
-
 export const receiveGames = (games, pagination) => ({
   type: RECEIVE_GAMES_SUCCESS,
   games,
   pagination,
 })
-
 export const receiveGamesFailure = error => ({
   type: RECEIVE_GAMES_FAILURE,
   error,
 })
-
 export const requestGamesCompletion = games => ({
   type: REQUEST_GAMES_COMPLETION,
   games,
 })
-
 export const requestMoreGames = () => ({
   type: REQUEST_MORE_GAMES,
 })
-
 export const receiveMoreGames = (games, pagination) => ({
   type: RECEIVE_MORE_GAMES_SUCCESS,
   games,
   pagination,
 })
-
 export const receiveMoreGamesFailure = error => ({
   type: RECEIVE_MORE_GAMES_FAILURE,
   error,
 })
+
 
 // Epics
 const requestGamesToStopEpic = action$ => action$
@@ -265,6 +268,7 @@ const receiveMoreGamesEpic = action$ => action$
 const receiveGamesEpic = action$ => action$
   .ofType(RECEIVE_MORE_GAMES_SUCCESS)
   .flatMap(action => action.games.map(receiveGame))
+
 
 export const epic = combineEpics(
   requestGamesToStopEpic,

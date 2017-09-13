@@ -9,11 +9,6 @@ import {
   extractPagination,
 } from '#services/giant-bomb'
 
-import { getSearchText } from '#selectors/search-engine'
-import {
-  isPending as isCataloguePending,
-} from '#selectors/game-catalogue'
-
 import {
   RECEIVE_GAMES_SUCCESS,
 
@@ -21,9 +16,12 @@ import {
   receiveGames,
 } from '#modules/game-catalogue'
 
-import {
-  getOwnedGames,
-} from '#selectors/owned-game-catalogue'
+import { getOwnedGames } from '#selectors/owned-game-catalogue'
+import { getSearchText } from '#selectors/search-engine'
+import { isPending as isCataloguePending } from '#selectors/game-catalogue'
+
+// state key
+export const STATE_KEY = 'searchEngine'
 
 
 // State

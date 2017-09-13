@@ -10,10 +10,16 @@ import { requestGames } from '#modules/game-catalogue'
 import { getSearchText } from '#selectors/search-engine'
 import { getOwnedGames } from '#selectors/owned-game-catalogue'
 
+
+// state key
+export const STATE_KEY = 'ownedGameCatalogue'
+
+
 // State
 const initialState = {
   games: {},
 }
+
 
 // Actions
 export const TOGGLE_PLATFORM_OWNERSHIP = 'my-games/owned-game-catalogue/TOGGLE_PLATFORM_OWNERSHIP'

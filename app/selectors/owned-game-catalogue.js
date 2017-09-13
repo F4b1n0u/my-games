@@ -1,9 +1,11 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 
+import { STATE_KEY as OWNED_GAME_CATALOGUE_KEY } from '#modules/owned-game-catalogue'
+import { STATE_KEY as PLATFORMS_KEY } from '#modules/game-catalogue/item/game/platforms'
 import { getGames } from '#selectors/game-catalogue'
 
-export const getOwnedGameList = state => state.ownedGameCatalogue.games
+export const getOwnedGameList = state => state[OWNED_GAME_CATALOGUE_KEY].games
 
 export const getOwnedGameIds = state => Object.keys(getOwnedGameList(state))
 
@@ -14,7 +16,7 @@ export const getOwnedGames = createSelector(
 
 export const getOwnedPlatformIds = (ownedGamesList, game) => ownedGamesList[game.id] || []
 
-export const hasOwnedGame = state => !_.isEmpty(state.ownedGameCatalogue.games)
+export const hasOwnedGame = state => !_.isEmpty(state[OWNED_GAME_CATALOGUE_KEY].games)
 
 export const isPlatformOwned = createSelector(
   [(ownedGamesList, game, platform) => ({ ownedGamesList, game, platform })],
@@ -29,7 +31,7 @@ export const isPlatformOwned = createSelector(
   }
 )
 
-export const isGameOwned = (ownedGamesList, game) => game.platforms.some(isPlatformOwned.bind(null, ownedGamesList, game))
+export const isGameOwned = (ownedGamesList, game) => game[PLATFORMS_KEY].some(isPlatformOwned.bind(null, ownedGamesList, game))
 
 export const getMarkedPlatform = (ownedGamesList, game, platform) => {
   const ownedPlatformIds = getOwnedPlatformIds(ownedGamesList, game)
@@ -53,7 +55,7 @@ export const getMarkedGame = createSelector(
       game,
       {
         isOwned,
-        platforms: game.platforms.map(getMarkedPlatform.bind(null, ownedGamesList, game))
+        [PLATFORMS_KEY]: game[PLATFORMS_KEY].map(getMarkedPlatform.bind(null, ownedGamesList, game))
       }
     )
     return markedGame

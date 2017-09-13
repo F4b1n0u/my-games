@@ -3,6 +3,11 @@ import _ from 'lodash'
 
 import { RECEIVE_GAME_COMPLETION_SUCCESS } from '#modules/game-catalogue'
 
+
+// state key
+export const STATE_KEY = 'platforms'
+
+
 // State
 const initialState = []
 
@@ -27,7 +32,7 @@ export default (
         nextState = action.completedGame.platforms
       } else {
         // platforms already here (completion level > 1)
-        nextState = action.completedGame.platforms.map((platform) => {
+        nextState = action.completedGame[STATE_KEY].map((platform) => {
           const isOwned = !!_.find(state, (currentPlatform) => {
             const isAlreadyMarked = Object.prototype.hasOwnProperty.call(currentPlatform, 'isOwned')
 

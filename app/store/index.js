@@ -5,6 +5,8 @@ import { AsyncStorage } from 'react-native'
 import devStoreConfigure from '#store/store-configure.dev'
 import prodStoreConfigure from '#store/store-configure.prod'
 
+import { STATE_KEY as OWNED_GAME_CATALOGUE_KEY } from '#modules/owned-game-catalogue'
+
 export default (initialState) => {
   const store = (process.env.NODE_ENV === 'production') ?
     prodStoreConfigure(initialState) :
@@ -14,7 +16,7 @@ export default (initialState) => {
     store,
     {
       storage: AsyncStorage,
-      whitelist: ['ownedGameCatalogue'],
+      whitelist: [OWNED_GAME_CATALOGUE_KEY],
     }
   )
 
