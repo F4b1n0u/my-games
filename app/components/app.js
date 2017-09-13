@@ -1,5 +1,5 @@
 import React from 'react'
-import { UIManager } from 'react-native'
+import { UIManager, StatusBar } from 'react-native'
 import styled from 'styled-components/native'
 import Expo, { Font } from 'expo'
 import {
@@ -28,6 +28,7 @@ export default class AppComponents extends React.Component {
   
   componentWillMount() {
     this._loadAssetsAsync()
+    StatusBar.setHidden(true)
   }
   
   _loadAssetsAsync = async () => {
@@ -123,9 +124,13 @@ const AboutIconWrapper = styled.TouchableOpacity.attrs({
   activeOpacity: 0.4,
 })`
   position: absolute;
-  top: 27;
-  left: ${scale(13)};
-  background-color: transparent;
+  top: ${verticalScale(10)};
+  left: 0;
+  background-color: transparent;  
+  width: ${scale(50)};
+  height: ${scale(33)};
+  justify-content: center;
+  align-items: center;
 `
 
 const AboutIcon = styled(Octicons).attrs({
