@@ -30,6 +30,6 @@ const Name = styled.Text.attrs({
   color: #333333;
   textAlign: center;
   fontSize: ${scale(20)};
-  width: 100%;
+  width: 80%;
   font-family: 'florentia-extralight';
 `
