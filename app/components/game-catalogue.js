@@ -1,17 +1,18 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import {
-  Dimensions,
-} from 'react-native'
+import { Dimensions, PixelRatio } from 'react-native'
+
 import GameWrapper from '#components/game-wrapper'
+
+import { verticalScale } from '#utils/dimension'
 
 const {
   height,
 } = Dimensions.get('window')
 
-const normalHeight = height / 2.3
+const normalHeight = PixelRatio.roundToNearestPixel(height / 2.3)
 // should depend of the ratio of the screen, the idea is to allow the user to have it in full screen
-const detailedHeight = height - 50
+const detailedHeight = height - verticalScale(26)
 
 export default class GameCatalogueComponent extends React.Component {
   static _keyExtractor(item) {
