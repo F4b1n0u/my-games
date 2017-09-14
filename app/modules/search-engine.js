@@ -222,7 +222,7 @@ const requestFranchisesEpic = (action$, store) => action$
         // Req G <- similar to STOP_SEARCHING here due to requestGamesToStopEpic
         // Res G
         // Res F
-        // .takeUntil(action$.ofType(STOP_SEARCHING))
+        .takeUntil(action$.ofType(STOP_SEARCHING))
         .catch(error => Observable.of(receiveFranchisesFailure(error)))
     } else {
       observable = Observable.of(receiveFranchises([]))
@@ -246,7 +246,7 @@ const requestFranchiseCompletionEpic = action$ => action$
       response.results.games,
       extractPagination(response)
     ))
-    // .takeUntil(action$.ofType(SUBMIT_SEARCH))
+    .takeUntil(action$.ofType(SUBMIT_SEARCH))
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error)))
   )
 
