@@ -3,16 +3,17 @@ import { createSelector } from 'reselect'
 
 import { STATE_KEY as GAME_CATALOGUE_KEY } from '#modules/game-catalogue'
 
-export const getList = state => state[GAME_CATALOGUE_KEY].list
+export const getEntityItems = state => state[GAME_CATALOGUE_KEY].entities.items
 
 export const getGames = createSelector(
-  [getList],
-  list => list.map(
-    item => _.merge(
+  [getEntityItems],
+  entityItems => entityItems.allIds.map(
+    id => _.merge(
       {},
-      item.game,
+      entityItems.byId[id].game,
+      // maybe could use the the preprocessing of normalizr to do that ...
       {
-        platforms: []
+        platforms: [],
       }
     )
   )
@@ -27,4 +28,4 @@ export const hasMore = state => (state[GAME_CATALOGUE_KEY].pagination.total - (s
 
 export const getNextOffset = state => state[GAME_CATALOGUE_KEY].pagination.offset + state[GAME_CATALOGUE_KEY].pagination.amount
 
-export const hasGames = state => !_.isEmpty(state[GAME_CATALOGUE_KEY].list)
+export const hasGames = state => !_.isEmpty(state[GAME_CATALOGUE_KEY].entities.items.allIds)

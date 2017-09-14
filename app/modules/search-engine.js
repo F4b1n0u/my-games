@@ -10,10 +10,9 @@ import {
 } from '#services/giant-bomb'
 
 import {
-  RECEIVE_GAMES_SUCCESS,
-
   requestGames,
   receiveGames,
+  removeAllGames,
 } from '#modules/game-catalogue'
 
 import { getOwnedGames } from '#selectors/owned-game-catalogue'
@@ -48,6 +47,7 @@ export const RECEIVE_FRANCHISE_COMPLETION_SUCCESS = `my-games/${STATE_KEY}/RECEI
 export const RECEIVE_FRANCHISE_COMPLETION_FAILURE = `my-games/${STATE_KEY}/RECEIVE_FRANCHISE_COMPLETION_FAILURE`
 export const STOP_SEARCHING = `my-games/${STATE_KEY}/STOP_SEARCHING`
 export const CLEAR_SEARCH = `my-games/${STATE_KEY}/CLEAR_SEARCH`
+export const REMOVE_ALL_FRANCHISE = `my-games/${STATE_KEY}/REMOVE_ALL_FRANCHISE`
 
 // Reducers
 function searchTextReducer(
@@ -78,8 +78,7 @@ function franchisesReducer(
     case RECEIVE_FRANCHISES_SUCCESS:
       return action.franchises
     case RECEIVE_FRANCHISES_FAILURE:
-    case STOP_SEARCHING: // maybe a hide could be better to avoid to request the api again :s
-    case RECEIVE_GAMES_SUCCESS: // to close the suggestion to be sure to see the games
+    case REMOVE_ALL_FRANCHISE: // maybe a hide could be better to avoid to request the api again :s
       return []
     default:
       return state
@@ -97,7 +96,7 @@ function franchisesStatusReducer(
         error: null,
       }
     case RECEIVE_FRANCHISES_SUCCESS:
-    case STOP_SEARCHING:
+    case REMOVE_ALL_FRANCHISE:
       return initialState.franchisesStatus
     case RECEIVE_FRANCHISES_FAILURE:
       return {
@@ -187,6 +186,10 @@ export const clearSearch = () => ({
   type: CLEAR_SEARCH,
 })
 
+export const removeAllFranchise = () => ({
+  type: REMOVE_ALL_FRANCHISE,
+})
+
 
 // Epics
 const updateSearchTextEpic = action$ => action$
@@ -233,7 +236,10 @@ const requestFranchisesEpic = (action$, store) => action$
 
 const selectFranchiseToStopEpic = action$ => action$
   .ofType(SELECT_FRANCHISE)
-  .mapTo(stopSearching())
+  .flatMap(() => [
+    stopSearching(),
+    removeAllGames(),
+  ])
 
 const selectFranchiseTofetchEpic = action$ => action$
   .ofType(SELECT_FRANCHISE)
@@ -256,22 +262,34 @@ const clearSearchEpic = (action$, store) => action$
   .flatMap(() => {
     const ownedGames = getOwnedGames(store.getState())
 
-    return Observable.of(requestGames(ownedGames))
+    return [
+      removeAllGames(),
+      stopSearching(),
+      requestGames(ownedGames),
+    ]
   })
 
 const submitSearchEpic = (action$, store) => action$
   .ofType(SUBMIT_SEARCH)
   .flatMap(() => {
-    let observable = Observable.empty()
+    const actions = [
+      removeAllGames(),
+      stopSearching(),
+    ]
 
     const searchText = getSearchText(store.getState()).trim()
 
     if (searchText) {
-      observable = Observable.of(requestGames())
+      actions.push(requestGames())
     }
 
-    return observable
+    return actions
   })
+
+const stopSearchingEpic = action$ => action$
+  .ofType(STOP_SEARCHING)
+  .mapTo(removeAllFranchise())
+
 export const epic = combineEpics(
   updateSearchTextEpic,
   requestFranchisesEpic,
@@ -279,5 +297,6 @@ export const epic = combineEpics(
   selectFranchiseTofetchEpic,
   requestFranchiseCompletionEpic,
   clearSearchEpic,
-  submitSearchEpic
+  submitSearchEpic,
+  stopSearchingEpic
 )

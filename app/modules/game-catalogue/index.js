@@ -12,14 +12,6 @@ import {
 } from '#services/giant-bomb'
 
 import {
-  // TODO use a alias action instead
-  SELECT_FRANCHISE,
-  RECEIVE_FRANCHISE_COMPLETION_FAILURE,
-
-  stopSearching,
-} from '#modules/search-engine'
-
-import {
   RECEIVE_GAME_SUCCESS,
   RECEIVE_GAME_COMPLETION_SUCCESS,
 
@@ -41,7 +33,12 @@ export const STATE_KEY = 'gameCatalogue'
 
 // State
 const initialState = {
-  list: [],
+  entities: {
+    items: {
+      byId: {},
+      allIds: []
+    }
+  },
   status: {
     pending: false,
     error: null,
@@ -67,51 +64,63 @@ export const REQUEST_GAMES_COMPLETION = `my-games/${STATE_KEY}/REQUEST_GAMES_COM
 export const REQUEST_MORE_GAMES = `my-games/${STATE_KEY}/REQUEST_MORE_GAMES`
 export const RECEIVE_MORE_GAMES_SUCCESS = `my-games/${STATE_KEY}/RECEIVE_MORE_GAMES_SUCCESS`
 export const RECEIVE_MORE_GAMES_FAILURE = `my-games/${STATE_KEY}/RECEIVE_MORE_GAMES_FAILURE`
+export const REMOVE_ALL_GAMES = `my-games/${STATE_KEY}/REMOVE_ALL_GAMES`
 
-
-// Reducers
 // TODO split this reducer in dedicated modules, to finish the duck pattern 
-function listReducer(state = initialState.list, action) {
-  const nextState = _.merge(
-    [],
-    state
-  )
-  let itemPosition
-
+function itemsByIdReducer(state = initialState.entities.items.byId, action) {
   switch (action.type) {
+    case REMOVE_ALL_GAMES:
+      return initialState.entities.items.byId
     case RECEIVE_GAME_SUCCESS:
-      return _.concat(
+      return _.merge(
+        {},
         state,
-        itemReducer(
-          initialState.item,
-          action
-        )
+        {
+          [action.game.id]: itemReducer(
+            initialState.item,
+            action
+          )
+        }
       )
     case RECEIVE_GAME_COMPLETION_SUCCESS:
-      itemPosition = _.findIndex(state, item => item.game.id === action.completedGame.id)
-      if (itemPosition >= 0) {
-        nextState[itemPosition] = itemReducer(
-          state[itemPosition],
-          action
-        )
-      }
-
-      return nextState
-    case REQUEST_GAMES:
-    case SELECT_FRANCHISE:
-      return []
-    case RECEIVE_FRANCHISE_COMPLETION_FAILURE:
-    case RECEIVE_GAMES_FAILURE:
+      return _.merge(
+        {},
+        state,
+        {
+          [action.completedGame.id]: itemReducer(
+            initialState.item,
+            action
+          )
+        }
+      )
     default:
       return state
   }
 }
+
+// TODO split this reducer in dedicated modules, to finish the duck pattern 
+function itemsAllIdsReducer(state = initialState.entities.items.allIds, action) {
+  switch (action.type) {
+    case REMOVE_ALL_GAMES:
+      return initialState.entities.items.allIds
+    case RECEIVE_GAME_SUCCESS:
+      return _.uniq(
+        _.concat(
+          state,
+          action.game.id
+        )
+      )
+    default:
+      return state
+  }
+}
+
 // TODO split this reducer in dedicated modules, to finish the duck pattern 
 function statusReducer(state = initialState.status, action) {
   switch (action.type) {
     case REQUEST_GAMES:
     case REQUEST_MORE_GAMES:
-    case SELECT_FRANCHISE:
+    case REMOVE_ALL_GAMES:
       return {
         pending: true,
         error: null,
@@ -140,9 +149,19 @@ function paginationReducer(state = initialState.pagination, action) {
       return state
   }
 }
+
+const itemsReducer = combineReducers({
+  byId: itemsByIdReducer,
+  allIds: itemsAllIdsReducer,
+})
+
+const entitiesReducer = combineReducers({
+  items: itemsReducer
+})
+
 // TODO once split, use the STATE_KEY instead
 export default combineReducers({
-  list: listReducer,
+  entities: entitiesReducer,
   status: statusReducer,
   pagination: paginationReducer,
 })
@@ -178,13 +197,11 @@ export const receiveMoreGamesFailure = error => ({
   type: RECEIVE_MORE_GAMES_FAILURE,
   error,
 })
-
+export const removeAllGames = () => ({
+  type: REMOVE_ALL_GAMES,
+})
 
 // Epics
-const requestGamesToStopEpic = action$ => action$
-  .ofType(REQUEST_GAMES)
-  .mapTo(stopSearching())
-
 const requestGamesToFetchEpic = (action$, store) => action$
   .ofType(REQUEST_GAMES)
   .switchMap((action) => {
@@ -261,17 +278,15 @@ const requestGamesCompletionEpic = action$ => action$
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
-const receiveMoreGamesEpic = action$ => action$
+const receiveGamesEpic = action$ => action$
   .ofType(RECEIVE_GAMES_SUCCESS)
   .flatMap(action => action.games.map(receiveGame))
 
-const receiveGamesEpic = action$ => action$
+const receiveMoreGamesEpic = action$ => action$
   .ofType(RECEIVE_MORE_GAMES_SUCCESS)
   .flatMap(action => action.games.map(receiveGame))
 
-
 export const epic = combineEpics(
-  requestGamesToStopEpic,
   requestGamesToFetchEpic,
   requestMoreGameEpic,
   requestGamesCompletionEpic,

@@ -27,28 +27,19 @@ export const RECEIVE_GAME_COMPLETION_FAILURE = `my-games/${STATE_KEY}/RECEIVE_GA
 
 // Reducers
 export default (state = initialState, action) => {
-  const nextState = _.merge(
-    {},
-    state
-  )
-
   switch (action.type) {
     case RECEIVE_GAME_SUCCESS:
       return action.game
     case RECEIVE_GAME_COMPLETION_SUCCESS:
-      if (action.completedGame.id === state.id) {
-        _.merge(
-          nextState,
-          action.completedGame,
-          {
-            [PLATFORMS_KEY]: platformsReducer(nextState.platforms, action),
-          }
-        )
-      }
-
-      return nextState
+      return _.merge(
+        {},
+        action.completedGame,
+        {
+          [PLATFORMS_KEY]: platformsReducer(state.platforms, action),
+        }
+      )
     default:
-      return nextState
+      return state
   }
 }
 

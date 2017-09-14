@@ -168,8 +168,6 @@ const SlideShow = styled(Carousel).attrs({
   slideHeight,
   itemWidth,
   inactiveSlideScale: 1,
-  dotsLength: 4,
-  activeDotIndex: 1,
 })`
   width: 100%;
 `
