@@ -128,7 +128,7 @@ const AboutIconWrapper = styled.TouchableOpacity.attrs({
   left: 0;
   background-color: transparent;  
   width: ${scale(50)};
-  height: ${scale(33)};
+  height: ${verticalScale(37)};
   justify-content: center;
   align-items: center;
 `
