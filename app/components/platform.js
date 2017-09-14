@@ -36,10 +36,7 @@ const Icon = styled(Ionicons).attrs({
   name: 'ios-game-controller-b-outline',
 })`
   opacity:    ${props => props.isOwned ? '1' : '0.5'};
-  font-size:  ${props => {
-    console.log(props)
-    return scale(props.iconFontSize)
-  }};
+  font-size:  ${props => scale(props.iconFontSize)};
   color:      ${props => props.isDetailed ? '#000000' : '#fafafa'};
 `
 
