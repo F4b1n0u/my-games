@@ -1,12 +1,17 @@
 import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components/native'
+import { LayoutAnimation } from 'react-native'
 
 import FranchiseComponent from '#components/franchise'
 
 import { scale } from '#utils/dimension'
 
 export default class FranchiseListComponent extends React.Component {
+  componentWillReceiveProps() {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+  }
+
   _handlePressItem = (item) => {
     const {
       selectFranchise,
