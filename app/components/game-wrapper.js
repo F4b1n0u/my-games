@@ -3,7 +3,7 @@ import React from 'react'
 import { BlurView } from 'expo'
 import styled from 'styled-components/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { Animated, Easing } from 'react-native'
+import { Animated, Easing, LayoutAnimation } from 'react-native'
 
 import CompleteDetailedGame from '#components/complete-detailed-game'
 import CompleteNotDetailedGame from '#components/complete-not-detailed-game'
@@ -23,6 +23,10 @@ export default class GameWrapperComponent extends React.Component {
     normalMargin: scale(10),
     detailedMargin : scale(5),
   };
+
+  componentWillReceiveProps() {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+  }
 
   componentWillMount() {
     const {
