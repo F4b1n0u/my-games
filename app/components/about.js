@@ -62,17 +62,17 @@ export default class BlurViewExample extends React.Component {
               {'About'}
             </Title>
             <Paragraph>
-              {'This app is designed and developed by:\n\nFabien BEHIER\n'}
+              {'This app is designed and developed by:\n\nFabien Behier\n'}
             </Paragraph>
             <Paragraph>
               {'the source code is available on github at:\nhttps://github.com/F4b1n0u/my-games'}
             </Paragraph>
             <Paragraph>
-              {'the data source is powerded by:'}
+              {'the data source is powered by:'}
             </Paragraph>
             <GiantBombLogo />
             <Paragraph>
-              {'hoping you will like it\n(*^_^*)'}
+              {'hope you like it!\n(*^_^*)'}
             </Paragraph>
             <Version>
               {`version: ${version}`}

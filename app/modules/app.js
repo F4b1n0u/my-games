@@ -140,8 +140,8 @@ const displayGenericErrorEpic = action$ => action$
   .ofType(DISPLAY_GENERIC_ERROR)
   .mergeMap(() => {
     Alert.alert(
-      'Something went wrong',
-      'Oops, apparently something didn\'t end up very well\n can you please, try later ?',
+      'Oops !!',
+      'it looks like something \nwent wrong :/\nmaybe try later?',
       {
         cancelable: true,
       }
