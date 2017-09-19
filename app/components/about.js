@@ -1,46 +1,98 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import { BlurView } from 'expo'
+import { Animated } from 'react-native'
+
+import { version } from '../../package.json'
 
 import ProgressiveImage from '#components/progressive-image'
 
 import { scale, verticalScale } from '#utils/dimension'
 
 
-import {
-  version,
-} from '../../package.json'
-export default ({
-  style,
-  toggleAboutDisplay,
-}) => (
-  <Overlay
-    onPress={toggleAboutDisplay}
-  >
-    <About
-      style={style}
-    >
-      <Title>
-        {'About'}
-      </Title>
-      <Paragraph>
-        {'This app is designed and developed by:\n\nFabien BEHIER\n'}
-      </Paragraph>
-      <Paragraph>
-        {'the source code is available on github at:\nhttps://github.com/F4b1n0u/my-games'}
-      </Paragraph>
-      <Paragraph>
-        {'the data source is powerded by:'}
-      </Paragraph>
-      <GiantBombLogo />
-      <Paragraph>
-        {'hoping you will like it\n(*^_^*)'}
-      </Paragraph>
-      <Version>
-        {`version: ${version}`}
-      </Version>
-    </About>
-  </Overlay>
-)
+export default class BlurViewExample extends React.Component {
+  state = {
+    animationProgress: new Animated.Value(0),
+  }
+
+  componentDidMount() {
+    this._animate()
+  }
+
+  _animate = () => {
+    let {
+      animationProgress
+    } = this.state;
+
+    Animated.timing(
+      animationProgress,
+      {
+        duration: 250,
+        toValue: 1
+      }
+    ).start()
+  }
+
+  render() {
+    const {
+      style,
+      toggleAboutDisplay,
+    } = this.props
+
+    const {
+      animationProgress,
+    } = this.state
+
+    const intensityProgress = animationProgress.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 100],
+    })
+
+    return (
+      <Background
+        intensity={intensityProgress}
+      >
+        <Overlay
+          onPress={toggleAboutDisplay}
+        >
+          <About
+            style={style}
+          >
+            <Title>
+              {'About'}
+            </Title>
+            <Paragraph>
+              {'This app is designed and developed by:\n\nFabien BEHIER\n'}
+            </Paragraph>
+            <Paragraph>
+              {'the source code is available on github at:\nhttps://github.com/F4b1n0u/my-games'}
+            </Paragraph>
+            <Paragraph>
+              {'the data source is powerded by:'}
+            </Paragraph>
+            <GiantBombLogo />
+            <Paragraph>
+              {'hoping you will like it\n(*^_^*)'}
+            </Paragraph>
+            <Version>
+              {`version: ${version}`}
+            </Version>
+          </About>
+        </Overlay>
+      </Background>
+    )
+  }
+} 
+
+const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
+
+const Background = styled(AnimatedBlurView)`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+`
 
 const Overlay = styled.TouchableOpacity.attrs({
   activeOpacity: 1,
@@ -92,7 +144,6 @@ const GiantBombLogo = styled(ProgressiveImage).attrs({
   height: ${verticalScale(150)};
   width: ${scale(300)};
 `
-
 
 const Version = styled.Text`
   margin-top: ${scale(10)};
