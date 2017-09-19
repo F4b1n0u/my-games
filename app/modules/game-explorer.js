@@ -97,7 +97,7 @@ const showGameDetailsEpic = action$ => action$
 const requestGameFullCompletionEpic = action$ => action$
   .ofType(REQUEST_GAME_FULL_COMPLETION)
   .mergeMap(action => fetchFullGame(action.game)
-    .mergeMap(response => receiveGameCompletion(response.results))
+    .mergeMap(response => Observable.of(receiveGameCompletion(response.results)))
     .takeUntil(action$.ofType(HIDE_GAME_DETAILS))
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
