@@ -78,7 +78,6 @@ export default class SearchEngineComponent extends React.Component {
               keyboardShouldPersistTaps={false}
               placeholder="type a name"
               ref={(ref) => { this._searchInput = ref }}
-              selectTextOnFocus
               value={searchText}
 
               onChangeText={updateSearchText}
