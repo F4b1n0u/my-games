@@ -270,7 +270,7 @@ const requestGamesCompletionEpic = action$ => action$
     .mergeMap(response => Observable.from(response.results))
     .mergeMap(game => Observable.of(receiveGameCompletion(game)))
     .takeUntil(action$.ofType(REQUEST_GAMES))
-    // .catch(error => Observable.of(receiveGameCompletionFailure(error)))
+    .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
 const receiveGamesEpic = action$ => action$

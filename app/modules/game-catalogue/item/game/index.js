@@ -70,8 +70,8 @@ export const receiveGame = game => ({
 const requestGamePartialCompletionEpic = action$ => action$
   .ofType(REQUEST_GAME_PARTIAL_COMPLETION)
   .bufferTime(1000)
-  .switchMap((requests) => {
-    const games = requests.map(request => request.game)
+  .map(requests => requests.map(request => request.game))
+  .mergeMap((games) => {
     let observable = Observable.empty()
 
     if (!_.isEmpty(games)) {
@@ -80,8 +80,6 @@ const requestGamePartialCompletionEpic = action$ => action$
 
     return observable
   })
-
-
 export const epic = combineEpics(
   requestGamePartialCompletionEpic
 )
