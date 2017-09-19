@@ -219,7 +219,7 @@ const GameWrapper = styled.View`
 
 const OwnershipMarkerWrapper = styled.View`
   position: absolute;
-  top: ${verticalScale(-8)};
+  top: ${verticalScale(-10)};
   right: ${scale(-3)};
   height: ${scale(40)};
   width: ${scale(40)};
@@ -240,4 +240,7 @@ const OwnershipMarkerIcon = styled(MaterialCommunityIcons).attrs({
 })`
   font-size: ${scale(40)};
   color: #eb2b36;
+  text-shadow-color: #333333;
+  text-shadow-offset: 1px 1px;
+  text-shadow-radius: 2
 `
