@@ -213,7 +213,7 @@ const requestGamesToFetchEpic = (action$, store) => action$
           response.results,
           extractPagination(response)
         ))
-        // .takeUntil(action$.ofType(REQUEST_FRANCHISES))
+        .takeUntil(action$.ofType(REQUEST_GAMES))
         .catch(error => Observable.of(receiveGamesFailure(error)))
     } else {
       const searchText = getSearchText(store.getState()).trim()
@@ -264,17 +264,12 @@ const requestMoreGameEpic = (action$, store) => action$
     return observable
   })
 
-// TODO maybe a proper action like DISPLAY_OWNED_GAMES, could be better
-// because this action could be reused coule of times
-// clear search, search for en empty string, etc
 const requestGamesCompletionEpic = action$ => action$
   .ofType(REQUEST_GAMES_COMPLETION)
   .switchMap(action => fetchGamesByBulk(action.games)
-    // no need of an observable Oo
-
     // TODO is it really a receiveGameCompletion I need to do here and not a simple receiveGames ??
     .flatMap(response => response.results.map(receiveGameCompletion))
-    // .takeUntil(action$.ofType(REQUEST_FRANCHISES))
+    .takeUntil(action$.ofType(REQUEST_GAMES))
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
