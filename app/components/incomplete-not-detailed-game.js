@@ -7,6 +7,7 @@ export default ({
   name,
 }) => (
   <Game>
+    <Spinner />
     <Name>
       {name}
     </Name>
@@ -21,6 +22,12 @@ const Game = styled.View`
   justify-content: center;
   align-items: center;
 `
+
+const Spinner = styled.ActivityIndicator.attrs({
+  animating: true,
+  size: 'large',
+})``
+
 
 const Name = styled.Text.attrs({
   numberOfLines: 3,
