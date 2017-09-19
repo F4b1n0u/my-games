@@ -14,7 +14,9 @@ export const getOwnedGames = createSelector(
   ownedGameIds => ownedGameIds.map(id => ({ id }))
 )
 
-export const getOwnedPlatformIds = (ownedGamesList, game) => ownedGamesList[game.id] || []
+export const getOwnedPlatformIds = (ownedGamesList, game) => {
+  return ownedGamesList[game.id] || []
+}
 
 export const hasOwnedGame = state => !_.isEmpty(state[OWNED_GAME_CATALOGUE_KEY].games)
 
@@ -31,7 +33,9 @@ export const isPlatformOwned = createSelector(
   }
 )
 
-export const isGameOwned = (ownedGamesList, game) => game[PLATFORMS_KEY].some(isPlatformOwned.bind(null, ownedGamesList, game))
+export const isGameOwned = (ownedGamesList, game) => {
+  return game[PLATFORMS_KEY].some(isPlatformOwned.bind(null, ownedGamesList, game))
+}
 
 export const getMarkedPlatform = (ownedGamesList, game, platform) => {
   const ownedPlatformIds = getOwnedPlatformIds(ownedGamesList, game)

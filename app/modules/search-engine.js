@@ -9,9 +9,7 @@ import {
   extractPagination,
 } from '#services/giant-bomb'
 
-import {
-  displayAnyGames,
-} from '#modules/game-explorer'
+import { displayAnyGames } from '#modules/game-explorer'
 
 import {
   requestGames,

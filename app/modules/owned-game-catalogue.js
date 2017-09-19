@@ -1,7 +1,11 @@
 import 'rxjs'
 import _ from 'lodash'
+import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
+
+import { displayAnyGames } from '#modules/game-explorer'
+import { getOwnedGameList, isGameOwned } from '#selectors/owned-game-catalogue'
 
 // state key
 export const STATE_KEY = 'ownedGameCatalogue'
@@ -72,4 +76,20 @@ export const togglePlatformOwnership = (game, platform) => ({
 
 
 // Epics
-export const epic = combineEpics()
+const togglePlatformOwnershipEpic = (action$, store) => action$
+  .ofType(TOGGLE_PLATFORM_OWNERSHIP)
+  .flatMap((action) => {
+    let sideEffect = Observable.empty()
+    const state = store.getState()
+    const ownedGameList = getOwnedGameList(state)
+
+    if (!isGameOwned(ownedGameList, action.game)) {
+      sideEffect = Observable.of(displayAnyGames())
+    }
+
+    return sideEffect
+  })
+
+export const epic = combineEpics(
+  togglePlatformOwnershipEpic
+)
