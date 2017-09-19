@@ -84,7 +84,7 @@ export const displayAnyGames = () => ({
 // Epics
 const showGameDetailsEpic = action$ => action$
   .ofType(SHOW_GAME_DETAILS)
-  .flatMap((action) => {
+  .mergeMap((action) => {
     let observable = Observable.empty()
 
     if (action.detailedGame.completionLevel < 3) {
@@ -96,15 +96,15 @@ const showGameDetailsEpic = action$ => action$
 
 const requestGameFullCompletionEpic = action$ => action$
   .ofType(REQUEST_GAME_FULL_COMPLETION)
-  .switchMap(action => fetchFullGame(action.game)
-    .map(response => receiveGameCompletion(response.results))
+  .mergeMap(action => fetchFullGame(action.game)
+    .mergeMap(response => receiveGameCompletion(response.results))
     .takeUntil(action$.ofType(HIDE_GAME_DETAILS))
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
 const displayOnlyOwnedGamesEpic = (action$, store) => action$
   .ofType(DISPLAY_ONLY_OWNED_GAMES)
-  .flatMap(() => {
+  .mergeMap(() => {
     const state = store.getState()
     const ownedGames = getOwnedGames(state)
 

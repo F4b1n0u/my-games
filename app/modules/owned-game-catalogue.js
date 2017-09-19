@@ -78,7 +78,7 @@ export const togglePlatformOwnership = (game, platform) => ({
 // Epics
 const togglePlatformOwnershipEpic = (action$, store) => action$
   .ofType(TOGGLE_PLATFORM_OWNERSHIP)
-  .flatMap((action) => {
+  .mergeMap((action) => {
     let sideEffect = Observable.empty()
     const state = store.getState()
     const ownedGameList = getOwnedGameList(state)

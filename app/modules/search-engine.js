@@ -229,7 +229,7 @@ const requestFranchisesEpic = (action$, store) => action$
 
     if (!isPending && searchText) {
       observable = fetchFranchises(searchText)
-        .map(response => receiveFranchises(response.results))
+        .mergeMap(response => Observable.of(receiveFranchises(response.results)))
         // check if a request game is pending
         // Req F
         // Req G <- similar to STOP_SEARCHING here due to requestGamesToStopEpic
@@ -246,7 +246,7 @@ const requestFranchisesEpic = (action$, store) => action$
 
 const selectFranchiseEpic = action$ => action$
   .ofType(SELECT_FRANCHISE)
-  .flatMap(action => [
+  .mergeMap(action => [
     stopSearching(),
     removeAllGames(),
     displayAnyGames(),
@@ -257,17 +257,17 @@ const selectFranchiseEpic = action$ => action$
 const requestFranchiseCompletionEpic = action$ => action$
   .ofType(REQUEST_FRANCHISE_COMPLETION)
   .mergeMap(action => fetchFranchiseCompletion(action.selectedFranchise)
-    .map(response => receiveGames(
+    .mergeMap(response => Observable.of(receiveGames(
       response.results.games,
       extractPagination(response)
-    ))
+    )))
     .takeUntil(action$.ofType(SUBMIT_SEARCH))
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error)))
   )
 
 const submitSearchEpic = (action$, store) => action$
   .ofType(SUBMIT_SEARCH)
-  .flatMap(() => {
+  .mergeMap(() => {
     const actions = [
       stopSearching(),
     ]
@@ -283,6 +283,14 @@ const submitSearchEpic = (action$, store) => action$
     return actions
   })
 
+const clearSearchEpic = action$ => action$
+  .ofType(CLEAR_SEARCH)
+  .mapTo(updateSearchText(''))
+
+const startSearchingEpic = action$ => action$
+  .ofType(START_SEARCHING)
+  .mapTo(requestFranchises())
+
 const stopSearchingEpic = action$ => action$
   .ofType(STOP_SEARCHING)
   .mapTo(removeAllFranchise())
@@ -293,5 +301,7 @@ export const epic = combineEpics(
   selectFranchiseEpic,
   requestFranchiseCompletionEpic,
   submitSearchEpic,
+  clearSearchEpic,
+  startSearchingEpic,
   stopSearchingEpic
 )

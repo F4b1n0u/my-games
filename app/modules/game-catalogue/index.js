@@ -204,15 +204,15 @@ export const removeAllGames = () => ({
 // Epics
 const requestGamesToFetchEpic = (action$, store) => action$
   .ofType(REQUEST_GAMES)
-  .switchMap((action) => {
+  .mergeMap((action) => {
     let observable
 
     if (action.games) {
       observable = fetchGamesByBulk(action.games)
-        .map(response => receiveGames(
+        .mergeMap(response => Observable.of(receiveGames(
           response.results,
           extractPagination(response)
-        ))
+        )))
         .takeUntil(action$.ofType(REQUEST_GAMES))
         .catch(error => Observable.of(receiveGamesFailure(error)))
     } else {
@@ -220,10 +220,10 @@ const requestGamesToFetchEpic = (action$, store) => action$
 
       if (searchText) {
         observable = fetchGamesBySearch(searchText)
-          .map(response => receiveGames(
+          .mergeMap(response => Observable.of(receiveGames(
             response.results,
             extractPagination(response)
-          ))
+          )))
           .catch(error => Observable.of(receiveGamesFailure(error)))
       } else {
         observable = Observable.of(receiveGames(
@@ -238,7 +238,7 @@ const requestGamesToFetchEpic = (action$, store) => action$
 
 const requestMoreGameEpic = (action$, store) => action$
   .ofType(REQUEST_MORE_GAMES)
-  .switchMap(() => {
+  .mergeMap(() => {
     const state = store.getState()
     const searchText = getSearchText(state)
     const offset = getNextOffset(state)
@@ -249,10 +249,10 @@ const requestMoreGameEpic = (action$, store) => action$
       observable = fetchGamesBySearch(searchText, {
         offset,
       })
-        .map(response => receiveMoreGames(
+        .mergeMap(response => Observable.of(receiveMoreGames(
           response.results,
           extractPagination(response)
-        ))
+        )))
         .catch(error => Observable.of(receiveMoreGamesFailure(error)))
     } else {
       observable = Observable.of(
@@ -266,20 +266,23 @@ const requestMoreGameEpic = (action$, store) => action$
 
 const requestGamesCompletionEpic = action$ => action$
   .ofType(REQUEST_GAMES_COMPLETION)
-  .switchMap(action => fetchGamesByBulk(action.games)
-    // TODO is it really a receiveGameCompletion I need to do here and not a simple receiveGames ??
-    .flatMap(response => response.results.map(receiveGameCompletion))
+  .mergeMap(action => fetchGamesByBulk(action.games)
+    .mergeMap(response => Observable.from(response.results))
+    .mergeMap(game => Observable.of(receiveGameCompletion(game)))
     .takeUntil(action$.ofType(REQUEST_GAMES))
-    .catch(error => Observable.of(receiveGameCompletionFailure(error)))
+    // .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
 const receiveGamesEpic = action$ => action$
   .ofType(RECEIVE_GAMES_SUCCESS)
-  .flatMap(action => action.games.map(receiveGame))
+  .mergeMap(action => Observable.from(action.games))
+  .mergeMap(game => Observable.of(receiveGame(game)))
 
 const receiveMoreGamesEpic = action$ => action$
   .ofType(RECEIVE_MORE_GAMES_SUCCESS)
-  .flatMap(action => action.games.map(receiveGame))
+  .mergeMap(action => Observable.from(action.games))
+  .mergeMap(game => Observable.of(receiveGame(game)))
+
 
 export const epic = combineEpics(
   requestGamesToFetchEpic,
