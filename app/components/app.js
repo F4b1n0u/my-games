@@ -21,7 +21,6 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
 }
 
 export default class AppComponents extends React.Component {
-  
   constructor(props) {
     super(props)
   }

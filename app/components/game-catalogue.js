@@ -122,7 +122,6 @@ const GameCatalogue = styled.FlatList`
   background-color: transparent;
 `
 
-// TODO extract the style from the wrapper because it have sense only in the list context
 const Game = styled(GameWrapper)`
   border-color: #333333;
   border-width: 1;
@@ -131,7 +130,7 @@ const Game = styled(GameWrapper)`
 `
 
 const Footer = styled.View`
-  padding-vertical: 20;
+  padding-vertical: 30;
 `
 
 const Spinner = styled.ActivityIndicator.attrs({
