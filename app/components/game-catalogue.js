@@ -11,7 +11,7 @@ const {
 } = Dimensions.get('window')
 
 const normalHeight = PixelRatio.roundToNearestPixel(height / 2.3)
-const detailedHeight = height // minus height of the status bar + pixel a marge
+const detailedHeight = height - verticalScale(45) // minus height of the status bar + pixel a marge
 
 export default class GameCatalogueComponent extends React.Component {
   static _keyExtractor(item) {

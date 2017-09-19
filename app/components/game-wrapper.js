@@ -21,7 +21,7 @@ export default class GameWrapperComponent extends React.Component {
 
   static defaultProps = {
     normalMargin: scale(10),
-    detailedMargin : scale(2),
+    detailedMargin : scale(5),
   };
 
   componentWillMount() {

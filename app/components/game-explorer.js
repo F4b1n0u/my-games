@@ -64,7 +64,7 @@ const GameCatalogue = styled(GameCatalogueComponent)`
   overflow: visible;
   bottom: 0;
   width: 100%;
-  margin-top: ${props => props.hasDetailedGame ? verticalScale(5) : verticalScale(55)};
+  margin-top: ${props => props.hasDetailedGame ? verticalScale(30) : verticalScale(55)};
 `
 
 const NoGamesYet = styled(NoGamesYetComponent)`
