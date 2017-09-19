@@ -13,11 +13,9 @@ import {
   RECEIVE_GAMES_FAILURE,
   RECEIVE_GAME_COMPLETION_FAILURE,
   RECEIVE_MORE_GAMES_FAILURE,
-
-  requestGames,
 } from '#modules/game-catalogue'
 
-import { getOwnedGames } from '#selectors/owned-game-catalogue'
+import { displayOnlyOwnedGames } from '#modules/game-explorer'
 
 // state key
 export const STATE_KEY = 'app'
@@ -152,13 +150,9 @@ const displayGenericErrorEpic = action$ => action$
     return Observable.empty()
   })
 
-const appEndLoadEpic = (action$, store) => action$
+const appEndLoadEpic = action$ => action$
   .ofType(END_LOAD_SUCCESS)
-  .flatMap(() => {
-    const ownedGames = getOwnedGames(store.getState())
-
-    return Observable.of(requestGames(ownedGames))
-  })
+  .mapTo(displayOnlyOwnedGames())
 
 export const epic = combineEpics(
   receiveFranchiseErrorEpic,

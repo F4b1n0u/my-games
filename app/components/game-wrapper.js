@@ -3,10 +3,7 @@ import React from 'react'
 import { BlurView } from 'expo'
 import styled from 'styled-components/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import {
-  Animated,
-  Easing,
-} from 'react-native'
+import { Animated, Easing } from 'react-native'
 
 import CompleteDetailedGame from '#components/complete-detailed-game'
 import CompleteNotDetailedGame from '#components/complete-not-detailed-game'
@@ -149,7 +146,6 @@ export default class GameWrapperComponent extends React.Component {
   render() {
     const {
       completionLevel,
-      hasDetailedGame,
       isDetailed,
       isOwned,
       style,
@@ -196,7 +192,7 @@ export default class GameWrapperComponent extends React.Component {
           isOwned
            ? (
             <OwnershipMarkerWrapper>
-              <OwnershipMarker />
+              <OwnershipMarkerIcon />
               <OwnershipMarkerCheck />
             </OwnershipMarkerWrapper>
           ) : (
@@ -220,7 +216,7 @@ const GameWrapper = styled.View`
 const OwnershipMarkerWrapper = styled.View`
   position: absolute;
   top: ${verticalScale(-8)};
-  right: 0;
+  right: ${scale(-3)};
   height: ${scale(40)};
   width: ${scale(40)};
 `
@@ -235,7 +231,7 @@ const OwnershipMarkerCheck = styled(MaterialCommunityIcons).attrs({
   color: #ffffff;
 `
 
-const OwnershipMarker = styled(MaterialCommunityIcons).attrs({
+const OwnershipMarkerIcon = styled(MaterialCommunityIcons).attrs({
   name: 'bookmark'
 })`
   font-size: ${scale(40)};

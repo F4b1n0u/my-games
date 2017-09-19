@@ -1,15 +1,7 @@
 import 'rxjs'
 import _ from 'lodash'
-import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
-
-import { SUBMIT_SEARCH } from '#modules/search-engine'
-import { requestGames } from '#modules/game-catalogue'
-
-import { getSearchText } from '#selectors/search-engine'
-import { getOwnedGames } from '#selectors/owned-game-catalogue'
-
 
 // state key
 export const STATE_KEY = 'ownedGameCatalogue'
@@ -18,6 +10,7 @@ export const STATE_KEY = 'ownedGameCatalogue'
 // State
 const initialState = {
   games: {},
+  isDisplayingOnlyOwnedGame: true,
 }
 
 
@@ -26,10 +19,7 @@ export const TOGGLE_PLATFORM_OWNERSHIP = `my-games/${STATE_KEY}/TOGGLE_PLATFORM_
 
 
 // Reducers
-function gamesReducer(
-  state = initialState.games,
-  action
-) {
+function gamesReducer(state = initialState.games, action) {
   const nextState = _.merge(
     {},
     state
@@ -67,6 +57,7 @@ function gamesReducer(
   }
 }
 
+
 export default combineReducers({
   games: gamesReducer,
 })
@@ -81,23 +72,4 @@ export const togglePlatformOwnership = (game, platform) => ({
 
 
 // Epics
-const submitSearchEpic = (action$, store) => action$
-  .ofType(SUBMIT_SEARCH)
-  .flatMap(() => {
-    let observable = Observable.empty()
-
-    const state = store.getState()
-
-    const searchText = getSearchText(state).trim()
-
-    if (!searchText) {
-      const ownedGames = getOwnedGames(state)
-      observable = Observable.of(requestGames(ownedGames))
-    }
-
-    return observable
-  })
-
-export const epic = combineEpics(
-  submitSearchEpic
-)
+export const epic = combineEpics()

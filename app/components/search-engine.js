@@ -54,13 +54,12 @@ export default class SearchEngineComponent extends React.Component {
   render() {
     const {
       searchText,
-      hasDetailedGame,
       updateSearchText,
       isFranchisesPending,
       style,
     } = this.props
 
-    return (!hasDetailedGame) ? (
+    return (
       <Mask>
         <SearchEngine
           style={style}
@@ -104,7 +103,7 @@ export default class SearchEngineComponent extends React.Component {
           />
         </SearchEngine>
       </Mask>
-    ) : null
+    )
   }
 }
 
@@ -120,13 +119,15 @@ const ClearSearch = styled.TouchableOpacity.attrs({
   right: ${scale(1)};
   height: ${verticalScale(28)};
   width: ${verticalScale(28)};
+  justify-content: center;
+  align-items: center;
 `
 
 const ClearSearchIcon = styled(MaterialIcons).attrs({
-  name: 'delete-forever',
+  name: 'cancel',
 })`
   color: #333333;
-  font-size: ${verticalScale(28)};
+  font-size: ${verticalScale(20)};
 `
 
 const TextInputWrapper = styled.View`
@@ -159,7 +160,7 @@ const Spinner = styled.ActivityIndicator.attrs({
 `
 
 const Mask = styled(LinearGradient).attrs({
-  colors: ['#fafafad0', '#fafafaa0', '#fafafa00'],
+  colors: ['#fafafad0', '#fafafad0', '#fafafaa0', '#fafafa00'],
 })`
   position: absolute;
   top: 0;

@@ -10,12 +10,15 @@ import {
 } from '#services/giant-bomb'
 
 import {
+  displayAnyGames,
+} from '#modules/game-explorer'
+
+import {
   requestGames,
   receiveGames,
   removeAllGames,
 } from '#modules/game-catalogue'
 
-import { getOwnedGames } from '#selectors/owned-game-catalogue'
 import { getSearchText } from '#selectors/search-engine'
 import { isPending as isCataloguePending } from '#selectors/game-catalogue'
 
@@ -234,16 +237,15 @@ const requestFranchisesEpic = (action$, store) => action$
     return observable
   })
 
-const selectFranchiseToStopEpic = action$ => action$
+const selectFranchiseEpic = action$ => action$
   .ofType(SELECT_FRANCHISE)
-  .flatMap(() => [
+  .flatMap(action => [
     stopSearching(),
     removeAllGames(),
+    displayAnyGames(),
+    // TODO not very clear, maybe something like requestGameFromFranchise could make more sense
+    requestFranchiseCompletion(action.selectedFranchise)
   ])
-
-const selectFranchiseTofetchEpic = action$ => action$
-  .ofType(SELECT_FRANCHISE)
-  .flatMap(action => Observable.of(requestFranchiseCompletion(action.selectedFranchise)))
 
 const requestFranchiseCompletionEpic = action$ => action$
   .ofType(REQUEST_FRANCHISE_COMPLETION)
@@ -256,30 +258,24 @@ const requestFranchiseCompletionEpic = action$ => action$
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error)))
   )
 
-// TODO check when we stop to search, if the search is empty then we display owned games
-const clearSearchEpic = (action$, store) => action$
+const clearSearchEpic = action$ => action$
   .ofType(CLEAR_SEARCH)
-  .flatMap(() => {
-    const ownedGames = getOwnedGames(store.getState())
-
-    return [
-      removeAllGames(),
-      stopSearching(),
-      requestGames(ownedGames),
-    ]
-  })
+  .flatMap(() => [
+    stopSearching(),
+  ])
 
 const submitSearchEpic = (action$, store) => action$
   .ofType(SUBMIT_SEARCH)
   .flatMap(() => {
     const actions = [
-      removeAllGames(),
       stopSearching(),
     ]
 
     const searchText = getSearchText(store.getState()).trim()
 
     if (searchText) {
+      actions.push(removeAllGames())
+      actions.push(displayAnyGames())
       actions.push(requestGames())
     }
 
@@ -293,8 +289,7 @@ const stopSearchingEpic = action$ => action$
 export const epic = combineEpics(
   updateSearchTextEpic,
   requestFranchisesEpic,
-  selectFranchiseToStopEpic,
-  selectFranchiseTofetchEpic,
+  selectFranchiseEpic,
   requestFranchiseCompletionEpic,
   clearSearchEpic,
   submitSearchEpic,

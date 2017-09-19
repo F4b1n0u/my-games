@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import SearchEngineContainer from '#containers/search-engine'
 import GameCatalogueComponent from '#components/game-catalogue'
@@ -24,7 +25,28 @@ export default props => (
       )
     }
 
-    <SearchEngine />
+    {
+      props.hasDetailedGame ? (
+        null
+      ) : (
+        <SearchEngine />
+      )
+    }
+
+    {
+      props.hasDetailedGame ? (
+        null
+      ) : (
+        <OwnershipFilterWrapper
+          onPress={props.displayOnlyOwnedGame}
+        >
+          <OwnershipFilterIcon
+            isActive={props.isDisplayingOnlyOwnedGames}
+          />
+          <OwnershipFilterCheck />
+        </OwnershipFilterWrapper>
+      )
+    }
   </GameExplorer>
 )
 
@@ -68,4 +90,34 @@ const SearchEngine = styled(SearchEngineContainer)`
   overflow: hidden;
   padding-vertical: 2;
   padding-horizontal: 2;
+`
+
+const OwnershipFilterWrapper = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.4,
+})`
+  position: absolute;
+  top: ${verticalScale(12)};
+  right: ${scale(2)};
+  background-color: transparent;  
+  width: ${scale(50)};
+  height: ${verticalScale(37)};
+  justify-content: center;
+  align-items: center;
+`
+
+const OwnershipFilterCheck = styled(MaterialCommunityIcons).attrs({
+  name: 'check'
+})`
+  position: absolute;
+  top: ${scale(3)};
+  right: ${scale(15)};
+  font-size: ${scale(20)};
+  color: #fafafa;
+`
+
+const OwnershipFilterIcon = styled(MaterialCommunityIcons).attrs({
+  name: 'bookmark',
+})`
+  font-size: ${scale(40)};
+  color: ${props => props.isActive ? '#eb2b36' : '#33333350'};
 `

@@ -3,9 +3,12 @@ import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
 
-import {
-  fetchFullGame,
-} from '#services/giant-bomb'
+import { fetchFullGame } from '#services/giant-bomb'
+
+import { getOwnedGames } from '#selectors/owned-game-catalogue'
+
+import { requestGames, removeAllGames } from '#modules/game-catalogue'
+import { clearSearch } from '#modules/search-engine'
 
 import {
   REQUEST_GAME_FULL_COMPLETION,
@@ -23,19 +26,18 @@ export const STATE_KEY = 'gameExplorer'
 // State
 const initialState = {
   detailedGameId: null,
+  isDisplayingOnlyOwnedGames: false,
 }
 
 
 // Actions
 export const SHOW_GAME_DETAILS = `my-games/${STATE_KEY}/SHOW_GAME_DETAILS`
 export const HIDE_GAME_DETAILS = `my-games/${STATE_KEY}/HIDE_GAME_DETAILS`
-
+export const DISPLAY_ONLY_OWNED_GAMES = `my-games/${STATE_KEY}/DISPLAY_ONLY_OWNED_GAMES`
+export const DISPLAY_ANY_GAMES = `my-games/${STATE_KEY}/DISPLAY_ANY_GAMES`
 
 // Reducers
-function detailedGameIdReducer(
-  state = initialState.detailedGameId,
-  action
-) {
+function detailedGameIdReducer(state = initialState.detailedGameId, action) {
   switch (action.type) {
     case SHOW_GAME_DETAILS:
       return action.detailedGame.id
@@ -46,8 +48,20 @@ function detailedGameIdReducer(
   }
 }
 
+function isDisplayingOnlyOwnedGamesReducer(state = initialState.isDisplayingOnlyOwnedGames, action) {
+  switch (action.type) {
+    case DISPLAY_ONLY_OWNED_GAMES:
+      return true
+    case DISPLAY_ANY_GAMES:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   detailedGameId: detailedGameIdReducer,
+  isDisplayingOnlyOwnedGames: isDisplayingOnlyOwnedGamesReducer,
 })
 
 
@@ -56,9 +70,14 @@ export const showGameDetails = detailedGame => ({
   type: SHOW_GAME_DETAILS,
   detailedGame,
 })
-
 export const hideGameDetails = () => ({
   type: HIDE_GAME_DETAILS,
+})
+export const displayOnlyOwnedGames = () => ({
+  type: DISPLAY_ONLY_OWNED_GAMES,
+})
+export const displayAnyGames = () => ({
+  type: DISPLAY_ANY_GAMES,
 })
 
 
@@ -83,7 +102,22 @@ const requestGameFullCompletionEpic = action$ => action$
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
+const displayOnlyOwnedGamesEpic = (action$, store) => action$
+  .ofType(DISPLAY_ONLY_OWNED_GAMES)
+  .flatMap(() => {
+    const state = store.getState()
+    const ownedGames = getOwnedGames(state)
+
+    return [
+      clearSearch(),
+      removeAllGames(),
+      requestGames(ownedGames),
+    ]
+  })
+
+
 export const epic = combineEpics(
   showGameDetailsEpic,
-  requestGameFullCompletionEpic
+  requestGameFullCompletionEpic,
+  displayOnlyOwnedGamesEpic
 )

@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 
 import { isPending as isGamePending, hasMore as hasMoreGame, hasGames } from '#selectors/game-catalogue'
-import { getDetailedGameId, hasDetailedGame } from '#selectors/game-explorer'
+import { getDetailedGameId, hasDetailedGame, isDisplayingOnlyOwnedGames } from '#selectors/game-explorer'
 import { hasOwnedGame, getMarkedGames } from '#selectors/owned-game-catalogue'
 import { isCurrentSearchSubmitted } from '#selectors/search-engine'
 
 import { requestMoreGames } from '#modules/game-catalogue'
 import { requestGamePartialCompletion } from '#modules/game-catalogue/item/game'
 import { togglePlatformOwnership } from '#modules/owned-game-catalogue'
-import { showGameDetails, hideGameDetails } from '#modules/game-explorer'
+import { showGameDetails, hideGameDetails, displayOnlyOwnedGames } from '#modules/game-explorer'
 
 import GameExplorer from '#components/game-explorer'
 
@@ -20,7 +20,8 @@ const mapStateToProps = state => ({
   detailedGameId: getDetailedGameId(state),
   hasDetailedGame: hasDetailedGame(state),
   hasOwnedGame: hasOwnedGame(state),
-  isCurrentSearchSubmitted: isCurrentSearchSubmitted(state)
+  isCurrentSearchSubmitted: isCurrentSearchSubmitted(state),
+  isDisplayingOnlyOwnedGames: isDisplayingOnlyOwnedGames(state),
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -29,6 +30,7 @@ const mapDispatchToProps = dispatch => ({
   showGameDetails: game => dispatch(showGameDetails(game)),
   hideGameDetails: () => dispatch(hideGameDetails()),
   togglePlatformOwnership: (game, platform) => dispatch(togglePlatformOwnership(game, platform)),
+  displayOnlyOwnedGame: () => dispatch(displayOnlyOwnedGames())
 })
 
 export default connect(
