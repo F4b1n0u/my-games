@@ -119,5 +119,5 @@ const OwnershipFilterIcon = styled(MaterialCommunityIcons).attrs({
   name: 'bookmark',
 })`
   font-size: ${scale(40)};
-  color: ${props => props.isActive ? '#eb2b36' : '#33333350'};
+  color: ${props => props.isActive ? '#eb2b36' : '#333333'};
 `
