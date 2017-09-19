@@ -8,13 +8,10 @@ import FranchiseList from '#components/franchise-list'
 
 import { scale, verticalScale } from '#utils/dimension'
 export default class SearchEngineComponent extends React.Component {
-  componentWillReceiveProps() {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-  }
-
   componentDidUpdate() {
     const {
       hasLoadingGames,
+      isSearching,
     } = this.props
 
     const {
@@ -22,7 +19,9 @@ export default class SearchEngineComponent extends React.Component {
     } = this
 
     // not sure why the press on franchise does not blur the input ...
-    if (_searchInput && _searchInput.root.isFocused() && hasLoadingGames) {
+    if (isSearching) {
+      _searchInput.root.focus()
+    } else {
       _searchInput.root.blur()
     }
   }
@@ -53,10 +52,11 @@ export default class SearchEngineComponent extends React.Component {
 
   render() {
     const {
-      searchText,
-      updateSearchText,
       isFranchisesPending,
+      isSearching,
+      searchText,
       style,
+      updateSearchText,
     } = this.props
 
     return (
@@ -86,7 +86,7 @@ export default class SearchEngineComponent extends React.Component {
               onSubmitEditing={this._handleSubmit}
             />
             {
-              searchText ? (
+              searchText && isSearching ? (
                 <ClearSearch
                   onPress={this._handlePressClearSearch}
                 >

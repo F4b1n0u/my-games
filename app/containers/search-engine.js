@@ -12,6 +12,7 @@ import {
   getSearchText,
   getFranchises,
   isFranchisesPending,
+  isSearching,
 } from '#selectors/search-engine'
 import {
   isPending as isCataloguePending,
@@ -28,6 +29,7 @@ const mapStateToProps = state => ({
   hasLoadingGames: isCataloguePending(state),
   searchText: getSearchText(state),
   isFranchisesPending: isFranchisesPending(state),
+  isSearching: isSearching(state)
 })
 
 const mapDispatchToProps = dispatch => ({

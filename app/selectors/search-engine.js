@@ -4,3 +4,4 @@ export const getSearchText = state => state[SEARCH_ENGINE_KEY].searchText || ''
 export const isCurrentSearchSubmitted = state => state[SEARCH_ENGINE_KEY].isCurrentSearchSubmitted
 export const getFranchises = state => state[SEARCH_ENGINE_KEY].franchises.filter(franchise => franchise.resource_type === 'franchise')
 export const isFranchisesPending = state => state[SEARCH_ENGINE_KEY].franchisesStatus.pending
+export const isSearching = state => state[SEARCH_ENGINE_KEY].isSearching

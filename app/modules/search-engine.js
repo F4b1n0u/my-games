@@ -33,6 +33,7 @@ const initialState = {
     pending: false,
     error: null,
   },
+  isSearching: false,
 }
 
 // Actions
@@ -109,10 +110,7 @@ function franchisesStatusReducer(
   }
 }
 
-function isCurrentSearchSubmittedReducer(
-  state = initialState.isCurrentSearchSubmitted,
-  action
-) {
+function isCurrentSearchSubmittedReducer(state = initialState.isCurrentSearchSubmitted, action) {
   switch (action.type) {
     case SUBMIT_SEARCH:
       return true
@@ -124,11 +122,23 @@ function isCurrentSearchSubmittedReducer(
   }
 }
 
+function isSearchingReducer(state = initialState.isSearching, action) {
+  switch (action.type) {
+    case START_SEARCHING:
+      return true
+    case STOP_SEARCHING:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   searchText: searchTextReducer,
   isCurrentSearchSubmitted: isCurrentSearchSubmittedReducer,
   franchises: franchisesReducer,
   franchisesStatus: franchisesStatusReducer,
+  isSearching: isSearchingReducer,
 })
 
 // Action Creators
@@ -198,7 +208,6 @@ const updateSearchTextEpic = action$ => action$
   .debounceTime(250)
   .mapTo(requestFranchises())
 
-// TODO
 // Req G
 // Res G <-|
 // Req F   |-- inferior to 250, due to the debounce, not even sure this case is possible
@@ -256,12 +265,6 @@ const requestFranchiseCompletionEpic = action$ => action$
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error)))
   )
 
-const clearSearchEpic = action$ => action$
-  .ofType(CLEAR_SEARCH)
-  .flatMap(() => [
-    stopSearching(),
-  ])
-
 const submitSearchEpic = (action$, store) => action$
   .ofType(SUBMIT_SEARCH)
   .flatMap(() => {
@@ -289,7 +292,6 @@ export const epic = combineEpics(
   requestFranchisesEpic,
   selectFranchiseEpic,
   requestFranchiseCompletionEpic,
-  clearSearchEpic,
   submitSearchEpic,
   stopSearchingEpic
 )
