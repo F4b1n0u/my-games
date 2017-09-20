@@ -229,8 +229,8 @@ const OwnershipMarkerCheck = styled(MaterialCommunityIcons).attrs({
   name: 'check'
 })`
   position: absolute;
-  top: ${scale(7)};
-  right: ${scale(11)};
+  top: ${verticalScale(9)};
+  right: ${scale(10)};
   font-size: ${scale(20)};
   color: #ffffff;
 `

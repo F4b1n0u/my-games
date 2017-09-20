@@ -109,7 +109,7 @@ const OwnershipFilterCheck = styled(MaterialCommunityIcons).attrs({
   name: 'check'
 })`
   position: absolute;
-  top: ${scale(3)};
+  top: ${verticalScale(3)};
   right: ${scale(15)};
   font-size: ${scale(20)};
   color: #fafafa;
