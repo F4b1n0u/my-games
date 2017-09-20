@@ -27,7 +27,7 @@ export default class BlurViewExample extends React.Component {
     Animated.timing(
       animationProgress,
       {
-        duration: 250,
+        duration: 750,
         toValue: 1
       }
     ).start()
