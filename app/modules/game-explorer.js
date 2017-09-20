@@ -7,8 +7,18 @@ import { fetchFullGame } from '#services/giant-bomb'
 
 import { getOwnedGames } from '#selectors/owned-game-catalogue'
 
-import { requestGames, removeAllGames } from '#modules/game-catalogue'
-import { clearSearch } from '#modules/search-engine'
+import {
+  // SEARCHTEXT_SOURCE,
+  GAMES_SOURCE,
+
+  updateActiveSourceType,
+  updateGames,
+} from '#modules/game-source'
+
+import {
+  requestGames,
+  removeAllGames,
+} from '#modules/game-catalogue'
 
 import {
   REQUEST_GAME_FULL_COMPLETION,
@@ -33,8 +43,9 @@ const initialState = {
 // Actions
 export const SHOW_GAME_DETAILS = `my-games/${STATE_KEY}/SHOW_GAME_DETAILS`
 export const HIDE_GAME_DETAILS = `my-games/${STATE_KEY}/HIDE_GAME_DETAILS`
-export const DISPLAY_ONLY_OWNED_GAMES = `my-games/${STATE_KEY}/DISPLAY_ONLY_OWNED_GAMES`
-export const DISPLAY_ANY_GAMES = `my-games/${STATE_KEY}/DISPLAY_ANY_GAMES`
+export const MARK_DISPLAYING_ONLY_OWNED_GAMES = `my-games/${STATE_KEY}/MARK_DISPLAYING_ONLY_OWNED_GAMES`
+export const MARK_IS_DISPLAYING_ANY_GAMES = `my-games/${STATE_KEY}/MARK_IS_DISPLAYING_ANY_GAMES`
+
 
 // Reducers
 function detailedGameIdReducer(state = initialState.detailedGameId, action) {
@@ -50,9 +61,9 @@ function detailedGameIdReducer(state = initialState.detailedGameId, action) {
 
 function isDisplayingOnlyOwnedGamesReducer(state = initialState.isDisplayingOnlyOwnedGames, action) {
   switch (action.type) {
-    case DISPLAY_ONLY_OWNED_GAMES:
+    case MARK_DISPLAYING_ONLY_OWNED_GAMES:
       return true
-    case DISPLAY_ANY_GAMES:
+    case MARK_IS_DISPLAYING_ANY_GAMES:
       return false
     default:
       return state
@@ -73,11 +84,11 @@ export const showGameDetails = detailedGame => ({
 export const hideGameDetails = () => ({
   type: HIDE_GAME_DETAILS,
 })
-export const displayOnlyOwnedGames = () => ({
-  type: DISPLAY_ONLY_OWNED_GAMES,
+export const markDisplayingOnlyOwnedGames = () => ({
+  type: MARK_DISPLAYING_ONLY_OWNED_GAMES,
 })
-export const displayAnyGames = () => ({
-  type: DISPLAY_ANY_GAMES,
+export const markIsDisplayingAnyGames = () => ({
+  type: MARK_IS_DISPLAYING_ANY_GAMES,
 })
 
 
@@ -102,16 +113,17 @@ const requestGameFullCompletionEpic = action$ => action$
     .catch(error => Observable.of(receiveGameCompletionFailure(error)))
   )
 
-const displayOnlyOwnedGamesEpic = (action$, store) => action$
-  .ofType(DISPLAY_ONLY_OWNED_GAMES)
+const markDisplayingOnlyOwnedGamesEpic = (action$, store) => action$
+  .ofType(MARK_DISPLAYING_ONLY_OWNED_GAMES)
   .mergeMap(() => {
     const state = store.getState()
     const ownedGames = getOwnedGames(state)
 
     return [
-      clearSearch(),
+      updateActiveSourceType(GAMES_SOURCE),
+      updateGames(ownedGames),
       removeAllGames(),
-      requestGames(ownedGames),
+      requestGames()
     ]
   })
 
@@ -119,5 +131,5 @@ const displayOnlyOwnedGamesEpic = (action$, store) => action$
 export const epic = combineEpics(
   showGameDetailsEpic,
   requestGameFullCompletionEpic,
-  displayOnlyOwnedGamesEpic
+  markDisplayingOnlyOwnedGamesEpic
 )

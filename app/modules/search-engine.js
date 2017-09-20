@@ -6,16 +6,23 @@ import { combineEpics } from 'redux-observable'
 import {
   fetchFranchises,
   fetchFranchiseCompletion,
-  extractPagination,
 } from '#services/giant-bomb'
 
-import { displayAnyGames } from '#modules/game-explorer'
+import { markIsDisplayingAnyGames } from '#modules/game-explorer'
 
 import {
   requestGames,
-  receiveGames,
   removeAllGames,
 } from '#modules/game-catalogue'
+
+import {
+  SEARCHTEXT_SOURCE,
+  GAMES_SOURCE,
+
+  updateSearchText as updateSearchTextSource,
+  updateGames,
+  updateActiveSourceType,
+} from '#modules/game-source'
 
 import { getSearchText } from '#selectors/search-engine'
 import { isPending as isCataloguePending } from '#selectors/game-catalogue'
@@ -249,7 +256,7 @@ const selectFranchiseEpic = action$ => action$
   .mergeMap(action => [
     stopSearching(),
     removeAllGames(),
-    displayAnyGames(),
+    markIsDisplayingAnyGames(),
     // TODO not very clear, maybe something like requestGameFromFranchise could make more sense
     requestFranchiseCompletion(action.selectedFranchise)
   ])
@@ -257,10 +264,11 @@ const selectFranchiseEpic = action$ => action$
 const requestFranchiseCompletionEpic = action$ => action$
   .ofType(REQUEST_FRANCHISE_COMPLETION)
   .mergeMap(action => fetchFranchiseCompletion(action.selectedFranchise)
-    .mergeMap(response => Observable.of(receiveGames(
-      response.results.games,
-      extractPagination(response)
-    )))
+    .mergeMap(response => [
+      updateGames(response.results.games),
+      updateActiveSourceType(GAMES_SOURCE),
+      requestGames(),
+    ])
     .takeUntil(action$.ofType(SUBMIT_SEARCH))
     .catch(error => Observable.of(receiveFranchiseCompletionFailure(error)))
   )
@@ -275,8 +283,10 @@ const submitSearchEpic = (action$, store) => action$
     const searchText = getSearchText(store.getState()).trim()
 
     if (searchText) {
+      actions.push(markIsDisplayingAnyGames())
+      actions.push(updateSearchTextSource(searchText))
+      actions.push(updateActiveSourceType(SEARCHTEXT_SOURCE))
       actions.push(removeAllGames())
-      actions.push(displayAnyGames())
       actions.push(requestGames())
     }
 

@@ -8,7 +8,7 @@ import { isCurrentSearchSubmitted } from '#selectors/search-engine'
 import { requestMoreGames } from '#modules/game-catalogue'
 import { requestGamePartialCompletion } from '#modules/game-catalogue/item/game'
 import { togglePlatformOwnership } from '#modules/owned-game-catalogue'
-import { showGameDetails, hideGameDetails, displayOnlyOwnedGames } from '#modules/game-explorer'
+import { showGameDetails, hideGameDetails, markDisplayingOnlyOwnedGames } from '#modules/game-explorer'
 
 import GameExplorer from '#components/game-explorer'
 
@@ -30,7 +30,7 @@ const mapDispatchToProps = dispatch => ({
   showGameDetails: game => dispatch(showGameDetails(game)),
   hideGameDetails: () => dispatch(hideGameDetails()),
   togglePlatformOwnership: (game, platform) => dispatch(togglePlatformOwnership(game, platform)),
-  displayOnlyOwnedGame: () => dispatch(displayOnlyOwnedGames())
+  displayOnlyOwnedGame: () => dispatch(markDisplayingOnlyOwnedGames())
 })
 
 export default connect(

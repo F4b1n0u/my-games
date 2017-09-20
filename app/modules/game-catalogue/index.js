@@ -24,8 +24,13 @@ import itemReducer, {
   epic as itemEpic
 } from '#modules/game-catalogue/item'
 
-import { getSearchText } from '#selectors/search-engine'
+import {
+  SEARCHTEXT_SOURCE,
+  GAMES_SOURCE,
+} from '#modules/game-source'
+
 import { getNextOffset } from '#selectors/game-catalogue'
+import { getActiveSourceType, getActiveSource } from '#selectors/game-source'
 
 // state key
 export const STATE_KEY = 'gameCatalogue'
@@ -202,37 +207,48 @@ export const removeAllGames = () => ({
 })
 
 // Epics
-const requestGamesToFetchEpic = (action$, store) => action$
+const requestGamesEpic = (action$, store) => action$
   .ofType(REQUEST_GAMES)
-  .mergeMap((action) => {
+  .mergeMap(() => {
+    const state = store.getState()
+    const activeSourceType = getActiveSourceType(state)
+
     let observable
+    let searchText
+    let games
 
-    if (action.games) {
-      observable = fetchGamesByBulk(action.games)
-        .mergeMap(response => Observable.of(receiveGames(
-          response.results,
-          extractPagination(response)
-        )))
-        .takeUntil(action$.ofType(REQUEST_GAMES))
-        .catch(error => Observable.of(receiveGamesFailure(error)))
-    } else {
-      const searchText = getSearchText(store.getState()).trim()
+    switch (activeSourceType) {
+      case SEARCHTEXT_SOURCE:
+        searchText = getActiveSource(state).trim()
 
-      if (searchText) {
-        observable = fetchGamesBySearch(searchText)
+        if (searchText) {
+          observable = fetchGamesBySearch(searchText)
+            .mergeMap(response => Observable.of(receiveGames(
+              response.results,
+              extractPagination(response)
+            )))
+            .catch(error => Observable.of(receiveGamesFailure(error)))
+        } else {
+          observable = Observable.of(receiveGames(
+            [],
+            extractPagination()
+          ))
+        }
+        break
+      case GAMES_SOURCE:
+        games = getActiveSource(state)
+
+        observable = fetchGamesByBulk(games)
           .mergeMap(response => Observable.of(receiveGames(
             response.results,
             extractPagination(response)
           )))
+          .takeUntil(action$.ofType(REQUEST_GAMES))
           .catch(error => Observable.of(receiveGamesFailure(error)))
-      } else {
-        observable = Observable.of(receiveGames(
-          [],
-          extractPagination()
-        ))
-      }
+        break
+      default:
+        break
     }
-
     return observable
   })
 
@@ -240,25 +256,41 @@ const requestMoreGameEpic = (action$, store) => action$
   .ofType(REQUEST_MORE_GAMES)
   .mergeMap(() => {
     const state = store.getState()
-    const searchText = getSearchText(state)
+    const activeSourceType = getActiveSourceType(state)
     const offset = getNextOffset(state)
 
     let observable
+    let searchText
+    let games
 
-    if (searchText) {
-      observable = fetchGamesBySearch(searchText, {
-        offset,
-      })
-        .mergeMap(response => Observable.of(receiveMoreGames(
-          response.results,
-          extractPagination(response)
-        )))
-        .catch(error => Observable.of(receiveMoreGamesFailure(error)))
-    } else {
-      observable = Observable.of(
-        [],
-        extractPagination()
-      )
+    switch (activeSourceType) {
+      case SEARCHTEXT_SOURCE:
+        searchText = getActiveSource(state).trim()
+
+        observable = fetchGamesBySearch(searchText, {
+          offset,
+        })
+          .mergeMap(response => Observable.of(receiveMoreGames(
+            response.results,
+            extractPagination(response)
+          )))
+          .catch(error => Observable.of(receiveMoreGamesFailure(error)))
+        break
+      case GAMES_SOURCE:
+        games = getActiveSource(state)
+
+        observable = fetchGamesByBulk(games, {
+          offset,
+        })
+          .mergeMap(response => Observable.of(receiveGames(
+            response.results,
+            extractPagination(response)
+          )))
+          .takeUntil(action$.ofType(REQUEST_GAMES))
+          .catch(error => Observable.of(receiveGamesFailure(error)))
+        break
+      default:
+        break
     }
 
     return observable
@@ -285,7 +317,7 @@ const receiveMoreGamesEpic = action$ => action$
 
 
 export const epic = combineEpics(
-  requestGamesToFetchEpic,
+  requestGamesEpic,
   requestMoreGameEpic,
   requestGamesCompletionEpic,
   receiveMoreGamesEpic,

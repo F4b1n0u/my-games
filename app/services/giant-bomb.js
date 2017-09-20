@@ -43,12 +43,12 @@ export const fetchFranchises = (searchText) => {
     defaultQueryParams,
     {
       query: `${query}`,
+      sort: 'name:asc',
       resources: [
         'franchise',
       ].join(','),
-      field_list: '',
+      field_list: 'id,image,name',
       limit: 6,
-      sort: 'name:asc',
     }
   )
 
@@ -57,9 +57,7 @@ export const fetchFranchises = (searchText) => {
 
 export const fetchGamesBySearch = (
   searchText,
-  params = {
-    offset: 0,
-  }
+  params = { offset: 0 }
 ) => {
   const {
     offset,
@@ -106,7 +104,14 @@ export const fetchFullGame = ({ id }) => {
     })
 }
 
-export const fetchGamesByBulk = (games) => {
+export const fetchGamesByBulk = (
+  games,
+  params = { offset: 0 }
+) => {
+  const {
+    offset,
+  } = params
+
   const queryParams = _.merge(
     {},
     defaultQueryParams,
@@ -114,6 +119,8 @@ export const fetchGamesByBulk = (games) => {
       field_list: 'id,name,image,deck,platforms',
       sort: 'name:asc',
       filter: `id:${games.map(game => game.id).join('|')}`,
+      limit: 10,
+      offset,
     }
   )
   return ajax

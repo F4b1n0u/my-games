@@ -15,7 +15,7 @@ import {
   RECEIVE_MORE_GAMES_FAILURE,
 } from '#modules/game-catalogue'
 
-import { displayOnlyOwnedGames } from '#modules/game-explorer'
+import { markDisplayingOnlyOwnedGames } from '#modules/game-explorer'
 
 // state key
 export const STATE_KEY = 'app'
@@ -152,7 +152,7 @@ const displayGenericErrorEpic = action$ => action$
 
 const appEndLoadEpic = action$ => action$
   .ofType(END_LOAD_SUCCESS)
-  .mapTo(displayOnlyOwnedGames())
+  .mapTo(markDisplayingOnlyOwnedGames())
 
 export const epic = combineEpics(
   receiveFranchiseErrorEpic,

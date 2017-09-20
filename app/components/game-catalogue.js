@@ -117,7 +117,9 @@ export default class GameCatalogueComponent extends React.Component {
   }
 }
 
-const GameCatalogue = styled.FlatList`
+const GameCatalogue = styled.FlatList.attrs({
+  onEndReachedThreshold: 2
+})`
   flex: 1;
   background-color: transparent;
 `

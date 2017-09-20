@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
 
-import { displayAnyGames } from '#modules/game-explorer'
+import { markIsDisplayingAnyGames } from '#modules/game-explorer'
 import { getOwnedGameList, isGameOwned } from '#selectors/owned-game-catalogue'
 
 // state key
@@ -79,15 +79,15 @@ export const togglePlatformOwnership = (game, platform) => ({
 const togglePlatformOwnershipEpic = (action$, store) => action$
   .ofType(TOGGLE_PLATFORM_OWNERSHIP)
   .mergeMap((action) => {
-    let sideEffect = Observable.empty()
+    let observable = Observable.empty()
     const state = store.getState()
     const ownedGameList = getOwnedGameList(state)
 
     if (!isGameOwned(ownedGameList, action.game)) {
-      sideEffect = Observable.of(displayAnyGames())
+      observable = Observable.of(markIsDisplayingAnyGames())
     }
 
-    return sideEffect
+    return observable
   })
 
 export const epic = combineEpics(

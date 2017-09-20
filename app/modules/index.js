@@ -21,22 +21,28 @@ import ownedGameCatalogueReducer, {
   STATE_KEY as OWNED_GAME_CATALOGUE_KEY,
   epic as ownedGameCatalogueEpic,
 } from '#modules/owned-game-catalogue'
+import gameSourceReducer, {
+  STATE_KEY as GAME_SOURCE_KEY,
+  epic as gameSourceEpic,
+} from '#modules/game-source'
 
 // Reducers
 export default combineReducers({
   [APP_KEY]: appReducer,
-  [SEARCH_ENGINE_KEY]: searchEngineReducer,
   [GAME_CATALOGUE_KEY]: gameCatalogueReducer,
   [GAME_EXPLORER_KEY]: gameExplorerRecucer,
+  [GAME_SOURCE_KEY]: gameSourceReducer,
   [OWNED_GAME_CATALOGUE_KEY]: ownedGameCatalogueReducer,
+  [SEARCH_ENGINE_KEY]: searchEngineReducer,
 })
 
 
 // Epics
 export const epic = combineEpics(
   appEpic,
-  searchEngineEpic,
   gameCatalogueEpic,
   gameExplorerEpic,
-  ownedGameCatalogueEpic
+  gameSourceEpic,
+  ownedGameCatalogueEpic,
+  searchEngineEpic
 )
