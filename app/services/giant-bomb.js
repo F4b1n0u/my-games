@@ -4,6 +4,7 @@ import qs from 'query-string'
 import _ from 'lodash'
 import {
   GIANTBOMB_API_KEY,
+  SUPPORTED_PLATFORM_IDS,
 } from 'react-native-dotenv'
 
 const defaultQueryParams = {
@@ -47,6 +48,7 @@ export const fetchFranchises = (searchText) => {
       ].join(','),
       field_list: '',
       limit: 6,
+      sort: 'name:asc',
     }
   )
 
@@ -69,8 +71,9 @@ export const fetchGamesBySearch = (
     {},
     defaultQueryParams,
     {
-      filter: `name:${nameFilter}`,
+      filter: `name:${nameFilter},platforms:${SUPPORTED_PLATFORM_IDS}`,
       field_list: 'id,name,image,deck,platforms',
+      sort: 'name:asc',
       limit: 10,
       offset,
     }
@@ -109,6 +112,7 @@ export const fetchGamesByBulk = (games) => {
     defaultQueryParams,
     {
       field_list: 'id,name,image,deck,platforms',
+      sort: 'name:asc',
       filter: `id:${games.map(game => game.id).join('|')}`,
     }
   )
