@@ -79,6 +79,7 @@ export default class SearchEngineComponent extends React.Component {
               placeholder="type a name"
               ref={(ref) => { this._searchInput = ref }}
               value={searchText}
+              enablesReturnKeyAutomatically
 
               onChangeText={updateSearchText}
               onFocus={this._handleFocus}

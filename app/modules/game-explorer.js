@@ -5,6 +5,8 @@ import { combineEpics } from 'redux-observable'
 
 import { fetchFullGame } from '#services/giant-bomb'
 
+import { clearSearch } from '#modules/search-engine'
+
 import { getOwnedGames } from '#selectors/owned-game-catalogue'
 
 import {
@@ -120,6 +122,7 @@ const markDisplayingOnlyOwnedGamesEpic = (action$, store) => action$
     const ownedGames = getOwnedGames(state)
 
     return [
+      clearSearch(),
       updateActiveSourceType(GAMES_SOURCE),
       updateGames(ownedGames),
       removeAllGames(),

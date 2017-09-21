@@ -1,4 +1,5 @@
 import 'rxjs'
+import _ from 'lodash'
 import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
@@ -229,7 +230,7 @@ const requestFranchisesEpic = (action$, store) => action$
   .ofType(REQUEST_FRANCHISES)
   .switchMap(() => {
     const state = store.getState()
-    const searchText = getSearchText(state)
+    const searchText = getSearchText(state).trim()
     const isPending = isCataloguePending(state)
 
     let observable = Observable.empty()
@@ -276,18 +277,23 @@ const requestFranchiseCompletionEpic = action$ => action$
 const submitSearchEpic = (action$, store) => action$
   .ofType(SUBMIT_SEARCH)
   .mergeMap(() => {
-    const actions = [
-      stopSearching(),
-    ]
+    let actions = []
 
     const searchText = getSearchText(store.getState()).trim()
 
     if (searchText) {
-      actions.push(markIsDisplayingAnyGames())
-      actions.push(updateSearchTextSource(searchText))
-      actions.push(updateActiveSourceType(SEARCHTEXT_SOURCE))
-      actions.push(removeAllGames())
-      actions.push(requestGames())
+      actions = _.concat(
+        actions, [
+          stopSearching(),
+          markIsDisplayingAnyGames(),
+          updateSearchTextSource(searchText),
+          updateActiveSourceType(SEARCHTEXT_SOURCE),
+          removeAllGames(),
+          requestGames()
+        ]
+      )
+    } else {
+      actions.push(clearSearch())
     }
 
     return actions
