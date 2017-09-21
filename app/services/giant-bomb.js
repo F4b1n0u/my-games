@@ -57,10 +57,11 @@ export const fetchFranchises = (searchText) => {
 
 export const fetchGamesBySearch = (
   searchText,
-  params = { offset: 0 }
+  params = { offset: 0, page: 0 }
 ) => {
   const {
     offset,
+    page,
   } = params
 
   const query = `%${_.words(searchText).join('%')}%`
@@ -76,9 +77,20 @@ export const fetchGamesBySearch = (
       field_list: 'id,name,image,deck,platforms',
       sort: 'name:asc',
       limit: 10,
-      offset,
     }
   )
+
+  if (page) {
+    _.merge(
+      queryParams,
+      { page }
+    )
+  } else {
+    _.merge(
+      queryParams,
+      { offset }
+    )
+  }
 
   return ajax
     .getJSON(`https://www.giantbomb.com/api/search/?${qs.stringify(queryParams)}`)

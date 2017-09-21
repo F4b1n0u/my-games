@@ -28,4 +28,9 @@ export const hasMore = state => (state[GAME_CATALOGUE_KEY].pagination.total - (s
 
 export const getNextOffset = state => state[GAME_CATALOGUE_KEY].pagination.offset + state[GAME_CATALOGUE_KEY].pagination.amount
 
+// TODO will be deprecated ... one day ....
+// https://www.giantbomb.com/forums/api-developers-3017/offset-param-ignored-on-search-endpoint-1808045/#3
+// start at 1 not 0
+export const getNextPage = state => ( state[GAME_CATALOGUE_KEY].pagination.offset / state[GAME_CATALOGUE_KEY].pagination.amount ) + 1 + 1
+
 export const hasGames = state => !_.isEmpty(state[GAME_CATALOGUE_KEY].entities.items.allIds)

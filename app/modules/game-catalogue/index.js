@@ -29,7 +29,7 @@ import {
   GAMES_SOURCE,
 } from '#modules/game-source'
 
-import { getNextOffset } from '#selectors/game-catalogue'
+import { getNextOffset, getNextPage } from '#selectors/game-catalogue'
 import { getActiveSourceType, getActiveSource } from '#selectors/game-source'
 
 // state key
@@ -258,6 +258,7 @@ const requestMoreGameEpic = (action$, store) => action$
     const state = store.getState()
     const activeSourceType = getActiveSourceType(state)
     const offset = getNextOffset(state)
+    const page = getNextPage(state)
 
     let observable
     let searchText
@@ -268,7 +269,7 @@ const requestMoreGameEpic = (action$, store) => action$
         searchText = getActiveSource(state).trim()
 
         observable = fetchGamesBySearch(searchText, {
-          offset,
+          page,
         })
           .mergeMap(response => Observable.of(receiveMoreGames(
             response.results,
