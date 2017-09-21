@@ -4,17 +4,12 @@ import { Observable } from 'rxjs/Observable'
 import { combineReducers } from 'redux'
 import { combineEpics } from 'redux-observable'
 
-import {
-  fetchFranchises,
-  fetchFranchiseCompletion,
-} from '#services/giant-bomb'
+import { fetchFranchises, fetchFranchiseCompletion } from '#services/giant-bomb'
+import { fetchGameName } from '#services/amazon'
 
 import { markIsDisplayingAnyGames } from '#modules/game-explorer'
 
-import {
-  requestGames,
-  removeAllGames,
-} from '#modules/game-catalogue'
+import { requestGames, removeAllGames } from '#modules/game-catalogue'
 
 import {
   SEARCHTEXT_SOURCE,
@@ -42,6 +37,7 @@ const initialState = {
     error: null,
   },
   isSearching: false,
+  isScanningBarcode: false,
 }
 
 // Actions
@@ -58,12 +54,12 @@ export const RECEIVE_FRANCHISE_COMPLETION_FAILURE = `my-games/${STATE_KEY}/RECEI
 export const STOP_SEARCHING = `my-games/${STATE_KEY}/STOP_SEARCHING`
 export const CLEAR_SEARCH = `my-games/${STATE_KEY}/CLEAR_SEARCH`
 export const REMOVE_ALL_FRANCHISE = `my-games/${STATE_KEY}/REMOVE_ALL_FRANCHISE`
+export const START_SCAN_BARCODE = `my-games/${STATE_KEY}/START_SCAN_BARCODE`
+export const STOP_SCAN_BARCODE = `my-games/${STATE_KEY}/STOP_SCAN_BARCODE`
+export const RECEIVE_SCAN_RESULT = `my-games/${STATE_KEY}/RECEIVE_SCAN_RESULT`
 
 // Reducers
-function searchTextReducer(
-  state = initialState.searchText,
-  action
-) {
+function searchTextReducer(state = initialState.searchText, action) {
   const {
     type,
   } = action
@@ -80,10 +76,7 @@ function searchTextReducer(
   }
 }
 
-function franchisesReducer(
-  state = initialState.franchises,
-  action
-) {
+function franchisesReducer(state = initialState.franchises, action) {
   switch (action.type) {
     case RECEIVE_FRANCHISES_SUCCESS:
       return action.franchises
@@ -95,10 +88,7 @@ function franchisesReducer(
   }
 }
 
-function franchisesStatusReducer(
-  state = initialState.franchisesStatus,
-  action
-) {
+function franchisesStatusReducer(state = initialState.franchisesStatus, action) {
   switch (action.type) {
     case REQUEST_FRANCHISES:
       return {
@@ -141,12 +131,24 @@ function isSearchingReducer(state = initialState.isSearching, action) {
   }
 }
 
+function isScanningBarcodeReducer(state = initialState.isScanningBarcode, action) {
+  switch (action.type) {
+    case START_SCAN_BARCODE:
+      return true
+    case STOP_SCAN_BARCODE:
+      return false
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   searchText: searchTextReducer,
   isCurrentSearchSubmitted: isCurrentSearchSubmittedReducer,
   franchises: franchisesReducer,
   franchisesStatus: franchisesStatusReducer,
   isSearching: isSearchingReducer,
+  isScanningBarcode: isScanningBarcodeReducer,
 })
 
 // Action Creators
@@ -209,6 +211,19 @@ export const removeAllFranchise = () => ({
   type: REMOVE_ALL_FRANCHISE,
 })
 
+
+export const startScanBarcode = () => ({
+  type: START_SCAN_BARCODE,
+})
+
+export const stopScanBarcode = () => ({
+  type: STOP_SCAN_BARCODE
+})
+
+export const receiveScanResult = barcode => ({
+  type: RECEIVE_SCAN_RESULT,
+  barcode,
+})
 
 // Epics
 const updateSearchTextEpic = action$ => action$
@@ -311,6 +326,20 @@ const stopSearchingEpic = action$ => action$
   .ofType(STOP_SEARCHING)
   .mapTo(removeAllFranchise())
 
+const receiveScanResultEpic = action$ => action$
+  .ofType(RECEIVE_SCAN_RESULT)
+  .switchMap(action => fetchGameName(action.barcode)
+    .mergeMap(gameName => {
+      if (gameName) {
+        return [
+          updateSearchText(gameName),
+          submitSearch()
+        ]
+      }
+      return Observable.empty()
+    })
+  )
+
 export const epic = combineEpics(
   updateSearchTextEpic,
   requestFranchisesEpic,
@@ -319,5 +348,6 @@ export const epic = combineEpics(
   submitSearchEpic,
   clearSearchEpic,
   startSearchingEpic,
-  stopSearchingEpic
+  stopSearchingEpic,
+  receiveScanResultEpic
 )

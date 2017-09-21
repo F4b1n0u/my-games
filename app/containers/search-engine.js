@@ -7,19 +7,20 @@ import {
   submitSearch,
   stopSearching,
   clearSearch,
+  startScanBarcode,
+  receiveScanResult,
 } from '#modules/search-engine'
+
 import {
   getSearchText,
   getFranchises,
   isFranchisesPending,
   isSearching,
 } from '#selectors/search-engine'
-import {
-  isPending as isCataloguePending,
-} from '#selectors/game-catalogue'
-import {
-  hasDetailedGame,
-} from '#selectors/game-explorer'
+
+import { isPending as isCataloguePending } from '#selectors/game-catalogue'
+
+import { hasDetailedGame } from '#selectors/game-explorer'
 
 import SearchEngine from '#components/search-engine'
 
@@ -29,7 +30,7 @@ const mapStateToProps = state => ({
   hasLoadingGames: isCataloguePending(state),
   searchText: getSearchText(state),
   isFranchisesPending: isFranchisesPending(state),
-  isSearching: isSearching(state)
+  isSearching: isSearching(state),
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -39,6 +40,7 @@ const mapDispatchToProps = dispatch => ({
   submitSearch: () => dispatch(submitSearch()),
   updateSearchText: searchText => dispatch(updateSearchText(searchText)),
   clearSearch: () => dispatch(clearSearch()),
+  startScanBarcode: () => dispatch(startScanBarcode()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchEngine)

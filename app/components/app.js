@@ -13,6 +13,8 @@ import Background from '#components/background'
 import GameExplorer from '#containers/game-explorer'
 import AboutComponent from '#components/about'
 
+import BarcodeScannerContainer from '#containers/barcode-scanner'
+
 import { cacheImages, cacheFonts } from '#utils'
 import { scale, verticalScale } from '#utils/dimension'
 
@@ -69,6 +71,14 @@ export default class AppComponents extends React.Component {
     }
   }
 
+  _handleStopScan = () => {
+    const {
+      stopScanBarcode,
+    } = this.props
+
+    stopScanBarcode()
+  }
+
   render() {
     const {
       isLoaded,
@@ -76,39 +86,50 @@ export default class AppComponents extends React.Component {
       isAboutVisible,
       hasDetailedGame,
       toggleAboutDisplay,
+      isScanningBarcode,
+      stopScanBarcode
     } = this.props
 
-    return (!isLoading && isLoaded) ?
-      (
-        <App>
-          <Background />
-          <GameExplorer />
+    if (!isLoading && isLoaded) {
+      if (isScanningBarcode) {
+        return (
+          <BarcodeScanner />
+        )
+      } else {
+        return (
+          <App>
+            <Background />
+            <GameExplorer />
 
-          {
-            hasDetailedGame ? (
-              null
-            ) : (
-              <AboutIconWrapper
-                onPress={toggleAboutDisplay}
-              >
-                <AboutIcon />
-              </AboutIconWrapper>
-            )
-          }
+            {
+              hasDetailedGame ? (
+                null
+              ) : (
+                <AboutIconWrapper
+                  onPress={toggleAboutDisplay}
+                >
+                  <AboutIcon />
+                </AboutIconWrapper>
+              )
+            }
 
-          {
-            isAboutVisible ? (
-              <About
-                toggleAboutDisplay={toggleAboutDisplay}
-              />
-            ) : (
-              null
-            )
-          }
-        </App>
-      ) : (
+            {
+              isAboutVisible ? (
+                <About
+                  toggleAboutDisplay={toggleAboutDisplay}
+                />
+              ) : (
+                null
+              )
+            }
+          </App>
+        )
+      }
+    } else {
+      return (
         <Expo.AppLoading />
       )
+    }
   }
 }
 
@@ -137,4 +158,12 @@ const AboutIcon = styled(Octicons).attrs({
 })`
   font-size: ${verticalScale(32)};
   color: #333333;
+`
+
+const BarcodeScanner = styled(BarcodeScannerContainer)`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 `

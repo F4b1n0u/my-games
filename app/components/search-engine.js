@@ -2,7 +2,7 @@ import React from 'react'
 import { LayoutAnimation } from 'react-native'
 import { LinearGradient } from 'expo'
 import styled from 'styled-components/native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 import FranchiseList from '#components/franchise-list'
 
@@ -50,6 +50,14 @@ export default class SearchEngineComponent extends React.Component {
     clearSearch()
   }
 
+  _handlePressScan = () => {
+    const {
+      startScanBarcode,
+    } = this.props
+
+    startScanBarcode()
+  }
+
   render() {
     const {
       isFranchisesPending,
@@ -85,18 +93,18 @@ export default class SearchEngineComponent extends React.Component {
               onFocus={this._handleFocus}
               onSubmitEditing={this._handleSubmit}
             />
-            {
-              searchText && isSearching ? (
-                <ClearSearch
-                  onPress={this._handlePressClearSearch}
-                >
+            
+            <IconWrapper
+              onPress={searchText ? this._handlePressClearSearch : this._handlePressScan}
+            >
+              {
+                (searchText) ? (
                   <ClearSearchIcon />
-                </ClearSearch>
-              ) : (
-                null
-              )
-            }
-
+                ) : (
+                  <ScannerIcon />
+                )
+              }
+            </IconWrapper>
           </TextInputWrapper>
           <FranchiseList
             {...this.props}
@@ -111,14 +119,14 @@ const SearchEngine = styled.View`
   flex: 1;
 `
 
-const ClearSearch = styled.TouchableOpacity.attrs({
+const IconWrapper = styled.TouchableOpacity.attrs({
   activeOpacity: 0.4,
 })`
   position: absolute;
   top: ${scale(1)};
-  right: ${scale(1)};
-  height: ${verticalScale(28)};
-  width: ${verticalScale(28)};
+  right: ${scale(2)};
+  height: ${verticalScale(30)};
+  width: ${verticalScale(30)};
   justify-content: center;
   align-items: center;
 `
@@ -128,6 +136,13 @@ const ClearSearchIcon = styled(MaterialIcons).attrs({
 })`
   color: #333333;
   font-size: ${verticalScale(20)};
+`
+
+const ScannerIcon = styled(MaterialCommunityIcons).attrs({
+  name: 'barcode-scan',
+})`
+  color: #333333;
+  font-size: ${verticalScale(30)};
 `
 
 const TextInputWrapper = styled.View`
