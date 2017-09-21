@@ -63,13 +63,16 @@ export const fetchGamesBySearch = (
     offset,
   } = params
 
-  const nameFilter = `%${_.words(searchText).join('%')}%`
-
+  const query = `%${_.words(searchText).join('%')}%`
+  
   const queryParams = _.merge(
     {},
     defaultQueryParams,
     {
-      filter: `name:${nameFilter},platforms:${SUPPORTED_PLATFORM_IDS}`,
+      query: `${searchText}`,
+      resources: [
+        'game',
+      ].join(','),
       field_list: 'id,name,image,deck,platforms',
       sort: 'name:asc',
       limit: 10,
@@ -78,7 +81,7 @@ export const fetchGamesBySearch = (
   )
 
   return ajax
-    .getJSON(`https://www.giantbomb.com/api/games/?${qs.stringify(queryParams)}`)
+    .getJSON(`https://www.giantbomb.com/api/search/?${qs.stringify(queryParams)}`)
     .map((response) => {
       response.results = response.results.map(markGameCompletionLevel.bind(null, 2))
       return response
