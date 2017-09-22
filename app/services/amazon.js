@@ -54,8 +54,8 @@ export const fetchGameName = (barcode) => {
     .map((response) => {
       const xmlResponse = response.response
       const jsonResponse = new X2JS().xml2js(xmlResponse)
-      const gameName = _.get(jsonResponse, 'ItemSearchResponse.Items.Item.ItemAttributes.Title', '')
-
+      let gameName = _.get(jsonResponse, 'ItemSearchResponse.Items.Item.ItemAttributes.Title', '')
+      gameName = gameName.replace(/\([^()]*\)/g, '')
       return gameName
     })
 }
