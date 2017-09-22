@@ -6,6 +6,7 @@ import devStoreConfigure from '#store/store-configure.dev'
 import prodStoreConfigure from '#store/store-configure.prod'
 
 import { STATE_KEY as OWNED_GAME_CATALOGUE_KEY } from '#modules/owned-game-catalogue'
+import { STATE_KEY as WALKTHROUGH_KEY } from '#modules/walkthrough'
 
 export default (initialState) => {
   const store = (process.env.NODE_ENV === 'production') ?
@@ -16,12 +17,12 @@ export default (initialState) => {
     store,
     {
       storage: AsyncStorage,
-      whitelist: [OWNED_GAME_CATALOGUE_KEY],
+      whitelist: [OWNED_GAME_CATALOGUE_KEY, WALKTHROUGH_KEY],
     }
   )
 
   return {
-    store,
+    store, 
     persistedStore
   }
 }

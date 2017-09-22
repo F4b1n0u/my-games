@@ -14,6 +14,7 @@ import GameExplorer from '#containers/game-explorer'
 import AboutComponent from '#components/about'
 
 import BarcodeScannerContainer from '#containers/barcode-scanner'
+import WalkthroughContainer from '#containers/walkthrough'
 
 import { cacheImages, cacheFonts } from '#utils'
 import { scale, verticalScale } from '#utils/dimension'
@@ -45,6 +46,7 @@ export default class AppComponents extends React.Component {
 
       const imageAssets = cacheImages([
         require('../../assets/images/all-games-wallpaper.png'),
+        require('../../assets/images/arrow.png'),
         require('../../assets/images/arrows.png'),
         require('../../assets/images/giantbomb-logo.png'),
         require('../../assets/images/icon.png'),
@@ -122,6 +124,8 @@ export default class AppComponents extends React.Component {
                 null
               )
             }
+
+            <Walkthrough />
           </App>
         )
       }
@@ -161,6 +165,14 @@ const AboutIcon = styled(Octicons).attrs({
 `
 
 const BarcodeScanner = styled(BarcodeScannerContainer)`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+`
+
+const Walkthrough = styled(WalkthroughContainer)`
   position: absolute;
   left: 0;
   right: 0;
