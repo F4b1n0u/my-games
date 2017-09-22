@@ -228,7 +228,7 @@ export const receiveScanResult = barcode => ({
 // Epics
 const updateSearchTextEpic = action$ => action$
   .ofType(UPDATE_SEARCHTEXT)
-  .debounceTime(250)
+  .debounceTime(500)
   .mapTo(requestFranchises())
 
 // Req G
