@@ -47,7 +47,6 @@ export default class BarcodeScannerExample extends React.Component {
             onBarCodeRead={this._handleBarCodeRead}
             style={StyleSheet.absoluteFill}
           />
-          <Target />
           <BarcodePlaceholder />
           <Cancel
             onPress={stopScanBarcode}
@@ -80,23 +79,13 @@ const BarCodeScannerWrapper = styled.View`
 
 const BarCodeScanner = styled(BarCodeScannerComponent)``
 
-const Target = styled(Ionicons).attrs({
-  name: 'ios-qr-scanner-outline'
-})`
-  position: absolute;
-  top: ${verticalScale(123)};
-  color: #ffffff;
-  font-size: ${verticalScale(300)};
-  background-color: transparent;
-`
-
 const BarcodePlaceholder = styled(FontAwesome).attrs({
   name: 'barcode'
 })`
   position: absolute;
   top: ${verticalScale(180)};
   color: #ffffff20;
-  font-size: ${verticalScale(200)};
+  font-size: ${verticalScale(250)};
   align-self: center;
   background-color: transparent;
 `
