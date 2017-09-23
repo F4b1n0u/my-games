@@ -7,6 +7,7 @@ import { combineEpics } from 'redux-observable'
 import {
   RECEIVE_FRANCHISES_FAILURE,
   RECEIVE_FRANCHISE_COMPLETION_FAILURE,
+  RECEIVE_SCAN_RESULT_FAILURE,
 } from '#modules/search-engine'
 
 import {
@@ -116,24 +117,28 @@ export const displayGenericError = error => ({
 
 
 // Epics
-const receiveFranchiseErrorEpic = action$ => action$
+const receiveFranchiseFailureEpic = action$ => action$
   .ofType(RECEIVE_FRANCHISES_FAILURE)
   .mergeMap(() => Observable.of(displayGenericError()))
 
-const receiveFranchiseCompletionErrorEpic = action$ => action$
+const receiveFranchiseCompletionFailureEpic = action$ => action$
   .ofType(RECEIVE_FRANCHISE_COMPLETION_FAILURE)
   .mergeMap(() => Observable.of(displayGenericError()))
 
-const receiveGamesErrorEpic = action$ => action$
+const receiveGamesFailureEpic = action$ => action$
   .ofType(RECEIVE_GAMES_FAILURE)
   .mergeMap(() => Observable.of(displayGenericError()))
 
-const receiveGamesCompletionErrorEpic = action$ => action$
+const receiveGamesCompletionFailureEpic = action$ => action$
   .ofType(RECEIVE_GAME_COMPLETION_FAILURE)
   .mergeMap(() => Observable.of(displayGenericError()))
 
-const requestMoreGamesErrorEpic = action$ => action$
+const requestMoreGamesFailureEpic = action$ => action$
   .ofType(RECEIVE_MORE_GAMES_FAILURE)
+  .mergeMap(() => Observable.of(displayGenericError()))
+
+const requestScanResultFailureEpic = action$ => action$
+  .ofType(RECEIVE_SCAN_RESULT_FAILURE)
   .mergeMap(() => Observable.of(displayGenericError()))
 
 const displayGenericErrorEpic = action$ => action$
@@ -155,11 +160,12 @@ const appEndLoadEpic = action$ => action$
   .mapTo(markDisplayingOnlyOwnedGames())
 
 export const epic = combineEpics(
-  receiveFranchiseErrorEpic,
-  receiveFranchiseCompletionErrorEpic,
-  receiveGamesErrorEpic,
-  receiveGamesCompletionErrorEpic,
-  requestMoreGamesErrorEpic,
+  receiveFranchiseFailureEpic,
+  receiveFranchiseCompletionFailureEpic,
+  receiveGamesFailureEpic,
+  receiveGamesCompletionFailureEpic,
+  requestMoreGamesFailureEpic,
+  requestScanResultFailureEpic,
   displayGenericErrorEpic,
   appEndLoadEpic
 )

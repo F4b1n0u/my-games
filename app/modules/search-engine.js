@@ -56,7 +56,8 @@ export const CLEAR_SEARCH = `my-games/${STATE_KEY}/CLEAR_SEARCH`
 export const REMOVE_ALL_FRANCHISE = `my-games/${STATE_KEY}/REMOVE_ALL_FRANCHISE`
 export const START_SCAN_BARCODE = `my-games/${STATE_KEY}/START_SCAN_BARCODE`
 export const STOP_SCAN_BARCODE = `my-games/${STATE_KEY}/STOP_SCAN_BARCODE`
-export const RECEIVE_SCAN_RESULT = `my-games/${STATE_KEY}/RECEIVE_SCAN_RESULT`
+export const RECEIVE_SCAN_RESULT_SUCCESS = `my-games/${STATE_KEY}/RECEIVE_SCAN_RESULT_SUCCESS`
+export const RECEIVE_SCAN_RESULT_FAILURE = `my-games/${STATE_KEY}/RECEIVE_SCAN_RESULT_FAILURE`
 
 // Reducers
 function searchTextReducer(state = initialState.searchText, action) {
@@ -221,7 +222,12 @@ export const stopScanBarcode = () => ({
 })
 
 export const receiveScanResult = barcode => ({
-  type: RECEIVE_SCAN_RESULT,
+  type: RECEIVE_SCAN_RESULT_SUCCESS,
+  barcode,
+})
+
+export const receiveScanResultFailure = barcode => ({
+  type: RECEIVE_SCAN_RESULT_FAILURE,
   barcode,
 })
 
@@ -327,7 +333,7 @@ const stopSearchingEpic = action$ => action$
   .mapTo(removeAllFranchise())
 
 const receiveScanResultEpic = action$ => action$
-  .ofType(RECEIVE_SCAN_RESULT)
+  .ofType(RECEIVE_SCAN_RESULT_SUCCESS)
   .switchMap(action => fetchGameName(action.barcode)
     .mergeMap(gameName => {
       if (gameName) {
@@ -338,7 +344,9 @@ const receiveScanResultEpic = action$ => action$
       }
       return Observable.empty()
     })
+    .catch(error => Observable.of(receiveScanResultFailure(error)))
   )
+
 
 export const epic = combineEpics(
   updateSearchTextEpic,
