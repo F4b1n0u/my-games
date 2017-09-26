@@ -33,32 +33,41 @@ export default class ProgressiveImage extends Component {
   }
 
   render() {
+    const {
+      imageBlurRadius,
+      imageSource,
+      placeHolderSource,
+      resizeMode,
+      style,
+      thumbnailBlurRadius,
+      thumbnailSource,
+    } = this.props
     return (
-      <View style={this.props.style}>
+      <View style={style}>
         <Image
-          resizeMode={this.props.resizeMode}
-          style={[styles.image, this.props.style]}
-          source={this.props.placeHolderSource}
+          resizeMode={resizeMode}
+          style={[styles.image, style]}
+          source={placeHolderSource}
         />
         {
-          this.props.thumbnailSource && !this.state.isLoaded ? (
+          thumbnailSource && !this.state.isLoaded ? (
             <Animated.Image
-              resizeMode={this.props.resizeMode}
-              style={[styles.image, { opacity: this.state.thumbnailOpacity }, this.props.style]}
-              source={this.props.thumbnailSource}
+              resizeMode={resizeMode}
+              style={[styles.image, { opacity: this.state.thumbnailOpacity }, style]}
+              source={thumbnailSource}
               onLoad={() => this.onLoadThumbnail()}
-              blurRadius={this.props.thumbnailBlurRadius}
+              blurRadius={thumbnailBlurRadius}
             />
           ) : (
             null
           )
         }
         <Animated.Image
-          resizeMode={this.props.resizeMode}
-          style={[styles.image, { opacity: this.state.imageOpacity }, this.props.style]}
-          source={this.props.imageSource}
+          resizeMode={resizeMode}
+          style={[styles.image, { opacity: this.state.imageOpacity }, style]}
+          source={imageSource}
           onLoad={() => this.onLoadImage()}
-          blurRadius={this.props.imageBlurRadius}
+          blurRadius={imageBlurRadius}
         />
       </View>
     )
@@ -72,6 +81,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+    overflow: 'hidden',
   },
 })
 

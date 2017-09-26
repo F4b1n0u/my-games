@@ -128,8 +128,7 @@ const Platform = styled(PlatformComponent).attrs({
 `
 
 
-const Cover = styled(RatioLessImage).attrs({
-})`
+const Cover = styled(RatioLessImage)`
   position: absolute;
   left: 0;
   right: 0;

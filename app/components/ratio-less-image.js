@@ -5,8 +5,11 @@ import ProgressiveImage from '#components/progressive-image'
 export default ({
   image,
   children,
+  style,
 }) => (
-  <RatioLessImage>
+  <RatioLessImage
+    style={style}
+  >
     <BackgroundImage
       imageSource={{ uri: image.tiny_url }}
     />
@@ -35,6 +38,8 @@ const BackgroundImage = styled(ProgressiveImage).attrs({
 
 const Image = styled(ProgressiveImage).attrs({
   resizeMode: 'contain',
+  height: undefined,
+  width: undefined,
 })`
   position: absolute;
   left: 0;

@@ -6,7 +6,7 @@ import { Dimensions } from 'react-native'
 import { BlurView, WebBrowser } from 'expo'
 import { MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
 
-import ProgressiveImage from '#components/progressive-image'
+import RatioLessImage from '#components/ratio-less-image'
 import PlatformComponent from '#components/platform'
 
 import { scale } from '#utils/dimension'
@@ -92,8 +92,7 @@ export default class CompleteDetailedGameComponent extends React.Component {
               >
                 <ImageContainer>
                   <Picture
-                    thumbnailSource={{ uri: currentImage.tiny_url }}
-                    imageSource={{ uri: currentImage.medium_url }}
+                    image={currentImage}
                   />
                 </ImageContainer>
               </Slide>
@@ -177,17 +176,13 @@ const Slide = styled.View`
 `
 
 const ImageContainer = styled.View`
-  flex: 1;
+  height: ${slideHeight};
+  borderRadius: 5;
   padding-horizontal: ${itemHorizontalMargin};
 `
 
-const Picture = styled(ProgressiveImage).attrs({
-  resizeMode: 'cover',
-})`
-  width: ${slideWidth};
-  height: ${slideHeight};
-  borderRadius: 5;
-  background-color: #333333a0;
+const Picture = styled(RatioLessImage)`
+  background-color: #33333350;
 `
 
 const Description = styled.Text.attrs({
