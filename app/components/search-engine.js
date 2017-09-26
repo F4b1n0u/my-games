@@ -34,6 +34,14 @@ export default class SearchEngineComponent extends React.Component {
     startSearching()
   }
 
+  _handleBlur = () => {
+    const {
+      stopSearching,
+    } = this.props
+
+    stopSearching()
+  }
+
   _handleSubmit = () => {
     const {
       submitSearch,
@@ -91,6 +99,7 @@ export default class SearchEngineComponent extends React.Component {
 
               onChangeText={updateSearchText}
               onFocus={this._handleFocus}
+              onBlur={this._handleBlur}
               onSubmitEditing={this._handleSubmit}
             />
             
