@@ -16,7 +16,10 @@ example: "mario" -> "super mario", "paper mario", etc
 - ### Barcode scanner
 You can also search a game via his barcode, could be conveninent if you already have a big collection.
 
+# Test it live
+you can use this app right now with expo on the following link
 
+ https://expo.io/@f4b1n0u/my-games
 # How to run your own version
 - populate your own .env file
 - add your sentry auth api key in expo.hooks.postPublish.config.authToken  of the app.json
