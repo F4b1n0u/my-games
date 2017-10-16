@@ -4,6 +4,14 @@
 </p>
 My games is a react antive application (iOS only for now), who allow you to keep track of your video game collection
 
+## Supported Devices
+### iOS
+this app is supposed to work flawlessly on any iOS devices, phone or tablet
+
+### Android
+WORK IN PROGRESS
+this app is runnable on Android, BUT there is no garranty it works fine, some issue are klnown like the overflow issues (like any RN app actually), and the side effects are triggered in a strange way. in any cases feel free to fix this issues you like, any contributions are more than welcome :)
+
 ## Features
 you can search games in 3 fashions
 
