@@ -29,4 +29,4 @@ in case you want to run it on your own dev environement you will have to:
 
 
 the supported platfom list is a group of IDs of platform separeted by a pipe "|"
-example: 1|2|3|4, to know which id you should use, you need to look at the GiantBomb api. but you can as well look at the non exaustive list provided in the section "suported paltforms" of this file
+example: 1|2|3|4, to know which id you should use, you need to look at the GiantBomb api.
