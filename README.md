@@ -17,7 +17,7 @@ example: "mario" -> "super mario", "paper mario", etc
 You can also search a game via his barcode, could be conveninent if you already have a big collection.
 
 # Test it live NOW
-the app is still waiting to be release by Apple on his store, so to be able to use it right now on your iPhone or iPad,  you can use this app right now with expo on the following link
+the app is still waiting to be release by Apple on his store, so to be able to use it right now on your iPhone or iPad,  you can visit the expo page on the following link
 
  https://expo.io/@f4b1n0u/my-games
  
