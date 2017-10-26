@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components/native'
 import { BlurView } from 'expo'
-import { Animated } from 'react-native'
-
-import { version } from '../../package.json'
+import { Animated, Linking } from 'react-native'
+import { GITHUB_URL } from 'react-native-dotenv'
 
 import ProgressiveImage from '#components/progressive-image'
 
 import { scale, verticalScale } from '#utils/dimension'
 
+import { version } from '../../package.json'
 
 export default class BlurViewExample extends React.Component {
   state = {
@@ -31,6 +31,10 @@ export default class BlurViewExample extends React.Component {
         toValue: 1
       }
     ).start()
+  }
+
+  _handleLink() {
+    Linking.openURL(GITHUB_URL);
   }
 
   render() {
@@ -65,7 +69,12 @@ export default class BlurViewExample extends React.Component {
               {'This app is designed and developed by:\n\nFabien Behier\n'}
             </Paragraph>
             <Paragraph>
-              {'the source code is available on github at:\nhttps://github.com/F4b1n0u/my-games'}
+              {'the source code is available on github at:\n'}
+              <Link
+                onPress={this._handleLink}
+              >
+                {GITHUB_URL}
+              </Link>
             </Paragraph>
             <Paragraph>
               {'the data source is powered by:'}
@@ -150,3 +159,5 @@ const Version = styled.Text`
   text-align: center;
   font-size: ${scale(10)}
 `
+
+const Link = styled.Text``
